@@ -77,15 +77,23 @@ def get_word_data():
       
 def send_telegram(data):
     if not data: return
-    # Экранируем HTML
-    safe_sentence = html.escape(data['sentence_en']).replace("{{", "<b>").replace("}}", "</b>")
+
+    # 1. Сначала экранируем спецсимволы HTML (<, >)
+    safe_sentence = html.escape(data['sentence_en'])
     safe_word = html.escape(data['word'])
-    
+    safe_grammar = html.escape(data.get('grammar_rule', ''))
+    safe_transcription = html.escape(data.get('transcription', ''))
+
+    # 2. ВОТ ЭТА СТРОКА, КОТОРОЙ НЕ ХВАТАЛО:
+    # Превращаем {{word}} в жирный шрифт <b>word</b>
+    formatted_sentence = safe_sentence.replace("{{", "<b>").replace("}}", "</b>")
+
+    # 3. Формируем сообщение
     message = (
-        f"🐸 <b>Memeglish Philosophy</b>\n"
-        f"✨ <b>Word:</b> {safe_word} {html.escape(data.get('transcription', ''))}\n\n"
+        f"🐸 <b>Memeglish Philosophy</b>\n\n"
+        f"✨ <b>Word:</b> {safe_word} {safe_transcription}\n"
         f"💭 {formatted_sentence}\n\n"
-        f"🧠 <i>{html.escape(data['grammar_rule'])}</i>\n"
+        f"🧠 <i>{safe_grammar}</i>\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"🇷🇺 {html.escape(data['translations']['ru'])}\n"
         f"🇪🇸 {html.escape(data['translations']['es'])}\n"
@@ -95,9 +103,19 @@ def send_telegram(data):
         f"🇳🇿 {html.escape(data['translations']['mi'])}"
     )
 
-    url = f"[https://api.telegram.org/bot](https://api.telegram.org/bot){TG_BOT_TOKEN}/sendMessage"
-    payload = {"chat_id": TG_CHAT_ID, "text": message, "parse_mode": "HTML"}
-    requests.post(url, json=payload)
+    url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
+    payload = {
+        "chat_id": TG_CHAT_ID, 
+        "text": message, 
+        "parse_mode": "HTML"
+    }
+
+    try:
+        r = requests.post(url, json=payload)
+        r.raise_for_status()
+    except Exception as e:
+        print(f"Telegram Error: {e}")
+        print(r.text)
 
 def send_discord(data):
     if not data: return
