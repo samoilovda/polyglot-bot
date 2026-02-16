@@ -22,45 +22,46 @@ def clean_json_response(content):
     return content.strip()
 
 def get_word_data():
-    """Запрашивает слово с учетом случайной буквы, чтобы избежать повторов."""
+    """Запрашивает слово с учетом случайной буквы и детального перевода."""
     
-    # 1. Генерируем случайную букву (исключаем редкие типа X, Z, чтобы ИИ не тупил)
     random_letter = random.choice("ABCDEFGHIJKLMNOPRSTUVW")
-    
-    # 2. Список слов, которые уже надоели (можно пополнять)
     banned_words = "catharsis, resilience, procrastination, empathy, narcissism, burnout"
 
     prompt = f"""
     You are the author of a channel called "Memeglish Philosophy". 
-    Your tone is: Witty, slightly cynical, paradoxical, and philosophical (but in a funny way).
+    Your tone is: Witty, slightly cynical, paradoxical, and philosophical.
     
     Task:
-    1. Pick a sophisticated English word (Level B2-C2) related to psychology, modern life, existentialism, or human stupidity.
+    1. Pick a sophisticated English word (Level B2-C2) related to psychology, modern life, or existentialism.
     
     CRITICAL CONSTRAINTS:
     - The word MUST start with the letter: "{random_letter}"
     - DO NOT use these words: {banned_words}
     
     2. Create a sentence using this word. 
-       Style: The sentence MUST be an oxymoron, a paradox, a dark joke, or a witty observation. 
-       It should sound like a quote from Oscar Wilde or George Carlin.
+       Style: The sentence MUST be an oxymoron, a paradox, or a dark joke.
        
-    3. Explain the grammar rule or a linguistic nuance briefly.
-    4. Translate the sentence into: Russian, Spanish, Portuguese (Brazil), Turkish, Arabic, and Maori.
-    
+    3. Explain the grammar rule briefly.
+
+    4. Translate into: Russian, Spanish, Portuguese (Brazil), Turkish, Arabic, and Maori.
+    For EACH language, provide:
+       - The translated word.
+       - The IPA transcription of that word.
+       - The translated sentence where the word is wrapped in {{double curly braces}}.
+
     Output strictly valid JSON:
     {{
       "word": "The chosen word (starting with {random_letter})",
       "transcription": "/IPA/",
-      "sentence_en": "The witty/philosophical sentence using {{the word}}.",
+      "sentence_en": "The witty sentence using {{the word}}.",
       "grammar_rule": "Short explanation...",
       "translations": {{
-        "ru": "...",
-        "es": "...",
-        "pt_br": "...",
-        "tr": "...",
-        "ar": "...",
-        "mi": "..."
+        "ru": {{ "word": "...", "transcription": "[...]", "sentence": "Предложение с {{словом}}." }},
+        "es": {{ "word": "...", "transcription": "[...]", "sentence": "Frase con {{palabra}}." }},
+        "pt_br": {{ "word": "...", "transcription": "[...]", "sentence": "..." }},
+        "tr": {{ "word": "...", "transcription": "[...]", "sentence": "..." }},
+        "ar": {{ "word": "...", "transcription": "[...]", "sentence": "..." }},
+        "mi": {{ "word": "...", "transcription": "[...]", "sentence": "..." }}
       }}
     }}
     """
@@ -74,7 +75,7 @@ def get_word_data():
     payload = {
         "model": MODEL_NAME,
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 1.15  # Еще немного повысим для разнообразия
+        "temperature": 1.15
     }
 
     try:
@@ -91,29 +92,39 @@ def get_word_data():
 def send_telegram(data):
     if not data: return
 
-    # 1. Сначала экранируем спецсимволы HTML (<, >)
-    safe_sentence = html.escape(data['sentence_en'])
+    # Функция-помощник для форматирования строки перевода
+    def format_line(flag, lang_key):
+        lang_data = data['translations'].get(lang_key)
+        if not lang_data: return ""
+        
+        # Экранируем данные
+        safe_sent = html.escape(lang_data['sentence'])
+        safe_trans = html.escape(lang_data.get('transcription', ''))
+        
+        # Делаем жирным
+        formatted = safe_sent.replace("{{", "<b>").replace("}}", "</b>")
+        
+        # Собираем строку: Флаг [транскрипция] Предложение
+        return f"{flag} <code>{safe_trans}</code> {formatted}\n"
+
+    # Основной английский блок
+    safe_sentence = html.escape(data['sentence_en']).replace("{{", "<b>").replace("}}", "</b>")
     safe_word = html.escape(data['word'])
-    safe_grammar = html.escape(data.get('grammar_rule', ''))
     safe_transcription = html.escape(data.get('transcription', ''))
+    safe_grammar = html.escape(data.get('grammar_rule', ''))
 
-    # 2. ВОТ ЭТА СТРОКА, КОТОРОЙ НЕ ХВАТАЛО:
-    # Превращаем {{word}} в жирный шрифт <b>word</b>
-    formatted_sentence = safe_sentence.replace("{{", "<b>").replace("}}", "</b>")
-
-    # 3. Формируем сообщение
     message = (
-        f"🐸 <b>Memeglish Philosophy</b>\n\n"
+        f"🐸 <b>Word Of The Day!</b>\n\n"
         f"✨ <b>Word:</b> {safe_word} {safe_transcription}\n"
-        f"💭 {formatted_sentence}\n\n"
+        f"💭 {safe_sentence}\n\n"
         f"🧠 <i>{safe_grammar}</i>\n"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"🇷🇺 {html.escape(data['translations']['ru'])}\n"
-        f"🇪🇸 {html.escape(data['translations']['es'])}\n"
-        f"🇧🇷 {html.escape(data['translations']['pt_br'])}\n"
-        f"🇹🇷 {html.escape(data['translations']['tr'])}\n"
-        f"🇸🇦 {html.escape(data['translations']['ar'])}\n"
-        f"🇳🇿 {html.escape(data['translations']['mi'])}"
+        f"{format_line('🇷🇺', 'ru')}"
+        f"{format_line('🇪🇸', 'es')}"
+        f"{format_line('🇧🇷', 'pt_br')}"
+        f"{format_line('🇹🇷', 'tr')}"
+        f"{format_line('🇸🇦', 'ar')}"
+        f"{format_line('🇳🇿', 'mi')}"
     )
 
     url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
@@ -132,26 +143,40 @@ def send_telegram(data):
 
 def send_discord(data):
     if not data: return
-    # Markdown для Discord
+    
+    # Функция-помощник для Discord
+    def format_line_md(flag, lang_key):
+        lang_data = data['translations'].get(lang_key)
+        if not lang_data: return ""
+        # Жирный шрифт в Markdown
+        sent = lang_data['sentence'].replace("{{", "**").replace("}}", "**")
+        trans = lang_data.get('transcription', '')
+        return f"{flag} `[{trans}]` {sent}\n"
+
     sentence_md = data['sentence_en'].replace("{{", "**").replace("}}", "**")
     
+    # Собираем переводы в один блок текста
+    translations_block = (
+        f"{format_line_md('🇷🇺', 'ru')}"
+        f"{format_line_md('🇪🇸', 'es')}"
+        f"{format_line_md('🇧🇷', 'pt_br')}"
+        f"{format_line_md('🇹🇷', 'tr')}"
+        f"{format_line_md('🇸🇦', 'ar')}"
+        f"{format_line_md('🇳🇿', 'mi')}"
+    )
+
     embed = {
         "title": f"🇬🇧 Word: {data['word']}",
         "description": sentence_md,
-        "color": 3447003, # Синий цвет
+        "color": 3447003,
         "fields": [
             {"name": "Grammar / Nuance", "value": data['grammar_rule'], "inline": False},
-            {"name": "Translations", "value": (
-                f"🇷🇺 {data['translations']['ru']}\n"
-                f"🇪🇸 {data['translations']['es']}\n"
-                f"🇧🇷 {data['translations']['pt_br']}\n"
-                f"🇹🇷 {data['translations']['tr']}\n"
-                f"🇸🇦 {data['translations']['ar']}\n"
-                f"🇳🇿 {data['translations']['mi']}"
-            ), "inline": False}
+            {"name": "Translations", "value": translations_block, "inline": False}
         ],
         "footer": {"text": "Daily Polyglot Bot"}
     }
+    
+    requests.post(DISCORD_WEBHOOK_URL, json={"username": "Polyglot Tutor", "embeds": [embed]})
     
     requests.post(DISCORD_WEBHOOK_URL, json={"username": "Polyglot Tutor", "embeds": [embed]})
 
