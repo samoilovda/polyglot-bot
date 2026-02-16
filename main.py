@@ -92,23 +92,30 @@ def get_word_data():
 def send_telegram(data):
     if not data: return
 
+    # Вспомогательная функция для замены {word} на <b>word</b>
+    def make_bold(text):
+        # Ищет всё, что внутри { } или {{ }}, и оборачивает в теги <b>
+        return re.sub(r"\{+(.*?)\}+", r"<b>\1</b>", text)
+
     # Функция-помощник для форматирования строки перевода
     def format_line(flag, lang_key):
         lang_data = data['translations'].get(lang_key)
         if not lang_data: return ""
         
-        # Экранируем данные
+        # Сначала экранируем HTML (защита от взлома)
         safe_sent = html.escape(lang_data['sentence'])
         safe_trans = html.escape(lang_data.get('transcription', ''))
         
-        # Делаем жирным
-        formatted = safe_sent.replace("{{", "<b>").replace("}}", "</b>")
+        # Потом применяем жирный шрифт
+        formatted = make_bold(safe_sent)
         
         # Собираем строку: Флаг [транскрипция] Предложение
         return f"{flag} <code>{safe_trans}</code> {formatted}\n"
 
-    # Основной английский блок
-    safe_sentence = html.escape(data['sentence_en']).replace("{{", "<b>").replace("}}", "</b>")
+    # Обработка основного английского текста
+    safe_sentence = html.escape(data['sentence_en'])
+    formatted_main_sentence = make_bold(safe_sentence)
+    
     safe_word = html.escape(data['word'])
     safe_transcription = html.escape(data.get('transcription', ''))
     safe_grammar = html.escape(data.get('grammar_rule', ''))
@@ -116,7 +123,7 @@ def send_telegram(data):
     message = (
         f"🐸 <b>Word Of The Day!</b>\n\n"
         f"✨ <b>Word:</b> {safe_word} {safe_transcription}\n"
-        f"💭 {safe_sentence}\n\n"
+        f"💭 {formatted_main_sentence}\n\n"
         f"🧠 <i>{safe_grammar}</i>\n"
         f"━━━━━━━━━━━━━━━━━━\n"
         f"{format_line('🇷🇺', 'ru')}"
@@ -144,18 +151,24 @@ def send_telegram(data):
 def send_discord(data):
     if not data: return
     
+    # Вспомогательная функция для замены {word} на **word**
+    def make_bold_md(text):
+        return re.sub(r"\{+(.*?)\}+", r"**\1**", text)
+
     # Функция-помощник для Discord
     def format_line_md(flag, lang_key):
         lang_data = data['translations'].get(lang_key)
         if not lang_data: return ""
-        # Жирный шрифт в Markdown
-        sent = lang_data['sentence'].replace("{{", "**").replace("}}", "**")
+        
+        # Делаем жирным через Markdown
+        sent = make_bold_md(lang_data['sentence'])
         trans = lang_data.get('transcription', '')
         return f"{flag} `[{trans}]` {sent}\n"
 
-    sentence_md = data['sentence_en'].replace("{{", "**").replace("}}", "**")
+    # Основной текст
+    sentence_md = make_bold_md(data['sentence_en'])
     
-    # Собираем переводы в один блок текста
+    # Собираем переводы
     translations_block = (
         f"{format_line_md('🇷🇺', 'ru')}"
         f"{format_line_md('🇪🇸', 'es')}"
@@ -175,8 +188,6 @@ def send_discord(data):
         ],
         "footer": {"text": "Daily Polyglot Bot"}
     }
-    
-    requests.post(DISCORD_WEBHOOK_URL, json={"username": "Polyglot Tutor", "embeds": [embed]})
     
     requests.post(DISCORD_WEBHOOK_URL, json={"username": "Polyglot Tutor", "embeds": [embed]})
 
