@@ -3,6 +3,7 @@ import json
 import requests
 import html
 import re
+import random
 
 # --- КОНФИГУРАЦИЯ ---
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
@@ -21,35 +22,47 @@ def clean_json_response(content):
     return content.strip()
 
 def get_word_data():
-    """Запрашивает у LLM слово и переводы в стиле Memeglish."""
+    """Запрашивает слово с учетом случайной буквы, чтобы избежать повторов."""
+    
+    # 1. Генерируем случайную букву (исключаем редкие типа X, Z, чтобы ИИ не тупил)
+    random_letter = random.choice("ABCDEFGHIJKLMNOPRSTUVW")
+    
+    # 2. Список слов, которые уже надоели (можно пополнять)
+    banned_words = "catharsis, resilience, procrastination, empathy, narcissism, burnout"
 
-    prompt = """
+    prompt = f"""
     You are the author of a channel called "Memeglish Philosophy". 
     Your tone is: Witty, slightly cynical, paradoxical, and philosophical (but in a funny way).
     
+    Task:
     1. Pick a sophisticated English word (Level B2-C2) related to psychology, modern life, existentialism, or human stupidity.
+    
+    CRITICAL CONSTRAINTS:
+    - The word MUST start with the letter: "{random_letter}"
+    - DO NOT use these words: {banned_words}
+    
     2. Create a sentence using this word. 
-       CRITICAL STYLE INSTRUCTION: The sentence MUST be an oxymoron, a paradox, a dark joke, or a witty observation. 
-       It should sound like a quote from Oscar Wilde if he lived in 2024 and posted memes.
-       Example: "Laziness is just the habit of resting before you get tired."
+       Style: The sentence MUST be an oxymoron, a paradox, a dark joke, or a witty observation. 
+       It should sound like a quote from Oscar Wilde or George Carlin.
+       
     3. Explain the grammar rule or a linguistic nuance briefly.
     4. Translate the sentence into: Russian, Spanish, Portuguese (Brazil), Turkish, Arabic, and Maori.
     
     Output strictly valid JSON:
-    {
-      "word": "The chosen word",
+    {{
+      "word": "The chosen word (starting with {random_letter})",
       "transcription": "/IPA/",
       "sentence_en": "The witty/philosophical sentence using {{the word}}.",
       "grammar_rule": "Short explanation...",
-      "translations": {
+      "translations": {{
         "ru": "...",
         "es": "...",
         "pt_br": "...",
         "tr": "...",
         "ar": "...",
         "mi": "..."
-      }
-    }
+      }}
+    }}
     """
 
     headers = {
@@ -61,7 +74,7 @@ def get_word_data():
     payload = {
         "model": MODEL_NAME,
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 1.1  # Повышаем температуру для большего креатива и юмора
+        "temperature": 1.15  # Еще немного повысим для разнообразия
     }
 
     try:
