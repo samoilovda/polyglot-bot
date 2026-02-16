@@ -92,27 +92,25 @@ def get_word_data():
 def send_telegram(data):
     if not data: return
 
-    # Вспомогательная функция для замены {word} на <b>word</b>
     def make_bold(text):
-        # Ищет всё, что внутри { } или {{ }}, и оборачивает в теги <b>
         return re.sub(r"\{+(.*?)\}+", r"<b>\1</b>", text)
 
-    # Функция-помощник для форматирования строки перевода
     def format_line(flag, lang_key):
         lang_data = data['translations'].get(lang_key)
         if not lang_data: return ""
         
-        # Сначала экранируем HTML (защита от взлома)
         safe_sent = html.escape(lang_data['sentence'])
         safe_trans = html.escape(lang_data.get('transcription', ''))
-        
-        # Потом применяем жирный шрифт
         formatted = make_bold(safe_sent)
         
-        # Собираем строку: Флаг [транскрипция] Предложение
+        # --- МАГИЯ ДЛЯ АРАБСКОГО ---
+        # Если язык арабский, оборачиваем предложение в RTL-контейнеры
+        if lang_key == 'ar':
+            formatted = f"\u202B{formatted}\u202C"
+        # ---------------------------
+
         return f"{flag} <code>{safe_trans}</code> {formatted}\n"
 
-    # Обработка основного английского текста
     safe_sentence = html.escape(data['sentence_en'])
     formatted_main_sentence = make_bold(safe_sentence)
     
@@ -135,40 +133,35 @@ def send_telegram(data):
     )
 
     url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": TG_CHAT_ID, 
-        "text": message, 
-        "parse_mode": "HTML"
-    }
+    payload = {"chat_id": TG_CHAT_ID, "text": message, "parse_mode": "HTML"}
 
     try:
-        r = requests.post(url, json=payload)
-        r.raise_for_status()
+        requests.post(url, json=payload).raise_for_status()
     except Exception as e:
         print(f"Telegram Error: {e}")
-        print(r.text)
 
 def send_discord(data):
     if not data: return
     
-    # Вспомогательная функция для замены {word} на **word**
     def make_bold_md(text):
         return re.sub(r"\{+(.*?)\}+", r"**\1**", text)
 
-    # Функция-помощник для Discord
     def format_line_md(flag, lang_key):
         lang_data = data['translations'].get(lang_key)
         if not lang_data: return ""
         
-        # Делаем жирным через Markdown
         sent = make_bold_md(lang_data['sentence'])
+        
+        # --- МАГИЯ ДЛЯ АРАБСКОГО ---
+        if lang_key == 'ar':
+            sent = f"\u202B{sent}\u202C"
+        # ---------------------------
+        
         trans = lang_data.get('transcription', '')
         return f"{flag} `[{trans}]` {sent}\n"
 
-    # Основной текст
     sentence_md = make_bold_md(data['sentence_en'])
     
-    # Собираем переводы
     translations_block = (
         f"{format_line_md('🇷🇺', 'ru')}"
         f"{format_line_md('🇪🇸', 'es')}"
