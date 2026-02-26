@@ -75,7 +75,7 @@ def get_word_data():
     payload = {
         "model": MODEL_NAME,
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 1.15
+        "temperature": 1.0
     }
 
     try:
