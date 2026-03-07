@@ -4,6 +4,7 @@ import requests
 import html
 import re
 import random
+import subprocess
 
 # --- КОНФИГУРАЦИЯ ---
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
@@ -43,11 +44,12 @@ def get_word_data():
        
     3. Explain the grammar rule briefly.
 
-    4. Translate into: Russian, Spanish, Portuguese (Brazil), Turkish, Arabic, and Maori.
+    4. Translate into: Russian, Spanish, Portuguese (Brazil), Arabic, and Maori.
     For EACH language, provide:
        - The translated word.
        - The IPA transcription of that word.
-       - The translated sentence where the word is wrapped in {{double curly braces}}.
+       - The translated sentence where the translated word is wrapped in {{double curly braces}}.
+       CRITICAL: Ensure the {{ }} are present in EVERY language, especially Arabic!
 
     Output strictly valid JSON:
     {{
@@ -59,7 +61,6 @@ def get_word_data():
         "ru": {{ "word": "...", "transcription": "[...]", "sentence": "Предложение с {{словом}}." }},
         "es": {{ "word": "...", "transcription": "[...]", "sentence": "Frase con {{palabra}}." }},
         "pt_br": {{ "word": "...", "transcription": "[...]", "sentence": "..." }},
-        "tr": {{ "word": "...", "transcription": "[...]", "sentence": "..." }},
         "ar": {{ "word": "...", "transcription": "[...]", "sentence": "..." }},
         "mi": {{ "word": "...", "transcription": "[...]", "sentence": "..." }}
       }}
@@ -69,7 +70,7 @@ def get_word_data():
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/polyglot-bot"
+        "HTTP-Referer": "[https://github.com/polyglot-bot](https://github.com/polyglot-bot)"
     }
 
     payload = {
@@ -79,17 +80,34 @@ def get_word_data():
     }
 
     try:
-        response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload)
+        response = requests.post("[https://openrouter.ai/api/v1/chat/completions](https://openrouter.ai/api/v1/chat/completions)", headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()
         raw_content = result['choices'][0]['message']['content']
         return json.loads(clean_json_response(raw_content))
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error fetching data: {e}")
         if 'raw_content' in locals(): print(f"Raw: {raw_content}")
         return None
-      
-def send_telegram(data):
+
+def generate_audio(text, filename="daily_word.mp3"):
+    """Генерирует аудиофайл с помощью бесплатного edge-tts."""
+    # Очищаем текст от фигурных скобок и спецсимволов, чтобы голос их не читал
+    clean_text = re.sub(r'\{+|\}+|\*+|<[^>]+>', '', text)
+    
+    # en-GB-RyanNeural - саркастичный британский мужской голос
+    voice = "en-GB-RyanNeural" 
+    
+    command = ["edge-tts", "--voice", voice, "--text", clean_text, "--write-media", filename]
+    
+    try:
+        subprocess.run(command, check=True)
+        return filename
+    except Exception as e:
+        print(f"Audio generation error: {e}")
+        return None
+
+def send_telegram(data, audio_path=None):
     if not data: return
 
     def make_bold(text):
@@ -103,11 +121,9 @@ def send_telegram(data):
         safe_trans = html.escape(lang_data.get('transcription', ''))
         formatted = make_bold(safe_sent)
         
-        # --- МАГИЯ ДЛЯ АРАБСКОГО ---
-        # Если язык арабский, оборачиваем предложение в RTL-контейнеры
+        # МАГИЯ ДЛЯ АРАБСКОГО (RLM маркеры)
         if lang_key == 'ar':
-            formatted = f"\u202B{formatted}\u202C"
-        # ---------------------------
+            formatted = f"\u200F{formatted}\u200F"
 
         return f"{flag} <code>{safe_trans}</code> {formatted}\n"
 
@@ -127,18 +143,31 @@ def send_telegram(data):
         f"{format_line('🇷🇺', 'ru')}"
         f"{format_line('🇪🇸', 'es')}"
         f"{format_line('🇧🇷', 'pt_br')}"
-        f"{format_line('🇹🇷', 'tr')}"
         f"{format_line('🇸🇦', 'ar')}"
         f"{format_line('🇳🇿', 'mi')}"
     )
 
-    url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
-    payload = {"chat_id": TG_CHAT_ID, "text": message, "parse_mode": "HTML"}
-
-    try:
-        requests.post(url, json=payload).raise_for_status()
-    except Exception as e:
-        print(f"Telegram Error: {e}")
+    # Если аудио успешно сгенерировалось — отправляем метод sendAudio
+    if audio_path and os.path.exists(audio_path):
+        url = f"[https://api.telegram.org/bot](https://api.telegram.org/bot){TG_BOT_TOKEN}/sendAudio"
+        with open(audio_path, 'rb') as audio_file:
+            files = {'audio': audio_file}
+            # Текст поста становится подписью (caption) к аудио
+            payload = {'chat_id': TG_CHAT_ID, 'caption': message, 'parse_mode': 'HTML'}
+            try:
+                requests.post(url, data=payload, files=files).raise_for_status()
+                print("Telegram message with audio sent.")
+            except Exception as e:
+                print(f"Telegram Audio Error: {e}")
+    else:
+        # Резервный вариант: если аудио сломалось, шлем просто текст
+        url = f"[https://api.telegram.org/bot](https://api.telegram.org/bot){TG_BOT_TOKEN}/sendMessage"
+        payload = {"chat_id": TG_CHAT_ID, "text": message, "parse_mode": "HTML"}
+        try:
+            requests.post(url, json=payload).raise_for_status()
+            print("Telegram text message sent (fallback).")
+        except Exception as e:
+            print(f"Telegram Text Error: {e}")
 
 def send_discord(data):
     if not data: return
@@ -152,10 +181,9 @@ def send_discord(data):
         
         sent = make_bold_md(lang_data['sentence'])
         
-        # --- МАГИЯ ДЛЯ АРАБСКОГО ---
+        # МАГИЯ ДЛЯ АРАБСКОГО (RLM маркеры)
         if lang_key == 'ar':
-            sent = f"\u202B{sent}\u202C"
-        # ---------------------------
+            sent = f"\u200F{sent}\u200F"
         
         trans = lang_data.get('transcription', '')
         return f"{flag} `[{trans}]` {sent}\n"
@@ -166,7 +194,6 @@ def send_discord(data):
         f"{format_line_md('🇷🇺', 'ru')}"
         f"{format_line_md('🇪🇸', 'es')}"
         f"{format_line_md('🇧🇷', 'pt_br')}"
-        f"{format_line_md('🇹🇷', 'tr')}"
         f"{format_line_md('🇸🇦', 'ar')}"
         f"{format_line_md('🇳🇿', 'mi')}"
     )
@@ -182,11 +209,28 @@ def send_discord(data):
         "footer": {"text": "Daily Polyglot Bot"}
     }
     
-    requests.post(DISCORD_WEBHOOK_URL, json={"username": "Polyglot Tutor", "embeds": [embed]})
+    try:
+        requests.post(DISCORD_WEBHOOK_URL, json={"username": "Polyglot Tutor", "embeds": [embed]})
+        print("Discord message sent.")
+    except Exception as e:
+        print(f"Discord Error: {e}")
 
 if __name__ == "__main__":
-    data = get_word_data()
-    if data:
-        send_telegram(data)
-        send_discord(data)
-        print("Done!")
+    print("Starting word generation...")
+    word_data = get_word_data()
+    
+    if word_data:
+        # Формируем текст для озвучки: "Слово. Английское предложение."
+        text_to_speak = f"{word_data['word']}. {word_data['sentence_en']}"
+        
+        # Генерируем mp3
+        print("Generating audio...")
+        audio_file_path = generate_audio(text_to_speak)
+        
+        # Отправляем в каналы
+        send_telegram(word_data, audio_path=audio_file_path)
+        send_discord(word_data)
+        
+        print("Workflow completed successfully!")
+    else:
+        print("Failed to get word data.")
