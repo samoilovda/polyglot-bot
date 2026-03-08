@@ -70,7 +70,7 @@ def get_word_data():
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "[https://github.com/polyglot-bot](https://github.com/polyglot-bot)"
+        "HTTP-Referer": "https://github.com/polyglot-bot"
     }
 
     payload = {
@@ -80,7 +80,7 @@ def get_word_data():
     }
 
     try:
-        response = requests.post("[https://openrouter.ai/api/v1/chat/completions](https://openrouter.ai/api/v1/chat/completions)", headers=headers, json=payload)
+        response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()
         raw_content = result['choices'][0]['message']['content']
@@ -149,7 +149,7 @@ def send_telegram(data, audio_path=None):
 
     # Если аудио успешно сгенерировалось — отправляем метод sendAudio
     if audio_path and os.path.exists(audio_path):
-        url = f"[https://api.telegram.org/bot](https://api.telegram.org/bot){TG_BOT_TOKEN}/sendAudio"
+        url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendAudio"
         with open(audio_path, 'rb') as audio_file:
             files = {'audio': audio_file}
             # Текст поста становится подписью (caption) к аудио
@@ -161,7 +161,7 @@ def send_telegram(data, audio_path=None):
                 print(f"Telegram Audio Error: {e}")
     else:
         # Резервный вариант: если аудио сломалось, шлем просто текст
-        url = f"[https://api.telegram.org/bot](https://api.telegram.org/bot){TG_BOT_TOKEN}/sendMessage"
+        url = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
         payload = {"chat_id": TG_CHAT_ID, "text": message, "parse_mode": "HTML"}
         try:
             requests.post(url, json=payload).raise_for_status()
