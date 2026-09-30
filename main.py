@@ -12,8 +12,8 @@ TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN")
 TG_CHAT_ID = os.environ.get("TG_CHAT_ID")
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-# Используем Gemini 2.0 Flash (быстрая и дешевая)
-MODEL_NAME = "google/gemini-2.0-flash-001"
+# Используем Gemini 3.8 Flash (быстрая и дешевая)
+MODEL_NAME = "google/gemini-3.8-flash"
 
 def clean_json_response(content):
     """Очищает ответ от markdown-оберток"""
