@@ -12,7 +12,7 @@ import requests
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN")
 TG_CHAT_ID = os.environ.get("TG_CHAT_ID")
-MODEL_NAME = os.environ.get("OPENROUTER_MODEL", "google/gemini-2.0-flash-001")
+MODEL_NAME = os.environ.get("OPENROUTER_MODEL", "~google/gemini-flash-latest")  # алиас OpenRouter на последнюю Gemini Flash
 DRY_RUN = os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes")
 # Для отладки: принудительно выбрать культуру (ключ из CULTURE_ORDER)
 FORCE_CULTURE = os.environ.get("FORCE_CULTURE", "").strip()
