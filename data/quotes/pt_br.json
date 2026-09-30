@@ -1,0 +1,242 @@
+[
+  {
+    "id": "pt_br-machado-001",
+    "country": "BR",
+    "text": "Não tive filhos, não transmiti a nenhuma criatura o legado da nossa miséria.",
+    "author": "Machado de Assis",
+    "author_en": "Machado de Assis",
+    "source": "Memórias Póstumas de Brás Cubas, 1881"
+  },
+  {
+    "id": "pt_br-machado-002",
+    "country": "BR",
+    "text": "Marcela amou-me durante quinze meses e onze contos de réis.",
+    "author": "Machado de Assis",
+    "author_en": "Machado de Assis",
+    "source": "Memórias Póstumas de Brás Cubas, 1881"
+  },
+  {
+    "id": "pt_br-clarice-001",
+    "country": "BR",
+    "text": "Tudo no mundo começou com um sim.",
+    "author": "Clarice Lispector",
+    "author_en": "Clarice Lispector",
+    "source": "A Hora da Estrela, 1977"
+  },
+  {
+    "id": "pt_br-drummond-001",
+    "country": "BR",
+    "text": "No meio do caminho tinha uma pedra.",
+    "author": "Carlos Drummond de Andrade",
+    "author_en": "Carlos Drummond de Andrade",
+    "source": "No meio do caminho, 1928"
+  },
+  {
+    "id": "pt_br-drummond-002",
+    "country": "BR",
+    "text": "E agora, José? A festa acabou, a luz apagou, o povo sumiu, a noite esfriou.",
+    "author": "Carlos Drummond de Andrade",
+    "author_en": "Carlos Drummond de Andrade",
+    "source": "José, 1942"
+  },
+  {
+    "id": "pt_br-drummond-003",
+    "country": "BR",
+    "text": "Tenho apenas duas mãos e o sentimento do mundo.",
+    "author": "Carlos Drummond de Andrade",
+    "author_en": "Carlos Drummond de Andrade",
+    "source": "Sentimento do Mundo, 1940"
+  },
+  {
+    "id": "pt_br-freire-001",
+    "country": "BR",
+    "text": "Ninguém educa ninguém, ninguém educa a si mesmo, os homens se educam entre si, mediatizados pelo mundo.",
+    "author": "Paulo Freire",
+    "author_en": "Paulo Freire",
+    "source": "Pedagogia do Oprimido, 1968"
+  },
+  {
+    "id": "pt_br-freire-002",
+    "country": "BR",
+    "text": "Não há saber mais ou saber menos: há saberes diferentes.",
+    "author": "Paulo Freire",
+    "author_en": "Paulo Freire",
+    "source": "Pedagogia do Oprimido, 1968"
+  },
+  {
+    "id": "pt_br-meireles-001",
+    "country": "BR",
+    "text": "Liberdade, essa palavra que o sonho humano alimenta: que não há ninguém que explique, e ninguém que não entenda!",
+    "author": "Cecília Meireles",
+    "author_en": "Cecília Meireles",
+    "source": "Romanceiro da Inconfidência, 1953"
+  },
+  {
+    "id": "pt_br-meireles-002",
+    "country": "BR",
+    "text": "Eu canto porque o instante existe e a minha vida está completa.",
+    "author": "Cecília Meireles",
+    "author_en": "Cecília Meireles",
+    "source": "Motivo, 1939"
+  },
+  {
+    "id": "pt_br-vinicius-001",
+    "country": "BR",
+    "text": "Que seja infinito enquanto dure.",
+    "author": "Vinicius de Moraes",
+    "author_en": "Vinicius de Moraes",
+    "source": "Soneto de Fidelidade, 1946"
+  },
+  {
+    "id": "pt_br-vinicius-002",
+    "country": "BR",
+    "text": "É melhor ser alegre que ser triste, alegria é a melhor coisa que existe.",
+    "author": "Vinicius de Moraes",
+    "author_en": "Vinicius de Moraes",
+    "source": "Samba da Bênção, 1966"
+  },
+  {
+    "id": "pt_br-rosa-001",
+    "country": "BR",
+    "text": "Mestre não é quem sempre ensina, mas quem de repente aprende.",
+    "author": "João Guimarães Rosa",
+    "author_en": "João Guimarães Rosa",
+    "source": "Grande Sertão: Veredas, 1956"
+  },
+  {
+    "id": "pt_br-rosa-002",
+    "country": "BR",
+    "text": "O sertão está em toda parte.",
+    "author": "João Guimarães Rosa",
+    "author_en": "João Guimarães Rosa",
+    "source": "Grande Sertão: Veredas, 1956"
+  },
+  {
+    "id": "pt_br-bandeira-001",
+    "country": "BR",
+    "text": "Vou-me embora pra Pasárgada, lá sou amigo do rei.",
+    "author": "Manuel Bandeira",
+    "author_en": "Manuel Bandeira",
+    "source": "Vou-me embora pra Pasárgada, 1930"
+  },
+  {
+    "id": "pt_br-coralina-001",
+    "country": "BR",
+    "text": "Recria tua vida, sempre, sempre. Remove pedras e planta roseiras e faz doces. Recomeça.",
+    "author": "Cora Coralina",
+    "author_en": "Cora Coralina",
+    "source": "Aninha e suas pedras"
+  },
+  {
+    "id": "pt_br-castroalves-001",
+    "country": "BR",
+    "text": "Senhor Deus dos desgraçados! Dizei-me vós, Senhor Deus!",
+    "author": "Castro Alves",
+    "author_en": "Castro Alves",
+    "source": "O Navio Negreiro, 1869"
+  },
+  {
+    "id": "pt_br-goncalvesdias-001",
+    "country": "BR",
+    "text": "Minha terra tem palmeiras, onde canta o Sabiá; as aves, que aqui gorjeiam, não gorjeiam como lá.",
+    "author": "Gonçalves Dias",
+    "author_en": "Gonçalves Dias",
+    "source": "Canção do Exílio, 1843"
+  },
+  {
+    "id": "pt_br-casimiro-001",
+    "country": "BR",
+    "text": "Oh! que saudades que tenho da aurora da minha vida, da minha infância querida que os anos não trazem mais!",
+    "author": "Casimiro de Abreu",
+    "author_en": "Casimiro de Abreu",
+    "source": "Meus oito anos, 1859"
+  },
+  {
+    "id": "pt_br-euclides-001",
+    "country": "BR",
+    "text": "O sertanejo é, antes de tudo, um forte.",
+    "author": "Euclides da Cunha",
+    "author_en": "Euclides da Cunha",
+    "source": "Os Sertões, 1902"
+  },
+  {
+    "id": "pt_br-quintana-001",
+    "country": "BR",
+    "text": "Os poemas são pássaros que chegam não se sabe de onde e pousam no livro que lês.",
+    "author": "Mário Quintana",
+    "author_en": "Mário Quintana",
+    "source": "Caderno H, 1973"
+  },
+  {
+    "id": "pt_br-quintana-002",
+    "country": "BR",
+    "text": "Se as coisas são inatingíveis... ora! Não é motivo para não querê-las.",
+    "author": "Mário Quintana",
+    "author_en": "Mário Quintana",
+    "source": "Espelho Mágico, 1951"
+  },
+  {
+    "id": "pt_br-cabral-001",
+    "country": "BR",
+    "text": "Catar feijão se limita com escrever: jogam-se os grãos na água do alguidar e as palavras na folha de papel.",
+    "author": "João Cabral de Melo Neto",
+    "author_en": "João Cabral de Melo Neto",
+    "source": "A educação pela pedra, 1966"
+  },
+  {
+    "id": "pt_br-prado-001",
+    "country": "BR",
+    "text": "Quando nasci um anjo esbelto, desses que tocam trombeta, anunciou: vai carregar bandeira.",
+    "author": "Adélia Prado",
+    "author_en": "Adélia Prado",
+    "source": "Com licença poética, 1976"
+  },
+  {
+    "id": "pt_br-chico-001",
+    "country": "BR",
+    "text": "Amou daquela vez como se fosse a última.",
+    "author": "Chico Buarque",
+    "author_en": "Chico Buarque",
+    "source": "Construção, 1971"
+  },
+  {
+    "id": "pt_br-renato-001",
+    "country": "BR",
+    "text": "É preciso amar as pessoas como se não houvesse amanhã.",
+    "author": "Renato Russo",
+    "author_en": "Renato Russo",
+    "source": "Pais e Filhos, 1989"
+  },
+  {
+    "id": "pt_br-jobim-001",
+    "country": "BR",
+    "text": "É pau, é pedra, é o fim do caminho.",
+    "author": "Tom Jobim",
+    "author_en": "Tom Jobim",
+    "source": "Águas de Março, 1972"
+  },
+  {
+    "id": "pt_br-caetano-001",
+    "country": "BR",
+    "text": "Cada um sabe a dor e a delícia de ser o que é.",
+    "author": "Caetano Veloso",
+    "author_en": "Caetano Veloso",
+    "source": "Dom de iludir, 1986"
+  },
+  {
+    "id": "pt_br-ruibarbosa-001",
+    "country": "BR",
+    "text": "A justiça tardia não é justiça, senão injustiça qualificada e manifesta.",
+    "author": "Rui Barbosa",
+    "author_en": "Rui Barbosa",
+    "source": "Oração aos Moços, 1921"
+  },
+  {
+    "id": "pt_br-lobato-001",
+    "country": "BR",
+    "text": "Um país se faz com homens e livros.",
+    "author": "Monteiro Lobato",
+    "author_en": "Monteiro Lobato",
+    "source": "A Barca de Gleyre, 1944"
+  }
+]

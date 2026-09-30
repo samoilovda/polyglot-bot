@@ -1,0 +1,242 @@
+[
+  {
+    "id": "es-cervantes-001",
+    "country": "ES",
+    "text": "La libertad, Sancho, es uno de los más preciosos dones que a los hombres dieron los cielos.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote, II, cap. 58, 1615"
+  },
+  {
+    "id": "es-cervantes-002",
+    "country": "ES",
+    "text": "El que lee mucho y anda mucho, ve mucho y sabe mucho.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote, II, cap. 25, 1615"
+  },
+  {
+    "id": "es-cervantes-003",
+    "country": "ES",
+    "text": "Donde una puerta se cierra, otra se abre.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote, I, cap. 21, 1605"
+  },
+  {
+    "id": "es-cervantes-004",
+    "country": "ES",
+    "text": "Cada uno es artífice de su ventura.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote, II, cap. 66, 1615"
+  },
+  {
+    "id": "es-machado-001",
+    "country": "ES",
+    "text": "Caminante, no hay camino, se hace camino al andar.",
+    "author": "Antonio Machado",
+    "author_en": "Antonio Machado",
+    "source": "Proverbios y cantares, 1912"
+  },
+  {
+    "id": "es-lorca-001",
+    "country": "ES",
+    "text": "El teatro es la poesía que se levanta del libro y se hace humana.",
+    "author": "Federico García Lorca",
+    "author_en": "Federico García Lorca",
+    "source": "Charla sobre teatro, 1935"
+  },
+  {
+    "id": "es-ortega-001",
+    "country": "ES",
+    "text": "Yo soy yo y mi circunstancia, y si no la salvo a ella no me salvo yo.",
+    "author": "José Ortega y Gasset",
+    "author_en": "José Ortega y Gasset",
+    "source": "Meditaciones del Quijote, 1914"
+  },
+  {
+    "id": "es-calderon-001",
+    "country": "ES",
+    "text": "Que toda la vida es sueño, y los sueños, sueños son.",
+    "author": "Pedro Calderón de la Barca",
+    "author_en": "Pedro Calderón de la Barca",
+    "source": "La vida es sueño, 1635"
+  },
+  {
+    "id": "es-gracian-001",
+    "country": "ES",
+    "text": "Lo bueno, si breve, dos veces bueno.",
+    "author": "Baltasar Gracián",
+    "author_en": "Baltasar Gracián",
+    "source": "Oráculo manual y arte de prudencia, 1647"
+  },
+  {
+    "id": "es-quevedo-001",
+    "country": "ES",
+    "text": "Poderoso caballero es don Dinero.",
+    "author": "Francisco de Quevedo",
+    "author_en": "Francisco de Quevedo",
+    "source": "Letrilla satírica, c. 1603"
+  },
+  {
+    "id": "es-hernandez-001",
+    "country": "ES",
+    "text": "Tristes guerras si no es amor la empresa.",
+    "author": "Miguel Hernández",
+    "author_en": "Miguel Hernández",
+    "source": "El hombre acecha, 1939"
+  },
+  {
+    "id": "es-goya-001",
+    "country": "ES",
+    "text": "El sueño de la razón produce monstruos.",
+    "author": "Francisco de Goya",
+    "author_en": "Francisco de Goya",
+    "source": "Los Caprichos, 1799"
+  },
+  {
+    "id": "es-cajal-001",
+    "country": "ES",
+    "text": "Todo hombre puede ser, si se lo propone, escultor de su propio cerebro.",
+    "author": "Santiago Ramón y Cajal",
+    "author_en": "Santiago Ramón y Cajal",
+    "source": "Reglas y consejos sobre investigación científica, 1897"
+  },
+  {
+    "id": "es-borges-001",
+    "country": "AR",
+    "text": "Yo, que me figuraba el Paraíso bajo la especie de una biblioteca.",
+    "author": "Jorge Luis Borges",
+    "author_en": "Jorge Luis Borges",
+    "source": "Poema de los dones, 1960"
+  },
+  {
+    "id": "es-borges-002",
+    "country": "AR",
+    "text": "El tiempo es la sustancia de que estoy hecho.",
+    "author": "Jorge Luis Borges",
+    "author_en": "Jorge Luis Borges",
+    "source": "Nueva refutación del tiempo, 1947"
+  },
+  {
+    "id": "es-cortazar-001",
+    "country": "AR",
+    "text": "Andábamos sin buscarnos, pero sabiendo que andábamos para encontrarnos.",
+    "author": "Julio Cortázar",
+    "author_en": "Julio Cortázar",
+    "source": "Rayuela, 1963"
+  },
+  {
+    "id": "es-hernandez-j-001",
+    "country": "AR",
+    "text": "Los hermanos sean unidos, porque esa es la ley primera.",
+    "author": "José Hernández",
+    "author_en": "José Hernández",
+    "source": "Martín Fierro, 1879"
+  },
+  {
+    "id": "es-marquez-001",
+    "country": "CO",
+    "text": "La vida no es la que uno vivió, sino la que uno recuerda y cómo la recuerda para contarla.",
+    "author": "Gabriel García Márquez",
+    "author_en": "Gabriel García Márquez",
+    "source": "Vivir para contarla, 2002"
+  },
+  {
+    "id": "es-neruda-001",
+    "country": "CL",
+    "text": "Puedo escribir los versos más tristes esta noche.",
+    "author": "Pablo Neruda",
+    "author_en": "Pablo Neruda",
+    "source": "Veinte poemas de amor y una canción desesperada, 1924"
+  },
+  {
+    "id": "es-neruda-002",
+    "country": "CL",
+    "text": "Es tan corto el amor, y es tan largo el olvido.",
+    "author": "Pablo Neruda",
+    "author_en": "Pablo Neruda",
+    "source": "Veinte poemas de amor y una canción desesperada, 1924"
+  },
+  {
+    "id": "es-mistral-001",
+    "country": "CL",
+    "text": "Piececitos de niño, azulosos de frío, ¡cómo os ven y no os cubren, Dios mío!",
+    "author": "Gabriela Mistral",
+    "author_en": "Gabriela Mistral",
+    "source": "Ternura, 1924"
+  },
+  {
+    "id": "es-parra-001",
+    "country": "CL",
+    "text": "Gracias a la vida que me ha dado tanto.",
+    "author": "Violeta Parra",
+    "author_en": "Violeta Parra",
+    "source": "Gracias a la vida, 1966"
+  },
+  {
+    "id": "es-paz-001",
+    "country": "MX",
+    "text": "La soledad es el fondo último de la condición humana.",
+    "author": "Octavio Paz",
+    "author_en": "Octavio Paz",
+    "source": "El laberinto de la soledad, 1950"
+  },
+  {
+    "id": "es-sorjuana-001",
+    "country": "MX",
+    "text": "Hombres necios que acusáis a la mujer sin razón, sin ver que sois la ocasión de lo mismo que culpáis.",
+    "author": "Sor Juana Inés de la Cruz",
+    "author_en": "Sor Juana Inés de la Cruz",
+    "source": "Redondillas, c. 1689"
+  },
+  {
+    "id": "es-nervo-001",
+    "country": "MX",
+    "text": "Vida, nada me debes. Vida, estamos en paz.",
+    "author": "Amado Nervo",
+    "author_en": "Amado Nervo",
+    "source": "En paz, 1915"
+  },
+  {
+    "id": "es-marti-001",
+    "country": "CU",
+    "text": "Cultivo una rosa blanca, en julio como en enero, para el amigo sincero que me da su mano franca.",
+    "author": "José Martí",
+    "author_en": "José Martí",
+    "source": "Versos sencillos, 1891"
+  },
+  {
+    "id": "es-marti-002",
+    "country": "CU",
+    "text": "Yo vengo de todas partes, y hacia todas partes voy.",
+    "author": "José Martí",
+    "author_en": "José Martí",
+    "source": "Versos sencillos, 1891"
+  },
+  {
+    "id": "es-dario-001",
+    "country": "NI",
+    "text": "Juventud, divino tesoro, ¡ya te vas para no volver!",
+    "author": "Rubén Darío",
+    "author_en": "Rubén Darío",
+    "source": "Canción de otoño en primavera, 1905"
+  },
+  {
+    "id": "es-bolivar-001",
+    "country": "VE",
+    "text": "Moral y luces son nuestras primeras necesidades.",
+    "author": "Simón Bolívar",
+    "author_en": "Simón Bolívar",
+    "source": "Discurso de Angostura, 1819"
+  },
+  {
+    "id": "es-benedetti-001",
+    "country": "UY",
+    "text": "No te quedes inmóvil al borde del camino.",
+    "author": "Mario Benedetti",
+    "author_en": "Mario Benedetti",
+    "source": "No te salves, 1985"
+  }
+]

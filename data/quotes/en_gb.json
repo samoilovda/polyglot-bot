@@ -1,0 +1,250 @@
+[
+  {
+    "id": "en_gb-shakespeare-001",
+    "country": "GB",
+    "text": "All the world's a stage, and all the men and women merely players.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "As You Like It, 1599"
+  },
+  {
+    "id": "en_gb-shakespeare-002",
+    "country": "GB",
+    "text": "This above all: to thine own self be true.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "Hamlet, c. 1600"
+  },
+  {
+    "id": "en_gb-shakespeare-003",
+    "country": "GB",
+    "text": "We know what we are, but know not what we may be.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "Hamlet, c. 1600"
+  },
+  {
+    "id": "en_gb-churchill-001",
+    "country": "GB",
+    "text": "I have nothing to offer but blood, toil, tears and sweat.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Speech to the House of Commons, 1940"
+  },
+  {
+    "id": "en_gb-churchill-002",
+    "country": "GB",
+    "text": "Never in the field of human conflict was so much owed by so many to so few.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Speech to the House of Commons, 1940"
+  },
+  {
+    "id": "en_gb-johnson-001",
+    "country": "GB",
+    "text": "When a man is tired of London, he is tired of life; for there is in London all that life can afford.",
+    "author": "Samuel Johnson",
+    "author_en": "Samuel Johnson",
+    "source": "Boswell, Life of Johnson, 1777"
+  },
+  {
+    "id": "en_gb-austen-001",
+    "country": "GB",
+    "text": "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+    "author": "Jane Austen",
+    "author_en": "Jane Austen",
+    "source": "Pride and Prejudice, 1813"
+  },
+  {
+    "id": "en_gb-orwell-001",
+    "country": "GB",
+    "text": "Freedom is the freedom to say that two plus two make four.",
+    "author": "George Orwell",
+    "author_en": "George Orwell",
+    "source": "Nineteen Eighty-Four, 1949"
+  },
+  {
+    "id": "en_gb-lewis-001",
+    "country": "GB",
+    "text": "Friendship is unnecessary, like philosophy, like art. It has no survival value; rather it is one of those things that give value to survival.",
+    "author": "C. S. Lewis",
+    "author_en": "C. S. Lewis",
+    "source": "The Four Loves, 1960"
+  },
+  {
+    "id": "en_gb-darwin-001",
+    "country": "GB",
+    "text": "Ignorance more frequently begets confidence than does knowledge.",
+    "author": "Charles Darwin",
+    "author_en": "Charles Darwin",
+    "source": "The Descent of Man, 1871"
+  },
+  {
+    "id": "en_gb-wilde-001",
+    "country": "IE",
+    "text": "We are all in the gutter, but some of us are looking at the stars.",
+    "author": "Oscar Wilde",
+    "author_en": "Oscar Wilde",
+    "source": "Lady Windermere's Fan, 1892"
+  },
+  {
+    "id": "en_gb-wilde-002",
+    "country": "IE",
+    "text": "The only way to get rid of a temptation is to yield to it.",
+    "author": "Oscar Wilde",
+    "author_en": "Oscar Wilde",
+    "source": "The Picture of Dorian Gray, 1890"
+  },
+  {
+    "id": "en_gb-shaw-001",
+    "country": "IE",
+    "text": "Liberty means responsibility. That is why most men dread it.",
+    "author": "George Bernard Shaw",
+    "author_en": "George Bernard Shaw",
+    "source": "Maxims for Revolutionists, 1903"
+  },
+  {
+    "id": "en_gb-swift-001",
+    "country": "IE",
+    "text": "Satire is a sort of glass, wherein beholders do generally discover everybody's face but their own.",
+    "author": "Jonathan Swift",
+    "author_en": "Jonathan Swift",
+    "source": "The Battle of the Books, 1704"
+  },
+  {
+    "id": "en_gb-yeats-001",
+    "country": "IE",
+    "text": "Tread softly because you tread on my dreams.",
+    "author": "W. B. Yeats",
+    "author_en": "W. B. Yeats",
+    "source": "He Wishes for the Cloths of Heaven, 1899"
+  },
+  {
+    "id": "en_gb-beckett-001",
+    "country": "IE",
+    "text": "Ever tried. Ever failed. No matter. Try again. Fail again. Fail better.",
+    "author": "Samuel Beckett",
+    "author_en": "Samuel Beckett",
+    "source": "Worstward Ho, 1983"
+  },
+  {
+    "id": "en_gb-joyce-001",
+    "country": "IE",
+    "text": "A man of genius makes no mistakes. His errors are volitional and are the portals of discovery.",
+    "author": "James Joyce",
+    "author_en": "James Joyce",
+    "source": "Ulysses, 1922"
+  },
+  {
+    "id": "en_gb-burns-001",
+    "country": "GB-SCT",
+    "text": "O wad some Power the giftie gie us to see oursels as ithers see us!",
+    "author": "Robert Burns",
+    "author_en": "Robert Burns",
+    "source": "To a Louse, 1786"
+  },
+  {
+    "id": "en_gb-stevenson-001",
+    "country": "GB-SCT",
+    "text": "To travel hopefully is a better thing than to arrive, and the true success is to labour.",
+    "author": "Robert Louis Stevenson",
+    "author_en": "Robert Louis Stevenson",
+    "source": "Virginibus Puerisque, 1881"
+  },
+  {
+    "id": "en_gb-scott-001",
+    "country": "GB-SCT",
+    "text": "Oh, what a tangled web we weave, when first we practise to deceive!",
+    "author": "Walter Scott",
+    "author_en": "Walter Scott",
+    "source": "Marmion, 1808"
+  },
+  {
+    "id": "en_gb-smith-001",
+    "country": "GB-SCT",
+    "text": "It is not from the benevolence of the butcher, the brewer, or the baker, that we expect our dinner, but from their regard to their own interest.",
+    "author": "Adam Smith",
+    "author_en": "Adam Smith",
+    "source": "The Wealth of Nations, 1776"
+  },
+  {
+    "id": "en_gb-hume-001",
+    "country": "GB-SCT",
+    "text": "Beauty in things exists merely in the mind which contemplates them.",
+    "author": "David Hume",
+    "author_en": "David Hume",
+    "source": "Essays, Moral and Political, 1742"
+  },
+  {
+    "id": "en_gb-thomas-001",
+    "country": "GB-WLS",
+    "text": "Do not go gentle into that good night. Rage, rage against the dying of the light.",
+    "author": "Dylan Thomas",
+    "author_en": "Dylan Thomas",
+    "source": "Do not go gentle into that good night, 1951"
+  },
+  {
+    "id": "en_gb-russell-001",
+    "country": "GB-WLS",
+    "text": "The fundamental cause of the trouble is that in the modern world the stupid are cocksure while the intelligent are full of doubt.",
+    "author": "Bertrand Russell",
+    "author_en": "Bertrand Russell",
+    "source": "The Triumph of Stupidity, 1933"
+  },
+  {
+    "id": "en_gb-keats-001",
+    "country": "GB",
+    "text": "A thing of beauty is a joy for ever.",
+    "author": "John Keats",
+    "author_en": "John Keats",
+    "source": "Endymion, 1818"
+  },
+  {
+    "id": "en_gb-byron-001",
+    "country": "GB",
+    "text": "Truth is always strange; stranger than fiction.",
+    "author": "Lord Byron",
+    "author_en": "Lord Byron",
+    "source": "Don Juan, 1823"
+  },
+  {
+    "id": "en_gb-dickens-001",
+    "country": "GB",
+    "text": "It was the best of times, it was the worst of times.",
+    "author": "Charles Dickens",
+    "author_en": "Charles Dickens",
+    "source": "A Tale of Two Cities, 1859"
+  },
+  {
+    "id": "en_gb-newton-001",
+    "country": "GB",
+    "text": "If I have seen further it is by standing on the shoulders of giants.",
+    "author": "Isaac Newton",
+    "author_en": "Isaac Newton",
+    "source": "Letter to Robert Hooke, 1675"
+  },
+  {
+    "id": "en_gb-bacon-001",
+    "country": "GB",
+    "text": "Reading maketh a full man; conference a ready man; and writing an exact man.",
+    "author": "Francis Bacon",
+    "author_en": "Francis Bacon",
+    "source": "Of Studies, 1625"
+  },
+  {
+    "id": "en_gb-tolkien-001",
+    "country": "GB",
+    "text": "Not all those who wander are lost.",
+    "author": "J. R. R. Tolkien",
+    "author_en": "J. R. R. Tolkien",
+    "source": "The Fellowship of the Ring, 1954"
+  },
+  {
+    "id": "en_gb-woolf-001",
+    "country": "GB",
+    "text": "A woman must have money and a room of her own if she is to write fiction.",
+    "author": "Virginia Woolf",
+    "author_en": "Virginia Woolf",
+    "source": "A Room of One's Own, 1929"
+  }
+]
