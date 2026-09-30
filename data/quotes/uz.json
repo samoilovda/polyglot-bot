@@ -30,5 +30,93 @@
     "author": "Mirzo Ulug‘bek",
     "author_en": "Mirzo Ulugh Beg",
     "source": "Ziji Ko‘ragoniy muqaddimasi (o‘zbekcha tarjima)"
+  },
+  {
+    "id": "uz-navoiy-002",
+    "country": "UZ",
+    "text": "Insong‘a erur kamol matlub, andin dag‘i dardu hol matlub. Har kimgaki ulum bo‘lsa vosil, gar dardiyu holi yo‘q, ne hosil?",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Layli va Majnun"
+  },
+  {
+    "id": "uz-navoiy-003",
+    "country": "UZ",
+    "text": "Moziyu mustaqbal ahvolin takallum ayla kam, ne uchunkim, dam bu damdir, dam bu damdir, dam bu dam.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy she‘riyatidan"
+  },
+  {
+    "id": "uz-navoiy-004",
+    "country": "UZ",
+    "text": "Xazon sipohig‘a, ey bog‘bon, emas mone, bu bog‘ tomida gar ignadin tikan qilg‘il.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy she‘riyatidan"
+  },
+  {
+    "id": "uz-navoiy-005",
+    "country": "UZ",
+    "text": "Onalarning oyog‘i ostidadir ravzai jannatu jinon bog‘i. Ravza bog‘in visolin istar ersang, bo‘l onaning oyog‘i tuprog‘i.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
+  },
+  {
+    "id": "uz-navoiy-006",
+    "country": "UZ",
+    "text": "Tilga ixtiyorsiz — elga e’tiborsiz. Tilini tiyolgan odam — donishmand oqil; so‘zga erk bergan odam — beandisha va pastkash.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
+  },
+  {
+    "id": "uz-navoiy-007",
+    "country": "UZ",
+    "text": "Muloyim so‘z — vahshiylarni ulfatga aylantiradi; sehrgar — ohang bilan afsun o‘qib, ilonni inidan chiqaradi.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
+  },
+  {
+    "id": "uz-navoiy-008",
+    "country": "UZ",
+    "text": "Shirin so‘z sof ko‘ngillar uchun asal kabi totlidir.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
+  },
+  {
+    "id": "uz-navoiy-009",
+    "country": "UZ",
+    "text": "Ozgina yolg‘on ham ulug‘ gunohdir; ozgina zahar ham halok qiluvchidir.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
+  },
+  {
+    "id": "uz-navoiy-010",
+    "country": "UZ",
+    "text": "So‘zning bir-biridan farqi ko‘pdir, ammo yolg‘ondan yomonroq turi yo‘qdir.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
+  },
+  {
+    "id": "uz-navoiy-011",
+    "country": "UZ",
+    "text": "Hilm axloqi odamning qimmatbaho libosi va u kiyim turlarining eng chidamli matosidir.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
+  },
+  {
+    "id": "uz-navoiy-012",
+    "country": "UZ",
+    "text": "Kimki ko‘ngilni qattiq so‘z bilan jarohatlar ekan, unga achchiq til zaharli nayzadek sanchiladi.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "Alisher Navoiy hikmatlari"
   }
 ]
