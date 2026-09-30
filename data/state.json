@@ -1,4 +1,6 @@
 {
-  "next_culture_index": 0,
-  "posted_ids": []
+  "next_culture_index": 1,
+  "posted_ids": [
+    "en_gb-shakespeare-001"
+  ]
 }
