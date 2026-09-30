@@ -114,17 +114,20 @@ def pick_quote(culture, state, quotes_dir=QUOTES_DIR):
 
 
 # --- ПЕРЕВОД ---
-def translate_quote(quote, culture, retries=2):
-    """Переводит цитату на все языки, кроме языка оригинала. Возвращает {lang_key: text}."""
-    targets = [k for k in CULTURE_ORDER if k != culture]
-    lang_list = "\n".join(f'- "{k}": {CULTURES[k]["lang_name"]}' for k in targets)
-    prompt = f"""You are a literary translator of famous quotations.
+def build_prompt(quote, culture):
+    all_langs = "\n".join(f'- "{k}": {CULTURES[k]["lang_name"]}' for k in CULTURE_ORDER)
+    source = f', from "{quote["source"]}"' if quote.get("source") else ""
+    return f"""You are a literary translator of famous quotations and a language teacher.
 
-Original ({CULTURES[culture]["lang_name"]}), by {quote["author_en"]}{f', from "{quote["source"]}"' if quote.get("source") else ""}:
+Original ({CULTURES[culture]["lang_name"]}), by {quote["author_en"]}{source}:
 \"\"\"{quote["text"]}\"\"\"
 
-Translate the quotation into each of these languages:
-{lang_list}
+Step 1. Pick ONE of the most difficult / sophisticated words of the ORIGINAL quotation (a content word, not a function word).
+Step 2. Explain its meaning in simple English (max 12 words).
+Step 3. Translate the quotation into every language except the original one, and choose in each translation the word that corresponds to the picked word.
+
+Languages:
+{all_langs}
 
 Rules:
 - Keep the meaning, tone and rhythm; translate literarily, not word by word.
@@ -133,11 +136,42 @@ Rules:
 - Brazilian Portuguese: Brazilian norm and vocabulary.
 - Uzbek: Latin script, with o‘ and g‘.
 - Arabic: Modern Standard Arabic, no diacritics.
-- Output only the translation of the quotation itself, without the author or quotation marks.
+- Translate only the quotation itself, without the author or quotation marks.
+- In EVERY text, wrap the picked word (or its equivalent) in {{{{double curly braces}}}}. This is required for every language, including Arabic.
+- For the original language, "text" is the original quotation copied EXACTLY, only with the word wrapped in braces.
+- For each language give "word" (the word in its dictionary/inflected form as used in the text) and "ipa" (its IPA transcription in slashes, e.g. /ˈkɒntəmpleɪt/).
 
-Answer with strictly valid JSON, keys exactly: {json.dumps(targets)}.
-Example shape: {{"{targets[0]}": "...", "{targets[1]}": "..."}}"""
+Answer with strictly valid JSON:
+{{"meaning_en": "...", "languages": {{"<lang key>": {{"word": "...", "ipa": "/.../", "text": "... {{{{word}}}} ..."}}, ...}}}}
+The "languages" object must contain exactly these keys: {json.dumps(CULTURE_ORDER)}."""
 
+
+def parse_lesson(data, quote, culture):
+    """Проверяет ответ модели. Возвращает {"meaning_en": str, "languages": {key: {word, ipa, text}}}."""
+    meaning = str(data.get("meaning_en", "")).strip()
+    if not meaning:
+        raise ValueError("missing meaning_en")
+    languages = data.get("languages") or {}
+    result = {}
+    for key in CULTURE_ORDER:
+        item = languages.get(key) or {}
+        text = str(item.get("text", "")).strip()
+        if not text:
+            raise ValueError(f"missing text for {key}")
+        if key == culture and re.sub(r"\{+|\}+", "", text).strip() != quote["text"].strip():
+            text = quote["text"]  # модель исказила оригинал — берём как есть, без выделения
+        result[key] = {
+            "word": str(item.get("word", "")).strip(),
+            "ipa": str(item.get("ipa", "")).strip(),
+            "text": text,
+        }
+    if not result[culture]["word"]:
+        raise ValueError("missing word for original language")
+    return {"meaning_en": meaning, "languages": result}
+
+
+def translate_quote(quote, culture, retries=2):
+    """Переводит цитату, выбирает сложное слово и его эквиваленты. См. parse_lesson."""
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
         "Content-Type": "application/json",
@@ -145,7 +179,7 @@ Example shape: {{"{targets[0]}": "...", "{targets[1]}": "..."}}"""
     }
     payload = {
         "model": MODEL_NAME,
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": [{"role": "user", "content": build_prompt(quote, culture)}],
         "temperature": 0.3,
         "response_format": {"type": "json_object"},
     }
@@ -159,11 +193,7 @@ Example shape: {{"{targets[0]}": "...", "{targets[1]}": "..."}}"""
             )
             response.raise_for_status()
             raw = response.json()["choices"][0]["message"]["content"]
-            data = json.loads(clean_json_response(raw))
-            missing = [k for k in targets if not str(data.get(k, "")).strip()]
-            if missing:
-                raise ValueError(f"missing translations: {missing}")
-            return {k: str(data[k]).strip() for k in targets}
+            return parse_lesson(json.loads(clean_json_response(raw)), quote, culture)
         except Exception as e:
             last_error = e
             print(f"Translation attempt {attempt + 1} failed: {e}")
@@ -189,13 +219,19 @@ def rtl(text):
     return f"‏{text}‏"
 
 
-def format_message(quote, culture, translations):
+def make_bold(escaped_text):
+    """{{слово}} -> <b>слово</b> (текст уже экранирован)."""
+    return re.sub(r"\{+(.*?)\}+", r"<b>\1</b>", escaped_text)
+
+
+def format_message(quote, culture, lesson):
     info = CULTURES[culture]
     country = country_flag(quote.get("country")) or info["flag"]
     is_ar = culture == "ar"
+    langs = lesson["languages"]
 
     title = html.escape(info["title"])
-    text = html.escape(quote["text"])
+    text = make_bold(html.escape(langs[culture]["text"]))
     author = html.escape(quote["author"])
     author_en = html.escape(quote.get("author_en", ""))
     source = html.escape(quote.get("source", ""))
@@ -212,15 +248,22 @@ def format_message(quote, culture, translations):
     lines = [head, "", body, author_line]
     if source:
         lines.append(f"<i>{source}</i>")
-    lines.append("━━━━━━━━━━━━━━━━━━")
+
+    word = html.escape(langs[culture]["word"])
+    ipa = html.escape(langs[culture]["ipa"])
+    word_line = f"✨ <b>{word}</b>" + (f" <code>{ipa}</code>" if ipa else "")
+    lines += ["", f"{word_line} — {html.escape(lesson['meaning_en'])}", "━━━━━━━━━━━━━━━━━━"]
 
     for key in CULTURE_ORDER:
         if key == culture:
             continue
-        line = html.escape(translations[key])
+        item = langs[key]
+        line = make_bold(html.escape(item["text"]))
         if key == "ar":
             line = rtl(line)
-        lines.append(f"{CULTURES[key]['flag']} {line}")
+        ipa = html.escape(item["ipa"])
+        prefix = f"<code>{ipa}</code> " if ipa else ""
+        lines.append(f"{CULTURES[key]['flag']} {prefix}{line}")
     return "\n".join(lines)
 
 
@@ -275,8 +318,8 @@ def main():
     print(f"Culture: {culture} (dry run: {DRY_RUN})")
 
     quote = pick_quote(culture, state)
-    translations = translate_quote(quote, culture)
-    message = format_message(quote, culture, translations)
+    lesson = translate_quote(quote, culture)
+    message = format_message(quote, culture, lesson)
 
     if DRY_RUN:
         print(message)

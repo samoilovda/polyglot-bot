@@ -18,25 +18,36 @@ class FakeResponse:
         return {"choices": [{"message": {"content": self._content}}]}
 
 
-def _keys(culture):
-    return [k for k in main.CULTURE_ORDER if k != culture]
+def _lesson_json(culture="ru", original=None):
+    langs = {k: {"word": f"w-{k}", "ipa": f"/i-{k}/", "text": f"t {{{{w-{k}}}}} x"} for k in main.CULTURE_ORDER}
+    langs[culture]["text"] = original or "raz dva {{tri}} chetyre pyat"
+    return {"meaning_en": "three", "languages": langs}
 
 
 def test_valid_response(monkeypatch):
-    payload = json.dumps({k: f"t-{k}" for k in _keys("ru")})
+    payload = json.dumps(_lesson_json())
     monkeypatch.setattr(main.requests, "post", lambda *a, **k: FakeResponse(payload))
-    assert main.translate_quote(QUOTE, "ru") == {k: f"t-{k}" for k in _keys("ru")}
+    lesson = main.translate_quote(QUOTE, "ru")
+    assert lesson["meaning_en"] == "three"
+    assert set(lesson["languages"]) == set(main.CULTURE_ORDER)
+    assert lesson["languages"]["es"]["ipa"] == "/i-es/"
 
 
 def test_markdown_wrapped_json(monkeypatch):
-    payload = "```json\n" + json.dumps({k: "t" for k in _keys("ru")}) + "\n```"
+    payload = "```json\n" + json.dumps(_lesson_json()) + "\n```"
     monkeypatch.setattr(main.requests, "post", lambda *a, **k: FakeResponse(payload))
-    assert set(main.translate_quote(QUOTE, "ru")) == set(_keys("ru"))
+    assert set(main.translate_quote(QUOTE, "ru")["languages"]) == set(main.CULTURE_ORDER)
 
 
-def test_missing_key_retries_then_raises(monkeypatch):
+def test_altered_original_falls_back_to_plain_text(monkeypatch):
+    payload = json.dumps(_lesson_json(original="something {{else}} entirely"))
+    monkeypatch.setattr(main.requests, "post", lambda *a, **k: FakeResponse(payload))
+    assert main.translate_quote(QUOTE, "ru")["languages"]["ru"]["text"] == QUOTE["text"]
+
+
+def test_missing_language_retries_then_raises(monkeypatch):
     calls = []
-    bad = json.dumps({"en_gb": "only one"})
+    bad = json.dumps({"meaning_en": "x", "languages": {"en_gb": {"word": "a", "ipa": "/a/", "text": "a"}}})
 
     def fake_post(*a, **k):
         calls.append(1)

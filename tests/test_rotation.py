@@ -43,7 +43,8 @@ def _run_main(monkeypatch, tmp_path, send_ok):
     monkeypatch.setattr(main, "STATE_PATH", str(state_path))
     monkeypatch.setattr(main, "DRY_RUN", False)
     monkeypatch.setattr(main, "translate_quote",
-                        lambda q, c: {k: "t" for k in main.CULTURE_ORDER if k != c})
+                        lambda q, c: {"meaning_en": "m", "languages": {
+                            k: {"word": "w", "ipa": "/w/", "text": "t {{w}}"} for k in main.CULTURE_ORDER}})
     monkeypatch.setattr(main, "generate_audio", lambda *a, **k: None)
     monkeypatch.setattr(main, "send_telegram", lambda *a, **k: send_ok)
     # main.load_state использует значение по умолчанию, вычисленное при импорте — подменяем явно
