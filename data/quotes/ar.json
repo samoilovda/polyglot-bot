@@ -1,0 +1,242 @@
+[
+  {
+    "id": "ar-mutanabbi-001",
+    "country": "IQ",
+    "text": "ما كل ما يتمنى المرء يدركه، تجري الرياح بما لا تشتهي السفن",
+    "author": "أبو الطيب المتنبي",
+    "author_en": "Al-Mutanabbi",
+    "source": "ديوان المتنبي"
+  },
+  {
+    "id": "ar-mutanabbi-002",
+    "country": "IQ",
+    "text": "على قدر أهل العزم تأتي العزائم، وتأتي على قدر الكرام المكارم",
+    "author": "أبو الطيب المتنبي",
+    "author_en": "Al-Mutanabbi",
+    "source": "ديوان المتنبي"
+  },
+  {
+    "id": "ar-mutanabbi-003",
+    "country": "IQ",
+    "text": "الخيل والليل والبيداء تعرفني والسيف والرمح والقرطاس والقلم",
+    "author": "أبو الطيب المتنبي",
+    "author_en": "Al-Mutanabbi",
+    "source": "ديوان المتنبي"
+  },
+  {
+    "id": "ar-mutanabbi-004",
+    "country": "IQ",
+    "text": "إذا رأيت نيوب الليث بارزة فلا تظنن أن الليث يبتسم",
+    "author": "أبو الطيب المتنبي",
+    "author_en": "Al-Mutanabbi",
+    "source": "ديوان المتنبي"
+  },
+  {
+    "id": "ar-mutanabbi-005",
+    "country": "IQ",
+    "text": "إذا غامرت في شرف مروم فلا تقنع بما دون النجوم",
+    "author": "أبو الطيب المتنبي",
+    "author_en": "Al-Mutanabbi",
+    "source": "ديوان المتنبي"
+  },
+  {
+    "id": "ar-mutanabbi-006",
+    "country": "IQ",
+    "text": "أنام ملء جفوني عن شواردها ويسهر الخلق جراها ويختصم",
+    "author": "أبو الطيب المتنبي",
+    "author_en": "Al-Mutanabbi",
+    "source": "ديوان المتنبي"
+  },
+  {
+    "id": "ar-sayyab-001",
+    "country": "IQ",
+    "text": "عيناك غابتا نخيل ساعة السحر",
+    "author": "بدر شاكر السياب",
+    "author_en": "Badr Shakir al-Sayyab",
+    "source": "أنشودة المطر، ١٩٦٠"
+  },
+  {
+    "id": "ar-shabbi-001",
+    "country": "TN",
+    "text": "إذا الشعب يوما أراد الحياة فلا بد أن يستجيب القدر",
+    "author": "أبو القاسم الشابي",
+    "author_en": "Abu al-Qasim al-Shabbi",
+    "source": "إرادة الحياة، ١٩٣٣"
+  },
+  {
+    "id": "ar-khaldun-001",
+    "country": "TN",
+    "text": "الإنسان ابن عوائده ومألوفه، لا ابن طبيعته ومزاجه",
+    "author": "ابن خلدون",
+    "author_en": "Ibn Khaldun",
+    "source": "المقدمة، ١٣٧٧"
+  },
+  {
+    "id": "ar-shawqi-001",
+    "country": "EG",
+    "text": "وما نيل المطالب بالتمني ولكن تؤخذ الدنيا غلابا",
+    "author": "أحمد شوقي",
+    "author_en": "Ahmad Shawqi",
+    "source": "الشوقيات"
+  },
+  {
+    "id": "ar-shawqi-002",
+    "country": "EG",
+    "text": "إنما الأمم الأخلاق ما بقيت، فإن هم ذهبت أخلاقهم ذهبوا",
+    "author": "أحمد شوقي",
+    "author_en": "Ahmad Shawqi",
+    "source": "الشوقيات"
+  },
+  {
+    "id": "ar-shawqi-003",
+    "country": "EG",
+    "text": "قم للمعلم وفه التبجيلا كاد المعلم أن يكون رسولا",
+    "author": "أحمد شوقي",
+    "author_en": "Ahmad Shawqi",
+    "source": "الشوقيات"
+  },
+  {
+    "id": "ar-shawqi-004",
+    "country": "EG",
+    "text": "وما استعصى على قوم منال إذا الإقدام كان لهم ركابا",
+    "author": "أحمد شوقي",
+    "author_en": "Ahmad Shawqi",
+    "source": "الشوقيات"
+  },
+  {
+    "id": "ar-hafez-001",
+    "country": "EG",
+    "text": "الأم مدرسة إذا أعددتها أعددت شعبا طيب الأعراق",
+    "author": "حافظ إبراهيم",
+    "author_en": "Hafez Ibrahim",
+    "source": "ديوان حافظ إبراهيم"
+  },
+  {
+    "id": "ar-gibran-001",
+    "country": "LB",
+    "text": "أعطني الناي وغن فالغنا سر الخلود",
+    "author": "جبران خليل جبران",
+    "author_en": "Kahlil Gibran",
+    "source": "المواكب، ١٩١٩"
+  },
+  {
+    "id": "ar-qabbani-001",
+    "country": "SY",
+    "text": "الحب في الأرض بعض من تخيلنا لو لم نجده عليها لاخترعناه",
+    "author": "نزار قباني",
+    "author_en": "Nizar Qabbani",
+    "source": "الأعمال الشعرية"
+  },
+  {
+    "id": "ar-maarri-001",
+    "country": "SY",
+    "text": "تعب كلها الحياة فما أعجب إلا من راغب في ازدياد",
+    "author": "أبو العلاء المعري",
+    "author_en": "Abu al-Ala al-Maarri",
+    "source": "ديوان سقط الزند"
+  },
+  {
+    "id": "ar-darwish-001",
+    "country": "PS",
+    "text": "على هذه الأرض ما يستحق الحياة",
+    "author": "محمود درويش",
+    "author_en": "Mahmoud Darwish",
+    "source": "على هذه الأرض ما يستحق الحياة، ١٩٨٦"
+  },
+  {
+    "id": "ar-darwish-002",
+    "country": "PS",
+    "text": "أحن إلى خبز أمي وقهوة أمي",
+    "author": "محمود درويش",
+    "author_en": "Mahmoud Darwish",
+    "source": "أحن إلى خبز أمي، ١٩٦٦"
+  },
+  {
+    "id": "ar-shafii-001",
+    "country": "PS",
+    "text": "نعيب زماننا والعيب فينا وما لزماننا عيب سوانا",
+    "author": "الإمام الشافعي",
+    "author_en": "Imam al-Shafi'i",
+    "source": "ديوان الإمام الشافعي"
+  },
+  {
+    "id": "ar-ali-001",
+    "country": "SA",
+    "text": "لا غنى كالعقل ولا فقر كالجهل",
+    "author": "الإمام علي بن أبي طالب",
+    "author_en": "Ali ibn Abi Talib",
+    "source": "نهج البلاغة"
+  },
+  {
+    "id": "ar-ali-002",
+    "country": "SA",
+    "text": "قيمة كل امرئ ما يحسنه",
+    "author": "الإمام علي بن أبي طالب",
+    "author_en": "Ali ibn Abi Talib",
+    "source": "نهج البلاغة"
+  },
+  {
+    "id": "ar-zuhayr-001",
+    "country": "SA",
+    "text": "ومهما تكن عند امرئ من خليقة وإن خالها تخفى على الناس تعلم",
+    "author": "زهير بن أبي سلمى",
+    "author_en": "Zuhayr ibn Abi Sulma",
+    "source": "المعلقة"
+  },
+  {
+    "id": "ar-imru-001",
+    "country": "SA",
+    "text": "قفا نبك من ذكرى حبيب ومنزل",
+    "author": "امرؤ القيس",
+    "author_en": "Imru' al-Qais",
+    "source": "المعلقة"
+  },
+  {
+    "id": "ar-tarafa-001",
+    "country": "BH",
+    "text": "ستبدي لك الأيام ما كنت جاهلا ويأتيك بالأخبار من لم تزود",
+    "author": "طرفة بن العبد",
+    "author_en": "Tarafa ibn al-Abd",
+    "source": "المعلقة"
+  },
+  {
+    "id": "ar-mutanabbi-007",
+    "country": "IQ",
+    "text": "وما الحسن في وجه الفتى شرفا له إذا لم يكن في فعله والخلائق",
+    "author": "أبو الطيب المتنبي",
+    "author_en": "Al-Mutanabbi",
+    "source": "ديوان المتنبي"
+  },
+  {
+    "id": "ar-sayyab-002",
+    "country": "IQ",
+    "text": "أتعلمين أي حزن يبعث المطر",
+    "author": "بدر شاكر السياب",
+    "author_en": "Badr Shakir al-Sayyab",
+    "source": "أنشودة المطر، ١٩٦٠"
+  },
+  {
+    "id": "ar-hafez-002",
+    "country": "EG",
+    "text": "أنا البحر في أحشائه الدر كامن فهل ساءلوا الغواص عن صدفاتي",
+    "author": "حافظ إبراهيم",
+    "author_en": "Hafez Ibrahim",
+    "source": "اللغة العربية تنعى حظها بين أهلها، ١٩٣٠"
+  },
+  {
+    "id": "ar-shawqi-005",
+    "country": "EG",
+    "text": "وللأوطان في دم كل حر يد سلفت ودين مستحق",
+    "author": "أحمد شوقي",
+    "author_en": "Ahmad Shawqi",
+    "source": "الشوقيات"
+  },
+  {
+    "id": "ar-maarri-002",
+    "country": "SY",
+    "text": "غير مجد في ملتي واعتقادي نوح باك ولا ترنم شاد",
+    "author": "أبو العلاء المعري",
+    "author_en": "Abu al-Ala al-Maarri",
+    "source": "ديوان سقط الزند"
+  }
+]

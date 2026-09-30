@@ -1,0 +1,34 @@
+[
+  {
+    "id": "uz-navoiy-001",
+    "country": "UZ",
+    "text": "Odami ersang, demagil odami, oniki yo‘q xalq g‘amidin g‘ami.",
+    "author": "Alisher Navoiy",
+    "author_en": "Alisher Navoi",
+    "source": "G‘azal"
+  },
+  {
+    "id": "uz-avloniy-001",
+    "country": "UZ",
+    "text": "Tarbiya biz uchun yo hayot — yo mamot, yo najot — yo halokat, yo saodat — yo falokat masalasidir.",
+    "author": "Abdulla Avloniy",
+    "author_en": "Abdulla Avloni",
+    "source": "Turkiy guliston yoxud axloq, 1913"
+  },
+  {
+    "id": "uz-oripov-001",
+    "country": "UZ",
+    "text": "Serquyosh, hur o‘lkam, elga baxt, najot, sen o‘zing do‘stlarga yo‘ldosh, mehribon!",
+    "author": "Abdulla Oripov",
+    "author_en": "Abdulla Oripov",
+    "source": "O‘zbekiston Respublikasi Davlat madhiyasi"
+  },
+  {
+    "id": "uz-ulugbek-001",
+    "country": "UZ",
+    "text": "Mazhablar tarqalib ketadi, saltanatlar barbod bo‘ladi, ammo olimlar mehnati mevalari mangu qoladi.",
+    "author": "Mirzo Ulug‘bek",
+    "author_en": "Mirzo Ulugh Beg",
+    "source": "Ziji Ko‘ragoniy muqaddimasi (o‘zbekcha tarjima)"
+  }
+]
