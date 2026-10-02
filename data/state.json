@@ -1,11 +1,12 @@
 {
-  "next_culture_index": 0,
+  "next_culture_index": 1,
   "posted_ids": [
     "en_gb-shakespeare-001",
     "es-neruda-002",
     "pt_br-machado-001",
     "uz-navoiy-004",
     "ar-tarafa-001",
-    "ru-dostoevsky-001"
+    "ru-dostoevsky-001",
+    "en_gb-scott-001"
   ]
 }
