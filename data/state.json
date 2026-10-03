@@ -1,5 +1,5 @@
 {
-  "next_culture_index": 4,
+  "next_culture_index": 5,
   "posted_ids": [
     "en_gb-shakespeare-001",
     "es-neruda-002",
@@ -10,6 +10,7 @@
     "en_gb-scott-001",
     "es-neruda-001",
     "pt_br-cabral-001",
-    "uz-navoiy-011"
+    "uz-navoiy-011",
+    "ar-shawqi-005"
   ]
 }
