@@ -39,6 +39,12 @@ def test_arabic_original_wrapped():
     assert "<blockquote>‏" in msg
 
 
+def test_arabic_word_line_forced_ltr():
+    msg = main.format_message(_quote(country="EG", text="نص عربي من خمس كلمات"), "ar", TR)
+    assert "\u200e✨ <b>w-ar</b>" in msg
+    assert "\u200e━" in msg
+
+
 def test_country_flags():
     assert main.country_flag("ES") == "🇪🇸"
     assert main.country_flag("IE") == "🇮🇪"

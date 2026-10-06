@@ -252,7 +252,13 @@ def format_message(quote, culture, lesson):
     word = html.escape(langs[culture]["word"])
     ipa = html.escape(langs[culture]["ipa"])
     word_line = f"✨ <b>{word}</b>" + (f" <code>{ipa}</code>" if ipa else "")
-    lines += ["", f"{word_line} — {html.escape(lesson['meaning_en'])}", "━━━━━━━━━━━━━━━━━━"]
+    word_line = f"{word_line} — {html.escape(lesson['meaning_en'])}"
+    separator = "━━━━━━━━━━━━━━━━━━"
+    if is_ar:
+        # арабское слово в начале строки делает абзац RTL и перемешивает IPA/перевод;
+        # LRM в начале принудительно задаёт LTR-абзац
+        word_line, separator = f"\u200e{word_line}", f"\u200e{separator}"
+    lines += ["", word_line, separator]
 
     for key in CULTURE_ORDER:
         if key == culture:
