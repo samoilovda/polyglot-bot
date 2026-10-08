@@ -1,5 +1,5 @@
 {
-  "next_culture_index": 5,
+  "next_culture_index": 0,
   "posted_ids": [
     "en_gb-shakespeare-001",
     "es-neruda-002",
@@ -23,6 +23,7 @@
     "es-borges-001",
     "pt_br-drummond-001",
     "uz-navoiy-012",
-    "ar-mutanabbi-002"
+    "ar-mutanabbi-002",
+    "ru-nekrasov-001"
   ]
 }
