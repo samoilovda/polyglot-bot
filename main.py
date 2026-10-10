@@ -253,7 +253,7 @@ def format_message(quote, culture, lesson):
 
     word = html.escape(langs[culture]["word"])
     ipa = html.escape(langs[culture]["ipa"])
-    word_line = f"✨ <b>{word}</b>" + (f" <code>{ipa}</code>" if ipa else "")
+    word_line = f"✨ <b>{word}</b>" + (f" {ipa}" if ipa else "")
     word_line = f"{word_line} — {html.escape(lesson['meaning_en'])}"
     separator = "━━━━━━━━━━━━━━━━━━"
     if is_ar:
@@ -270,7 +270,7 @@ def format_message(quote, culture, lesson):
         if key == "ar":
             line = rtl(line)
         ipa = html.escape(item["ipa"])
-        prefix = f"<code>{ipa}</code> " if ipa else ""
+        prefix = f"{ipa} " if ipa else ""
         lines.append(f"{CULTURES[key]['flag']} {prefix}{line}")
     return "\n".join(lines)
 

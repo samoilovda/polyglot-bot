@@ -24,7 +24,7 @@ def test_html_is_escaped():
 
 def test_original_language_not_duplicated():
     msg = main.format_message(_quote(), "en_gb", TR)
-    assert "🇬🇧 <code>" not in msg  # нет строки перевода на язык оригинала
+    assert "🇬🇧 /" not in msg  # нет строки перевода на язык оригинала
     for key in main.CULTURE_ORDER[1:]:
         assert f"tr-{key}" in msg
 
@@ -66,9 +66,9 @@ def test_author_en_shown_only_if_different():
 
 def test_word_bold_with_ipa_and_meaning():
     msg = main.format_message(_quote(), "en_gb", LESSON)
-    assert "✨ <b>w-en_gb</b> <code>/i-en_gb/</code> — a meaning" in msg
+    assert "✨ <b>w-en_gb</b> /i-en_gb/ — a meaning" in msg
     assert "<blockquote>tr-en_gb <b>w-en_gb</b></blockquote>" in msg
-    assert "🇪🇸 <code>/i-es/</code> tr-es <b>w-es</b>" in msg
+    assert "🇪🇸 /i-es/ tr-es <b>w-es</b>" in msg
 
 
 def test_missing_ipa_is_omitted():
