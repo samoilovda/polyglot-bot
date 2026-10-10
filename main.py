@@ -8,6 +8,8 @@ import sys
 
 import requests
 
+import slot
+
 # --- КОНФИГУРАЦИЯ ---
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN")
@@ -340,6 +342,7 @@ def main():
         return 1
 
     state["posted_ids"].append(quote["id"])
+    state["last_slot"] = slot.current_slot()
     state["next_culture_index"] = (index + 1) % len(CULTURE_ORDER)
     save_state(state)
     print("Workflow completed successfully!")

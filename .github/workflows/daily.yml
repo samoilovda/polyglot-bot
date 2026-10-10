@@ -2,10 +2,10 @@ name: Quotes Bot
 
 on:
   schedule:
-    # 3 раза в день (минуты не ровные — в начале часа GitHub сильно задерживает cron)
-    - cron: '7 6 * * *'    # 09:07 МСК
-    - cron: '7 11 * * *'   # 14:07 МСК
-    - cron: '7 17 * * *'   # 20:07 МСК
+    # Публикации в 10:00, 16:00 и 22:00 по Ташкенту решает slot.py (state.json -> last_slot).
+    # GitHub запаздывает с cron на часы, поэтому запускаем каждый час: первый же
+    # запуск после наступления слота публикует, остальные сразу завершаются.
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -27,20 +27,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Check publication slot
+        id: slot
+        run: python3 slot.py
+
       - name: Set up Python
+        if: steps.slot.outputs.due == 'true'
         uses: actions/setup-python@v6
         with:
           python-version: '3.13'
 
       - name: Install dependencies
+        if: steps.slot.outputs.due == 'true'
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Run tests
+        if: steps.slot.outputs.due == 'true'
         run: pytest -q
 
       - name: Run bot
+        if: steps.slot.outputs.due == 'true'
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
@@ -49,7 +57,7 @@ jobs:
         run: python main.py
 
       - name: Commit state
-        if: success()
+        if: success() && steps.slot.outputs.due == 'true'
         run: |
           git config user.name "quotes-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
