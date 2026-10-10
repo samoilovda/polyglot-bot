@@ -238,5 +238,805 @@
     "author": "Александр Пушкин",
     "author_en": "Alexander Pushkin",
     "source": "«Моцарт и Сальери», 1830"
+  },
+  {
+    "id": "ru-pushkin-006",
+    "country": "RU",
+    "text": "Я памятник себе воздвиг нерукотворный, к нему не зарастёт народная тропа.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-007",
+    "country": "RU",
+    "text": "Любви все возрасты покорны; но юным сердцам её порывы благотворны.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-008",
+    "country": "RU",
+    "text": "Октябрь уж наступил — уж роща отряхает последние листы с нагих своих ветвей.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-009",
+    "country": "RU",
+    "text": "Унылая пора! Очей очарованье! Приятна мне твоя прощальная краса.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-010",
+    "country": "RU",
+    "text": "Я вас любил: любовь ещё, быть может, в душе моей угасла не совсем.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-011",
+    "country": "RU",
+    "text": "Исполнись волею моей и, обходя моря и земли, глаголом жги сердца людей.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-012",
+    "country": "RU",
+    "text": "Если жизнь тебя обманет, не печалься, не сердись!",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-013",
+    "country": "RU",
+    "text": "Блажен, кто смолоду был молод, блажен, кто вовремя созрел.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-014",
+    "country": "RU",
+    "text": "Духовной жаждою томим, в пустыне мрачной я влачился.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pushkin-015",
+    "country": "RU",
+    "text": "Что в имени тебе моём? Оно умрёт, как шум печальный волны, плеснувшей в берег дальный.",
+    "author": "Александр Пушкин",
+    "author_en": "Alexander Pushkin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-lermontov-003",
+    "country": "RU",
+    "text": "Белеет парус одинокий в тумане моря голубом.",
+    "author": "Михаил Лермонтов",
+    "author_en": "Mikhail Lermontov",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-lermontov-004",
+    "country": "RU",
+    "text": "Люблю отчизну я, но странною любовью!",
+    "author": "Михаил Лермонтов",
+    "author_en": "Mikhail Lermontov",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-lermontov-005",
+    "country": "RU",
+    "text": "Нет, я не Байрон, я другой, ещё неведомый избранник.",
+    "author": "Михаил Лермонтов",
+    "author_en": "Mikhail Lermontov",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-lermontov-006",
+    "country": "RU",
+    "text": "Не верь, не верь себе, мечтатель молодой.",
+    "author": "Михаил Лермонтов",
+    "author_en": "Mikhail Lermontov",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-lermontov-007",
+    "country": "RU",
+    "text": "Погиб поэт! — невольник чести — пал, оклеветанный молвой.",
+    "author": "Михаил Лермонтов",
+    "author_en": "Mikhail Lermontov",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tyutchev-003",
+    "country": "RU",
+    "text": "Нам не дано предугадать, как слово наше отзовётся.",
+    "author": "Фёдор Тютчев",
+    "author_en": "Fyodor Tyutchev",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tyutchev-004",
+    "country": "RU",
+    "text": "Блажен, кто посетил сей мир в его минуты роковые!",
+    "author": "Фёдор Тютчев",
+    "author_en": "Fyodor Tyutchev",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tyutchev-005",
+    "country": "RU",
+    "text": "Люблю грозу в начале мая, когда весенний первый гром.",
+    "author": "Фёдор Тютчев",
+    "author_en": "Fyodor Tyutchev",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tyutchev-006",
+    "country": "RU",
+    "text": "Ещё в полях белеет снег, а воды уж весной шумят.",
+    "author": "Фёдор Тютчев",
+    "author_en": "Fyodor Tyutchev",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tyutchev-007",
+    "country": "RU",
+    "text": "Не то, что мните вы, природа: не слепок, не бездушный лик.",
+    "author": "Фёдор Тютчев",
+    "author_en": "Fyodor Tyutchev",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-fet-002",
+    "country": "RU",
+    "text": "Шёпот, робкое дыханье, трели соловья, серебро и колыханье сонного ручья.",
+    "author": "Афанасий Фет",
+    "author_en": "Afanasy Fet",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-nekrasov-002",
+    "country": "RU",
+    "text": "Есть женщины в русских селеньях с спокойною важностью лиц.",
+    "author": "Николай Некрасов",
+    "author_en": "Nikolay Nekrasov",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-nekrasov-003",
+    "country": "RU",
+    "text": "Идёт-гудёт Зелёный Шум, Зелёный Шум, весенний шум!",
+    "author": "Николай Некрасов",
+    "author_en": "Nikolay Nekrasov",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tolstoy-003",
+    "country": "RU",
+    "text": "Всё смешалось в доме Облонских.",
+    "author": "Лев Толстой",
+    "author_en": "Leo Tolstoy",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-tolstoy-004",
+    "country": "RU",
+    "text": "Люди как реки: вода во всех одинаковая, но каждая река бывает то узкая, то быстрая, то широкая, то тихая.",
+    "author": "Лев Толстой",
+    "author_en": "Leo Tolstoy",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-tolstoy-005",
+    "country": "RU",
+    "text": "Чтобы жить честно, надо рваться, путаться, биться, ошибаться, начинать и бросать, и опять начинать и опять бросать, и вечно бороться и лишаться.",
+    "author": "Лев Толстой",
+    "author_en": "Leo Tolstoy",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-tolstoy-006",
+    "country": "RU",
+    "text": "Одно из самых обычных заблуждений состоит в том, чтобы считать людей добрыми, злыми, глупыми, умными.",
+    "author": "Лев Толстой",
+    "author_en": "Leo Tolstoy",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-tolstoy-007",
+    "country": "RU",
+    "text": "Герой моего рассказа, которого я люблю всеми силами души, — правда.",
+    "author": "Лев Толстой",
+    "author_en": "Leo Tolstoy",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-dostoevsky-002",
+    "country": "RU",
+    "text": "Тут дьявол с Богом борется, а поле битвы — сердца людей.",
+    "author": "Фёдор Достоевский",
+    "author_en": "Fyodor Dostoevsky",
+    "source": "Братья Карамазовы"
+  },
+  {
+    "id": "ru-dostoevsky-003",
+    "country": "RU",
+    "text": "Человек есть тайна. Её надо разгадать, и ежели будешь её разгадывать всю жизнь, то не говори, что потерял время.",
+    "author": "Фёдор Достоевский",
+    "author_en": "Fyodor Dostoevsky",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-dostoevsky-004",
+    "country": "RU",
+    "text": "Любите всё создание Божие, и целое, и каждую песчинку.",
+    "author": "Фёдор Достоевский",
+    "author_en": "Fyodor Dostoevsky",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-dostoevsky-005",
+    "country": "RU",
+    "text": "Жизнь — дар, жизнь — счастье, каждая минута могла быть веком счастья.",
+    "author": "Фёдор Достоевский",
+    "author_en": "Fyodor Dostoevsky",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-chekhov-002",
+    "country": "RU",
+    "text": "Умей нести свой крест и веруй.",
+    "author": "Антон Чехов",
+    "author_en": "Anton Chekhov",
+    "source": "Чайка"
+  },
+  {
+    "id": "ru-chekhov-003",
+    "country": "RU",
+    "text": "Мы увидим небо в алмазах.",
+    "author": "Антон Чехов",
+    "author_en": "Anton Chekhov",
+    "source": "Проза и пьесы"
+  },
+  {
+    "id": "ru-chekhov-004",
+    "country": "RU",
+    "text": "Человеку нужно не три аршина земли, не усадьба, а весь земной шар.",
+    "author": "Антон Чехов",
+    "author_en": "Anton Chekhov",
+    "source": "Проза и пьесы"
+  },
+  {
+    "id": "ru-chekhov-005",
+    "country": "RU",
+    "text": "Если в первом акте на стене висит ружьё, то в последнем оно должно выстрелить.",
+    "author": "Антон Чехов",
+    "author_en": "Anton Chekhov",
+    "source": "Проза и пьесы"
+  },
+  {
+    "id": "ru-chekhov-006",
+    "country": "RU",
+    "text": "Надо по каплям выдавливать из себя раба.",
+    "author": "Антон Чехов",
+    "author_en": "Anton Chekhov",
+    "source": "Проза и пьесы"
+  },
+  {
+    "id": "ru-gogol-003",
+    "country": "RU",
+    "text": "Чему смеётесь? Над собою смеётесь!",
+    "author": "Николай Гоголь",
+    "author_en": "Nikolai Gogol",
+    "source": "Проза и пьесы"
+  },
+  {
+    "id": "ru-gogol-004",
+    "country": "RU",
+    "text": "Нет уз святее товарищества! Породниться родством по душе, а не по крови, может один только человек.",
+    "author": "Николай Гоголь",
+    "author_en": "Nikolai Gogol",
+    "source": "Проза и пьесы"
+  },
+  {
+    "id": "ru-gogol-005",
+    "country": "RU",
+    "text": "Чуден Днепр при тихой погоде, когда вольно и плавно мчит сквозь леса и горы полные воды свои.",
+    "author": "Николай Гоголь",
+    "author_en": "Nikolai Gogol",
+    "source": "Проза и пьесы"
+  },
+  {
+    "id": "ru-griboyedov-002",
+    "country": "RU",
+    "text": "И дым отечества нам сладок и приятен!",
+    "author": "Александр Грибоедов",
+    "author_en": "Alexander Griboyedov",
+    "source": "Горе от ума"
+  },
+  {
+    "id": "ru-griboyedov-003",
+    "country": "RU",
+    "text": "Блажен, кто верует, тепло ему на свете!",
+    "author": "Александр Грибоедов",
+    "author_en": "Alexander Griboyedov",
+    "source": "Горе от ума"
+  },
+  {
+    "id": "ru-griboyedov-004",
+    "country": "RU",
+    "text": "Чины людьми даются, а люди могут обмануться.",
+    "author": "Александр Грибоедов",
+    "author_en": "Alexander Griboyedov",
+    "source": "Горе от ума"
+  },
+  {
+    "id": "ru-griboyedov-005",
+    "country": "RU",
+    "text": "Ах! Злые языки страшнее пистолета.",
+    "author": "Александр Грибоедов",
+    "author_en": "Alexander Griboyedov",
+    "source": "Горе от ума"
+  },
+  {
+    "id": "ru-krylov-002",
+    "country": "RU",
+    "text": "А слона-то я и не приметил!",
+    "author": "Иван Крылов",
+    "author_en": "Ivan Krylov",
+    "source": "Басни"
+  },
+  {
+    "id": "ru-krylov-003",
+    "country": "RU",
+    "text": "У сильного всегда бессильный виноват.",
+    "author": "Иван Крылов",
+    "author_en": "Ivan Krylov",
+    "source": "Басни"
+  },
+  {
+    "id": "ru-krylov-004",
+    "country": "RU",
+    "text": "Беда, коль пироги начнёт печи сапожник, а сапоги тачать пирожник.",
+    "author": "Иван Крылов",
+    "author_en": "Ivan Krylov",
+    "source": "Басни"
+  },
+  {
+    "id": "ru-turgenev-002",
+    "country": "RU",
+    "text": "О великий, могучий, правдивый и свободный русский язык!",
+    "author": "Иван Тургенев",
+    "author_en": "Ivan Turgenev",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-turgenev-003",
+    "country": "RU",
+    "text": "Любовь сильнее смерти и страха смерти. Только ею, только любовью держится и движется жизнь.",
+    "author": "Иван Тургенев",
+    "author_en": "Ivan Turgenev",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-turgenev-004",
+    "country": "RU",
+    "text": "Природа не храм, а мастерская, и человек в ней работник.",
+    "author": "Иван Тургенев",
+    "author_en": "Ivan Turgenev",
+    "source": "Проза"
+  },
+  {
+    "id": "ru-lomonosov-002",
+    "country": "RU",
+    "text": "Науки юношей питают, отраду старым подают.",
+    "author": "Михаил Ломоносов",
+    "author_en": "Mikhail Lomonosov",
+    "source": "Ода и научные труды"
+  },
+  {
+    "id": "ru-lomonosov-003",
+    "country": "RU",
+    "text": "Широко простирает химия руки свои в дела человеческие.",
+    "author": "Михаил Ломоносов",
+    "author_en": "Mikhail Lomonosov",
+    "source": "Ода и научные труды"
+  },
+  {
+    "id": "ru-derzhavin-001",
+    "country": "RU",
+    "text": "Река времён в своём стремленьи уносит все дела людей.",
+    "author": "Гавриил Державин",
+    "author_en": "Gavrila Derzhavin",
+    "source": "О, ты, поэт!"
+  },
+  {
+    "id": "ru-akhmatova-002",
+    "country": "RU",
+    "text": "Я научилась просто, мудро жить, смотреть на небо и молиться Богу.",
+    "author": "Анна Ахматова",
+    "author_en": "Anna Akhmatova",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-akhmatova-003",
+    "country": "RU",
+    "text": "Не с теми я, кто бросил землю на растерзание врагам.",
+    "author": "Анна Ахматова",
+    "author_en": "Anna Akhmatova",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-akhmatova-004",
+    "country": "RU",
+    "text": "Так беспомощно грудь холодела, но шаги мои были легки.",
+    "author": "Анна Ахматова",
+    "author_en": "Anna Akhmatova",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-akhmatova-005",
+    "country": "RU",
+    "text": "Я к розам хочу, в тот единственный сад, где лучшая в мире стоит из оград.",
+    "author": "Анна Ахматова",
+    "author_en": "Anna Akhmatova",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-akhmatova-006",
+    "country": "RU",
+    "text": "Мне голос был. Он звал утешно, он говорил: иди сюда.",
+    "author": "Анна Ахматова",
+    "author_en": "Anna Akhmatova",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tsvetaeva-003",
+    "country": "RU",
+    "text": "Кто создан из камня, кто создан из глины, — а я серебрюсь и сверкаю!",
+    "author": "Марина Цветаева",
+    "author_en": "Marina Tsvetaeva",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tsvetaeva-004",
+    "country": "RU",
+    "text": "Тоска по родине! Давно разоблачённая морока!",
+    "author": "Марина Цветаева",
+    "author_en": "Marina Tsvetaeva",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tsvetaeva-005",
+    "country": "RU",
+    "text": "Красною кистью рябина зажглась; падали листья, я родилась.",
+    "author": "Марина Цветаева",
+    "author_en": "Marina Tsvetaeva",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-tsvetaeva-006",
+    "country": "RU",
+    "text": "Вы, идущие мимо меня к не моим и сомнительным чарам.",
+    "author": "Марина Цветаева",
+    "author_en": "Marina Tsvetaeva",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-mayakovsky-002",
+    "country": "RU",
+    "text": "Единица — вздор, единица — ноль; один даже если очень важный не подымет простое пятивершковое бревно.",
+    "author": "Владимир Маяковский",
+    "author_en": "Vladimir Mayakovsky",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-mayakovsky-003",
+    "country": "RU",
+    "text": "Я сам расскажу о времени и о себе.",
+    "author": "Владимир Маяковский",
+    "author_en": "Vladimir Mayakovsky",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-blok-002",
+    "country": "RU",
+    "text": "О, Русь моя! Жена моя! До боли нам ясен долгий путь!",
+    "author": "Александр Блок",
+    "author_en": "Alexander Blok",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-blok-003",
+    "country": "RU",
+    "text": "О доблестях, о подвигах, о славе я забывал на горестной земле.",
+    "author": "Александр Блок",
+    "author_en": "Alexander Blok",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-yesenin-002",
+    "country": "RU",
+    "text": "Шаганэ ты моя, Шаганэ! Потому, что я с севера, что ли.",
+    "author": "Сергей Есенин",
+    "author_en": "Sergei Yesenin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-yesenin-003",
+    "country": "RU",
+    "text": "Ты жива ещё, моя старушка? Жив и я. Привет тебе, привет!",
+    "author": "Сергей Есенин",
+    "author_en": "Sergei Yesenin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-yesenin-004",
+    "country": "RU",
+    "text": "Гой ты, Русь, моя родная, хаты — в ризах образа.",
+    "author": "Сергей Есенин",
+    "author_en": "Sergei Yesenin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-yesenin-005",
+    "country": "RU",
+    "text": "Мы теперь уходим понемногу в ту страну, где тишь и благодать.",
+    "author": "Сергей Есенин",
+    "author_en": "Sergei Yesenin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-yesenin-006",
+    "country": "RU",
+    "text": "До свиданья, друг мой, до свиданья. Милый мой, ты у меня в груди.",
+    "author": "Сергей Есенин",
+    "author_en": "Sergei Yesenin",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pasternak-002",
+    "country": "RU",
+    "text": "Февраль. Достать чернил и плакать! Писать о феврале навзрыд.",
+    "author": "Борис Пастернак",
+    "author_en": "Boris Pasternak",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pasternak-003",
+    "country": "RU",
+    "text": "Мело, мело по всей земле, во все пределы. Свеча горела на столе, свеча горела.",
+    "author": "Борис Пастернак",
+    "author_en": "Boris Pasternak",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pasternak-004",
+    "country": "RU",
+    "text": "Быть знаменитым некрасиво. Не это подымает ввысь.",
+    "author": "Борис Пастернак",
+    "author_en": "Boris Pasternak",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pasternak-005",
+    "country": "RU",
+    "text": "Во всём мне хочется дойти до самой сути.",
+    "author": "Борис Пастернак",
+    "author_en": "Boris Pasternak",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-pasternak-006",
+    "country": "RU",
+    "text": "Гул затих. Я вышел на подмостки. Прислонясь к дверному косяку.",
+    "author": "Борис Пастернак",
+    "author_en": "Boris Pasternak",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-brodsky-002",
+    "country": "RU",
+    "text": "Ни страны, ни погоста не хочу выбирать. На Васильевский остров я приду умирать.",
+    "author": "Иосиф Бродский",
+    "author_en": "Joseph Brodsky",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-brodsky-003",
+    "country": "RU",
+    "text": "Север крошит металл, но щадит стекло.",
+    "author": "Иосиф Бродский",
+    "author_en": "Joseph Brodsky",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-brodsky-004",
+    "country": "RU",
+    "text": "Есть города, в которые нет возврата.",
+    "author": "Иосиф Бродский",
+    "author_en": "Joseph Brodsky",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-bulgakov-002",
+    "country": "RU",
+    "text": "Каждому будет дано по его вере.",
+    "author": "Михаил Булгаков",
+    "author_en": "Mikhail Bulgakov",
+    "source": "Мастер и Маргарита"
+  },
+  {
+    "id": "ru-bulgakov-003",
+    "country": "RU",
+    "text": "Трусость — несомненно, один из самых страшных пороков.",
+    "author": "Михаил Булгаков",
+    "author_en": "Mikhail Bulgakov",
+    "source": "Мастер и Маргарита"
+  },
+  {
+    "id": "ru-bulgakov-004",
+    "country": "RU",
+    "text": "За мной, читатель! Кто сказал тебе, что нет на свете настоящей, верной, вечной любви?",
+    "author": "Михаил Булгаков",
+    "author_en": "Mikhail Bulgakov",
+    "source": "Мастер и Маргарита"
+  },
+  {
+    "id": "ru-bulgakov-005",
+    "country": "RU",
+    "text": "Он не заслужил света, он заслужил покой.",
+    "author": "Михаил Булгаков",
+    "author_en": "Mikhail Bulgakov",
+    "source": "Мастер и Маргарита"
+  },
+  {
+    "id": "ru-bulgakov-006",
+    "country": "RU",
+    "text": "Никогда не разговаривайте с неизвестными.",
+    "author": "Михаил Булгаков",
+    "author_en": "Mikhail Bulgakov",
+    "source": "Мастер и Маргарита"
+  },
+  {
+    "id": "ru-bulgakov-007",
+    "country": "RU",
+    "text": "Человек смертен, но это было бы ещё полбеды. Плохо то, что он иногда внезапно смертен.",
+    "author": "Михаил Булгаков",
+    "author_en": "Mikhail Bulgakov",
+    "source": "Мастер и Маргарита"
+  },
+  {
+    "id": "ru-bulgakov-008",
+    "country": "RU",
+    "text": "Разруха не в клозетах, а в головах.",
+    "author": "Михаил Булгаков",
+    "author_en": "Mikhail Bulgakov",
+    "source": "Мастер и Маргарита"
+  },
+  {
+    "id": "ru-vysotsky-001",
+    "country": "RU",
+    "text": "Если друг оказался вдруг и не друг, и не враг, а так.",
+    "author": "Владимир Высоцкий",
+    "author_en": "Vladimir Vysotsky",
+    "source": "Песня"
+  },
+  {
+    "id": "ru-vysotsky-002",
+    "country": "RU",
+    "text": "Лучше гор могут быть только горы, на которых ещё не бывал.",
+    "author": "Владимир Высоцкий",
+    "author_en": "Vladimir Vysotsky",
+    "source": "Песня"
+  },
+  {
+    "id": "ru-okudzhava-001",
+    "country": "RU",
+    "text": "Давайте говорить друг другу комплименты — ведь это всё любви счастливые моменты.",
+    "author": "Булат Окуджава",
+    "author_en": "Bulat Okudzhava",
+    "source": "Песня"
+  },
+  {
+    "id": "ru-okudzhava-002",
+    "country": "RU",
+    "text": "Возьмёмся за руки, друзья, чтоб не пропасть поодиночке.",
+    "author": "Булат Окуджава",
+    "author_en": "Bulat Okudzhava",
+    "source": "Песня"
+  },
+  {
+    "id": "ru-ilfpetrov-001",
+    "country": "RU",
+    "text": "Лёд тронулся, господа присяжные заседатели!",
+    "author": "Илья Ильф и Евгений Петров",
+    "author_en": "Ilya Ilf and Yevgeny Petrov",
+    "source": "Двенадцать стульев"
+  },
+  {
+    "id": "ru-ilfpetrov-002",
+    "country": "RU",
+    "text": "Спасение утопающих — дело рук самих утопающих.",
+    "author": "Илья Ильф и Евгений Петров",
+    "author_en": "Ilya Ilf and Yevgeny Petrov",
+    "source": "Двенадцать стульев"
+  },
+  {
+    "id": "ru-suvorov-001",
+    "country": "RU",
+    "text": "Тяжело в учении — легко в походе, легко в учении — тяжело в походе.",
+    "author": "Александр Суворов",
+    "author_en": "Alexander Suvorov",
+    "source": "Наука побеждать"
+  },
+  {
+    "id": "ru-suvorov-002",
+    "country": "RU",
+    "text": "Сам погибай, а товарища выручай.",
+    "author": "Александр Суворов",
+    "author_en": "Alexander Suvorov",
+    "source": "Наука побеждать"
+  },
+  {
+    "id": "ru-suvorov-003",
+    "country": "RU",
+    "text": "Каждый воин должен понимать свой манёвр.",
+    "author": "Александр Суворов",
+    "author_en": "Alexander Suvorov",
+    "source": "Наука побеждать"
+  },
+  {
+    "id": "ru-prutkov-001",
+    "country": "RU",
+    "text": "Если у тебя есть фонтан, заткни его; дай отдохнуть и фонтану.",
+    "author": "Козьма Прутков",
+    "author_en": "Kozma Prutkov",
+    "source": "Плоды раздумья"
+  },
+  {
+    "id": "ru-prutkov-002",
+    "country": "RU",
+    "text": "Многие вещи нам непонятны не потому, что наши понятия слабы, но потому, что сии вещи не входят в круг наших понятий.",
+    "author": "Козьма Прутков",
+    "author_en": "Kozma Prutkov",
+    "source": "Плоды раздумья"
+  },
+  {
+    "id": "ru-tsiolkovsky-001",
+    "country": "RU",
+    "text": "Земля — колыбель разума, но нельзя вечно жить в колыбели.",
+    "author": "Константин Циолковский",
+    "author_en": "Konstantin Tsiolkovsky",
+    "source": "Письмо Б. Н. Воробьёву, 1911"
+  },
+  {
+    "id": "ru-yevtushenko-001",
+    "country": "RU",
+    "text": "Поэт в России — больше, чем поэт.",
+    "author": "Евгений Евтушенко",
+    "author_en": "Yevgeny Yevtushenko",
+    "source": "Стихотворение"
+  },
+  {
+    "id": "ru-solzhenitsyn-001",
+    "country": "RU",
+    "text": "Линия, разделяющая добро и зло, проходит через каждое человеческое сердце.",
+    "author": "Александр Солженицын",
+    "author_en": "Alexander Solzhenitsyn",
+    "source": "Архипелаг ГУЛАГ"
   }
 ]

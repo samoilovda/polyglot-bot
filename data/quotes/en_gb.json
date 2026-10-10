@@ -246,5 +246,805 @@
     "author": "Virginia Woolf",
     "author_en": "Virginia Woolf",
     "source": "A Room of One's Own, 1929"
+  },
+  {
+    "id": "en_gb-shakespeare-004",
+    "country": "GB",
+    "text": "To be, or not to be, that is the question.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "Hamlet, c. 1600"
+  },
+  {
+    "id": "en_gb-shakespeare-005",
+    "country": "GB",
+    "text": "The course of true love never did run smooth.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "A Midsummer Night's Dream, 1595"
+  },
+  {
+    "id": "en_gb-shakespeare-006",
+    "country": "GB",
+    "text": "Brevity is the soul of wit.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "Hamlet, c. 1600"
+  },
+  {
+    "id": "en_gb-shakespeare-007",
+    "country": "GB",
+    "text": "Some are born great, some achieve greatness, and some have greatness thrust upon them.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "Twelfth Night, 1602"
+  },
+  {
+    "id": "en_gb-shakespeare-008",
+    "country": "GB",
+    "text": "We are such stuff as dreams are made on, and our little life is rounded with a sleep.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "The Tempest, 1611"
+  },
+  {
+    "id": "en_gb-shakespeare-009",
+    "country": "GB",
+    "text": "Cowards die many times before their deaths; the valiant never taste of death but once.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "Julius Caesar, 1599"
+  },
+  {
+    "id": "en_gb-shakespeare-010",
+    "country": "GB",
+    "text": "Uneasy lies the head that wears a crown.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "Henry IV, Part 2, 1598"
+  },
+  {
+    "id": "en_gb-shakespeare-011",
+    "country": "GB",
+    "text": "All that glisters is not gold.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "The Merchant of Venice, 1600"
+  },
+  {
+    "id": "en_gb-shakespeare-012",
+    "country": "GB",
+    "text": "Love looks not with the eyes, but with the mind.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "A Midsummer Night's Dream, 1595"
+  },
+  {
+    "id": "en_gb-shakespeare-013",
+    "country": "GB",
+    "text": "The quality of mercy is not strained; it droppeth as the gentle rain from heaven.",
+    "author": "William Shakespeare",
+    "author_en": "William Shakespeare",
+    "source": "The Merchant of Venice, 1600"
+  },
+  {
+    "id": "en_gb-churchill-003",
+    "country": "GB",
+    "text": "We shall fight on the beaches, we shall fight on the landing grounds, we shall fight in the fields and in the streets.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Speech to the House of Commons, 1940"
+  },
+  {
+    "id": "en_gb-churchill-004",
+    "country": "GB",
+    "text": "Democracy is the worst form of government, except for all those other forms that have been tried from time to time.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Speech to the House of Commons, 1947"
+  },
+  {
+    "id": "en_gb-churchill-005",
+    "country": "GB",
+    "text": "The price of greatness is responsibility.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Speech at Harvard, 1943"
+  },
+  {
+    "id": "en_gb-churchill-006",
+    "country": "GB",
+    "text": "To improve is to change; to be perfect is to change often.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Letter, 1925"
+  },
+  {
+    "id": "en_gb-churchill-007",
+    "country": "GB",
+    "text": "An appeaser is one who feeds a crocodile, hoping it will eat him last.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Speech, 1940"
+  },
+  {
+    "id": "en_gb-churchill-008",
+    "country": "GB",
+    "text": "Personally I am always ready to learn, although I do not always like being taught.",
+    "author": "Winston Churchill",
+    "author_en": "Winston Churchill",
+    "source": "Speech to the House of Commons, 1952"
+  },
+  {
+    "id": "en_gb-johnson-002",
+    "country": "GB",
+    "text": "Nothing will ever be attempted if all possible objections must first be overcome.",
+    "author": "Samuel Johnson",
+    "author_en": "Samuel Johnson",
+    "source": "Rasselas, 1759"
+  },
+  {
+    "id": "en_gb-johnson-003",
+    "country": "GB",
+    "text": "The only end of writing is to enable the readers better to enjoy life, or better to endure it.",
+    "author": "Samuel Johnson",
+    "author_en": "Samuel Johnson",
+    "source": "Lives of the Poets, 1781"
+  },
+  {
+    "id": "en_gb-austen-002",
+    "country": "GB",
+    "text": "There is no charm equal to tenderness of heart.",
+    "author": "Jane Austen",
+    "author_en": "Jane Austen",
+    "source": "Emma, 1815"
+  },
+  {
+    "id": "en_gb-austen-003",
+    "country": "GB",
+    "text": "I declare after all there is no enjoyment like reading!",
+    "author": "Jane Austen",
+    "author_en": "Jane Austen",
+    "source": "Pride and Prejudice, 1813"
+  },
+  {
+    "id": "en_gb-austen-004",
+    "country": "GB",
+    "text": "Nothing is more deceitful than the appearance of humility.",
+    "author": "Jane Austen",
+    "author_en": "Jane Austen",
+    "source": "Pride and Prejudice, 1813"
+  },
+  {
+    "id": "en_gb-austen-005",
+    "country": "GB",
+    "text": "One cannot be always laughing at a man without now and then stumbling on something witty.",
+    "author": "Jane Austen",
+    "author_en": "Jane Austen",
+    "source": "Pride and Prejudice, 1813"
+  },
+  {
+    "id": "en_gb-orwell-002",
+    "country": "GB",
+    "text": "War is peace. Freedom is slavery. Ignorance is strength.",
+    "author": "George Orwell",
+    "author_en": "George Orwell",
+    "source": "Nineteen Eighty-Four, 1949"
+  },
+  {
+    "id": "en_gb-orwell-003",
+    "country": "GB",
+    "text": "Who controls the past controls the future: who controls the present controls the past.",
+    "author": "George Orwell",
+    "author_en": "George Orwell",
+    "source": "Nineteen Eighty-Four, 1949"
+  },
+  {
+    "id": "en_gb-orwell-004",
+    "country": "GB",
+    "text": "All animals are equal, but some animals are more equal than others.",
+    "author": "George Orwell",
+    "author_en": "George Orwell",
+    "source": "Animal Farm, 1945"
+  },
+  {
+    "id": "en_gb-orwell-005",
+    "country": "GB",
+    "text": "If liberty means anything at all, it means the right to tell people what they do not want to hear.",
+    "author": "George Orwell",
+    "author_en": "George Orwell",
+    "source": "Preface to Animal Farm, 1945"
+  },
+  {
+    "id": "en_gb-lewis-002",
+    "country": "GB",
+    "text": "Friendship is born at that moment when one person says to another: What! You too? I thought I was the only one.",
+    "author": "C. S. Lewis",
+    "author_en": "C. S. Lewis",
+    "source": "The Four Loves, 1960"
+  },
+  {
+    "id": "en_gb-lewis-003",
+    "country": "GB",
+    "text": "Courage is not simply one of the virtues, but the form of every virtue at the testing point.",
+    "author": "C. S. Lewis",
+    "author_en": "C. S. Lewis",
+    "source": "The Screwtape Letters, 1942"
+  },
+  {
+    "id": "en_gb-darwin-002",
+    "country": "GB",
+    "text": "If the misery of the poor be caused not by the laws of nature, but by our institutions, great is our sin.",
+    "author": "Charles Darwin",
+    "author_en": "Charles Darwin",
+    "source": "The Voyage of the Beagle, 1839"
+  },
+  {
+    "id": "en_gb-darwin-003",
+    "country": "GB",
+    "text": "There is grandeur in this view of life, with its several powers, having been originally breathed into a few forms or into one.",
+    "author": "Charles Darwin",
+    "author_en": "Charles Darwin",
+    "source": "On the Origin of Species, 1859"
+  },
+  {
+    "id": "en_gb-wilde-003",
+    "country": "IE",
+    "text": "I can resist everything except temptation.",
+    "author": "Oscar Wilde",
+    "author_en": "Oscar Wilde",
+    "source": "Lady Windermere's Fan, 1892"
+  },
+  {
+    "id": "en_gb-wilde-004",
+    "country": "IE",
+    "text": "To live is the rarest thing in the world. Most people exist, that is all.",
+    "author": "Oscar Wilde",
+    "author_en": "Oscar Wilde",
+    "source": "The Soul of Man under Socialism, 1891"
+  },
+  {
+    "id": "en_gb-wilde-005",
+    "country": "IE",
+    "text": "Experience is merely the name men gave to their mistakes.",
+    "author": "Oscar Wilde",
+    "author_en": "Oscar Wilde",
+    "source": "The Picture of Dorian Gray, 1890"
+  },
+  {
+    "id": "en_gb-wilde-006",
+    "country": "IE",
+    "text": "The truth is rarely pure and never simple.",
+    "author": "Oscar Wilde",
+    "author_en": "Oscar Wilde",
+    "source": "The Importance of Being Earnest, 1895"
+  },
+  {
+    "id": "en_gb-wilde-007",
+    "country": "IE",
+    "text": "Man is least himself when he talks in his own person. Give him a mask, and he will tell you the truth.",
+    "author": "Oscar Wilde",
+    "author_en": "Oscar Wilde",
+    "source": "The Critic as Artist, 1891"
+  },
+  {
+    "id": "en_gb-shaw-002",
+    "country": "IE",
+    "text": "The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself.",
+    "author": "George Bernard Shaw",
+    "author_en": "George Bernard Shaw",
+    "source": "Man and Superman, 1903"
+  },
+  {
+    "id": "en_gb-shaw-003",
+    "country": "IE",
+    "text": "He who can, does. He who cannot, teaches.",
+    "author": "George Bernard Shaw",
+    "author_en": "George Bernard Shaw",
+    "source": "Man and Superman, 1903"
+  },
+  {
+    "id": "en_gb-shaw-004",
+    "country": "IE",
+    "text": "The worst sin towards our fellow creatures is not to hate them, but to be indifferent to them: that is the essence of inhumanity.",
+    "author": "George Bernard Shaw",
+    "author_en": "George Bernard Shaw",
+    "source": "The Devil's Disciple, 1897"
+  },
+  {
+    "id": "en_gb-swift-002",
+    "country": "IE",
+    "text": "It is useless to attempt to reason a man out of a thing he was never reasoned into.",
+    "author": "Jonathan Swift",
+    "author_en": "Jonathan Swift",
+    "source": "Letter to a Young Gentleman, 1721"
+  },
+  {
+    "id": "en_gb-yeats-002",
+    "country": "IE",
+    "text": "The best lack all conviction, while the worst are full of passionate intensity.",
+    "author": "W. B. Yeats",
+    "author_en": "W. B. Yeats",
+    "source": "The Second Coming, 1919"
+  },
+  {
+    "id": "en_gb-yeats-003",
+    "country": "IE",
+    "text": "Things fall apart; the centre cannot hold.",
+    "author": "W. B. Yeats",
+    "author_en": "W. B. Yeats",
+    "source": "The Second Coming, 1919"
+  },
+  {
+    "id": "en_gb-yeats-004",
+    "country": "IE",
+    "text": "How can we know the dancer from the dance?",
+    "author": "W. B. Yeats",
+    "author_en": "W. B. Yeats",
+    "source": "Among School Children, 1928"
+  },
+  {
+    "id": "en_gb-yeats-005",
+    "country": "IE",
+    "text": "Think where man's glory most begins and ends, and say my glory was I had such friends.",
+    "author": "W. B. Yeats",
+    "author_en": "W. B. Yeats",
+    "source": "The Municipal Gallery Revisited, 1937"
+  },
+  {
+    "id": "en_gb-beckett-002",
+    "country": "IE",
+    "text": "I can't go on, I'll go on.",
+    "author": "Samuel Beckett",
+    "author_en": "Samuel Beckett",
+    "source": "The Unnamable, 1953"
+  },
+  {
+    "id": "en_gb-beckett-003",
+    "country": "IE",
+    "text": "We are all born mad. Some remain so.",
+    "author": "Samuel Beckett",
+    "author_en": "Samuel Beckett",
+    "source": "Waiting for Godot, 1953"
+  },
+  {
+    "id": "en_gb-joyce-002",
+    "country": "IE",
+    "text": "Mistakes are the portals of discovery.",
+    "author": "James Joyce",
+    "author_en": "James Joyce",
+    "source": "Ulysses, 1922"
+  },
+  {
+    "id": "en_gb-joyce-003",
+    "country": "IE",
+    "text": "History is a nightmare from which I am trying to awake.",
+    "author": "James Joyce",
+    "author_en": "James Joyce",
+    "source": "Ulysses, 1922"
+  },
+  {
+    "id": "en_gb-burns-002",
+    "country": "GB-SCT",
+    "text": "The best laid schemes o' mice an' men gang aft agley.",
+    "author": "Robert Burns",
+    "author_en": "Robert Burns",
+    "source": "To a Mouse, 1785"
+  },
+  {
+    "id": "en_gb-burns-003",
+    "country": "GB-SCT",
+    "text": "A man's a man for a' that.",
+    "author": "Robert Burns",
+    "author_en": "Robert Burns",
+    "source": "A Man's a Man for A' That, 1795"
+  },
+  {
+    "id": "en_gb-burns-004",
+    "country": "GB-SCT",
+    "text": "My heart's in the Highlands, my heart is not here.",
+    "author": "Robert Burns",
+    "author_en": "Robert Burns",
+    "source": "My Heart's in the Highlands, 1789"
+  },
+  {
+    "id": "en_gb-stevenson-002",
+    "country": "GB-SCT",
+    "text": "To be what we are, and to become what we are capable of becoming, is the only end of life.",
+    "author": "Robert Louis Stevenson",
+    "author_en": "Robert Louis Stevenson",
+    "source": "Familiar Studies of Men and Books, 1882"
+  },
+  {
+    "id": "en_gb-scott-002",
+    "country": "GB-SCT",
+    "text": "Breathes there the man, with soul so dead, who never to himself hath said, This is my own, my native land!",
+    "author": "Walter Scott",
+    "author_en": "Walter Scott",
+    "source": "The Lay of the Last Minstrel, 1805"
+  },
+  {
+    "id": "en_gb-scott-003",
+    "country": "GB-SCT",
+    "text": "O Caledonia! stern and wild, meet nurse for a poetic child!",
+    "author": "Walter Scott",
+    "author_en": "Walter Scott",
+    "source": "The Lay of the Last Minstrel, 1805"
+  },
+  {
+    "id": "en_gb-smith-002",
+    "country": "GB-SCT",
+    "text": "No society can surely be flourishing and happy, of which the far greater part of the members are poor and miserable.",
+    "author": "Adam Smith",
+    "author_en": "Adam Smith",
+    "source": "The Wealth of Nations, 1776"
+  },
+  {
+    "id": "en_gb-hume-002",
+    "country": "GB-SCT",
+    "text": "Reason is, and ought only to be the slave of the passions.",
+    "author": "David Hume",
+    "author_en": "David Hume",
+    "source": "A Treatise of Human Nature, 1739"
+  },
+  {
+    "id": "en_gb-hume-003",
+    "country": "GB-SCT",
+    "text": "Be a philosopher; but, amidst all your philosophy, be still a man.",
+    "author": "David Hume",
+    "author_en": "David Hume",
+    "source": "An Enquiry Concerning Human Understanding, 1748"
+  },
+  {
+    "id": "en_gb-thomas-002",
+    "country": "GB-WLS",
+    "text": "And death shall have no dominion.",
+    "author": "Dylan Thomas",
+    "author_en": "Dylan Thomas",
+    "source": "And Death Shall Have No Dominion, 1933"
+  },
+  {
+    "id": "en_gb-russell-002",
+    "country": "GB-WLS",
+    "text": "The whole problem with the world is that fools and fanatics are always so certain of themselves, and wiser people so full of doubts.",
+    "author": "Bertrand Russell",
+    "author_en": "Bertrand Russell",
+    "source": "The Triumph of Stupidity, 1933"
+  },
+  {
+    "id": "en_gb-russell-003",
+    "country": "GB-WLS",
+    "text": "To be able to fill leisure intelligently is the last product of civilization.",
+    "author": "Bertrand Russell",
+    "author_en": "Bertrand Russell",
+    "source": "The Conquest of Happiness, 1930"
+  },
+  {
+    "id": "en_gb-keats-002",
+    "country": "GB",
+    "text": "Beauty is truth, truth beauty — that is all ye know on earth, and all ye need to know.",
+    "author": "John Keats",
+    "author_en": "John Keats",
+    "source": "Ode on a Grecian Urn, 1819"
+  },
+  {
+    "id": "en_gb-keats-003",
+    "country": "GB",
+    "text": "Season of mists and mellow fruitfulness, close bosom-friend of the maturing sun.",
+    "author": "John Keats",
+    "author_en": "John Keats",
+    "source": "To Autumn, 1819"
+  },
+  {
+    "id": "en_gb-keats-004",
+    "country": "GB",
+    "text": "Heard melodies are sweet, but those unheard are sweeter.",
+    "author": "John Keats",
+    "author_en": "John Keats",
+    "source": "Ode on a Grecian Urn, 1819"
+  },
+  {
+    "id": "en_gb-byron-002",
+    "country": "GB",
+    "text": "She walks in beauty, like the night of cloudless climes and starry skies.",
+    "author": "Lord Byron",
+    "author_en": "Lord Byron",
+    "source": "She Walks in Beauty, 1814"
+  },
+  {
+    "id": "en_gb-byron-003",
+    "country": "GB",
+    "text": "There is pleasure in the pathless woods, there is rapture in the lonely shore.",
+    "author": "Lord Byron",
+    "author_en": "Lord Byron",
+    "source": "Childe Harold's Pilgrimage, 1818"
+  },
+  {
+    "id": "en_gb-dickens-002",
+    "country": "GB",
+    "text": "No one is useless in this world who lightens the burden of it to anyone else.",
+    "author": "Charles Dickens",
+    "author_en": "Charles Dickens",
+    "source": "Our Mutual Friend, 1865"
+  },
+  {
+    "id": "en_gb-dickens-003",
+    "country": "GB",
+    "text": "I wear the chain I forged in life.",
+    "author": "Charles Dickens",
+    "author_en": "Charles Dickens",
+    "source": "A Christmas Carol, 1843"
+  },
+  {
+    "id": "en_gb-dickens-004",
+    "country": "GB",
+    "text": "It is a far, far better thing that I do, than I have ever done.",
+    "author": "Charles Dickens",
+    "author_en": "Charles Dickens",
+    "source": "A Tale of Two Cities, 1859"
+  },
+  {
+    "id": "en_gb-dickens-005",
+    "country": "GB",
+    "text": "Annual income twenty pounds, annual expenditure nineteen nineteen and six, result happiness.",
+    "author": "Charles Dickens",
+    "author_en": "Charles Dickens",
+    "source": "David Copperfield, 1850"
+  },
+  {
+    "id": "en_gb-newton-002",
+    "country": "GB",
+    "text": "I do not know what I may appear to the world, but to myself I seem to have been only like a boy playing on the sea-shore.",
+    "author": "Isaac Newton",
+    "author_en": "Isaac Newton",
+    "source": "Quoted in Brewster's Memoirs, 1855"
+  },
+  {
+    "id": "en_gb-newton-003",
+    "country": "GB",
+    "text": "To every action there is always opposed an equal reaction.",
+    "author": "Isaac Newton",
+    "author_en": "Isaac Newton",
+    "source": "Principia Mathematica, 1687"
+  },
+  {
+    "id": "en_gb-bacon-002",
+    "country": "GB",
+    "text": "Hope is a good breakfast, but it is a bad supper.",
+    "author": "Francis Bacon",
+    "author_en": "Francis Bacon",
+    "source": "Apophthegms, 1625"
+  },
+  {
+    "id": "en_gb-bacon-003",
+    "country": "GB",
+    "text": "Nature, to be commanded, must be obeyed.",
+    "author": "Francis Bacon",
+    "author_en": "Francis Bacon",
+    "source": "Novum Organum, 1620"
+  },
+  {
+    "id": "en_gb-bacon-004",
+    "country": "GB",
+    "text": "Some books are to be tasted, others to be swallowed, and some few to be chewed and digested.",
+    "author": "Francis Bacon",
+    "author_en": "Francis Bacon",
+    "source": "Of Studies, 1625"
+  },
+  {
+    "id": "en_gb-bacon-005",
+    "country": "GB",
+    "text": "If a man will begin with certainties, he shall end in doubts; but if he will be content to begin with doubts, he shall end in certainties.",
+    "author": "Francis Bacon",
+    "author_en": "Francis Bacon",
+    "source": "The Advancement of Learning, 1605"
+  },
+  {
+    "id": "en_gb-tolkien-002",
+    "country": "GB",
+    "text": "All we have to decide is what to do with the time that is given us.",
+    "author": "J. R. R. Tolkien",
+    "author_en": "J. R. R. Tolkien",
+    "source": "The Fellowship of the Ring, 1954"
+  },
+  {
+    "id": "en_gb-tolkien-003",
+    "country": "GB",
+    "text": "It's a dangerous business, Frodo, going out your door.",
+    "author": "J. R. R. Tolkien",
+    "author_en": "J. R. R. Tolkien",
+    "source": "The Fellowship of the Ring, 1954"
+  },
+  {
+    "id": "en_gb-tolkien-004",
+    "country": "GB",
+    "text": "The world is indeed full of peril, and in it there are many dark places; but still there is much that is fair.",
+    "author": "J. R. R. Tolkien",
+    "author_en": "J. R. R. Tolkien",
+    "source": "The Fellowship of the Ring, 1954"
+  },
+  {
+    "id": "en_gb-woolf-002",
+    "country": "GB",
+    "text": "One cannot think well, love well, sleep well, if one has not dined well.",
+    "author": "Virginia Woolf",
+    "author_en": "Virginia Woolf",
+    "source": "A Room of One's Own, 1929"
+  },
+  {
+    "id": "en_gb-woolf-003",
+    "country": "GB",
+    "text": "Lock up your libraries if you like; but there is no gate, no lock, no bolt that you can set upon the freedom of my mind.",
+    "author": "Virginia Woolf",
+    "author_en": "Virginia Woolf",
+    "source": "A Room of One's Own, 1929"
+  },
+  {
+    "id": "en_gb-wordsworth-001",
+    "country": "GB",
+    "text": "I wandered lonely as a cloud that floats on high o'er vales and hills.",
+    "author": "William Wordsworth",
+    "author_en": "William Wordsworth",
+    "source": "Daffodils, 1807"
+  },
+  {
+    "id": "en_gb-wordsworth-002",
+    "country": "GB",
+    "text": "The Child is father of the Man.",
+    "author": "William Wordsworth",
+    "author_en": "William Wordsworth",
+    "source": "My Heart Leaps Up, 1807"
+  },
+  {
+    "id": "en_gb-wordsworth-003",
+    "country": "GB",
+    "text": "Poetry is the spontaneous overflow of powerful feelings.",
+    "author": "William Wordsworth",
+    "author_en": "William Wordsworth",
+    "source": "Preface to Lyrical Ballads, 1800"
+  },
+  {
+    "id": "en_gb-wordsworth-004",
+    "country": "GB",
+    "text": "The world is too much with us; late and soon, getting and spending, we lay waste our powers.",
+    "author": "William Wordsworth",
+    "author_en": "William Wordsworth",
+    "source": "The World Is Too Much with Us, 1807"
+  },
+  {
+    "id": "en_gb-coleridge-001",
+    "country": "GB",
+    "text": "Water, water, every where, nor any drop to drink.",
+    "author": "Samuel Taylor Coleridge",
+    "author_en": "Samuel Taylor Coleridge",
+    "source": "The Rime of the Ancient Mariner, 1798"
+  },
+  {
+    "id": "en_gb-coleridge-002",
+    "country": "GB",
+    "text": "He prayeth well, who loveth well both man and bird and beast.",
+    "author": "Samuel Taylor Coleridge",
+    "author_en": "Samuel Taylor Coleridge",
+    "source": "The Rime of the Ancient Mariner, 1798"
+  },
+  {
+    "id": "en_gb-shelley-001",
+    "country": "GB",
+    "text": "If Winter comes, can Spring be far behind?",
+    "author": "Percy Bysshe Shelley",
+    "author_en": "Percy Bysshe Shelley",
+    "source": "Ode to the West Wind, 1820"
+  },
+  {
+    "id": "en_gb-shelley-002",
+    "country": "GB",
+    "text": "Poets are the unacknowledged legislators of the world.",
+    "author": "Percy Bysshe Shelley",
+    "author_en": "Percy Bysshe Shelley",
+    "source": "A Defence of Poetry, 1840"
+  },
+  {
+    "id": "en_gb-blake-001",
+    "country": "GB",
+    "text": "To see a World in a Grain of Sand and a Heaven in a Wild Flower.",
+    "author": "William Blake",
+    "author_en": "William Blake",
+    "source": "Auguries of Innocence, c. 1803"
+  },
+  {
+    "id": "en_gb-blake-002",
+    "country": "GB",
+    "text": "The road of excess leads to the palace of wisdom.",
+    "author": "William Blake",
+    "author_en": "William Blake",
+    "source": "The Marriage of Heaven and Hell, 1790"
+  },
+  {
+    "id": "en_gb-tennyson-001",
+    "country": "GB",
+    "text": "'Tis better to have loved and lost than never to have loved at all.",
+    "author": "Alfred, Lord Tennyson",
+    "author_en": "Alfred, Lord Tennyson",
+    "source": "In Memoriam A. H. H., 1850"
+  },
+  {
+    "id": "en_gb-tennyson-002",
+    "country": "GB",
+    "text": "To strive, to seek, to find, and not to yield.",
+    "author": "Alfred, Lord Tennyson",
+    "author_en": "Alfred, Lord Tennyson",
+    "source": "Ulysses, 1842"
+  },
+  {
+    "id": "en_gb-browning-001",
+    "country": "GB",
+    "text": "Ah, but a man's reach should exceed his grasp, or what's a heaven for?",
+    "author": "Robert Browning",
+    "author_en": "Robert Browning",
+    "source": "Andrea del Sarto, 1855"
+  },
+  {
+    "id": "en_gb-ebbrowning-001",
+    "country": "GB",
+    "text": "How do I love thee? Let me count the ways.",
+    "author": "Elizabeth Barrett Browning",
+    "author_en": "Elizabeth Barrett Browning",
+    "source": "Sonnets from the Portuguese, 1850"
+  },
+  {
+    "id": "en_gb-donne-001",
+    "country": "GB",
+    "text": "No man is an island, entire of itself; every man is a piece of the continent.",
+    "author": "John Donne",
+    "author_en": "John Donne",
+    "source": "Devotions upon Emergent Occasions, 1624"
+  },
+  {
+    "id": "en_gb-milton-001",
+    "country": "GB",
+    "text": "They also serve who only stand and wait.",
+    "author": "John Milton",
+    "author_en": "John Milton",
+    "source": "On His Blindness, 1673"
+  },
+  {
+    "id": "en_gb-pope-001",
+    "country": "GB",
+    "text": "To err is human, to forgive divine.",
+    "author": "Alexander Pope",
+    "author_en": "Alexander Pope",
+    "source": "An Essay on Criticism, 1711"
+  },
+  {
+    "id": "en_gb-carroll-001",
+    "country": "GB",
+    "text": "Why, sometimes I've believed as many as six impossible things before breakfast.",
+    "author": "Lewis Carroll",
+    "author_en": "Lewis Carroll",
+    "source": "Through the Looking-Glass, 1871"
+  },
+  {
+    "id": "en_gb-kipling-001",
+    "country": "GB",
+    "text": "If you can keep your head when all about you are losing theirs and blaming it on you.",
+    "author": "Rudyard Kipling",
+    "author_en": "Rudyard Kipling",
+    "source": "If—, 1910"
+  },
+  {
+    "id": "en_gb-eliot-001",
+    "country": "GB",
+    "text": "What do we live for, if it is not to make life less difficult to each other?",
+    "author": "George Eliot",
+    "author_en": "George Eliot",
+    "source": "Middlemarch, 1871"
+  },
+  {
+    "id": "en_gb-doyle-001",
+    "country": "GB-SCT",
+    "text": "When you have eliminated the impossible, whatever remains, however improbable, must be the truth.",
+    "author": "Arthur Conan Doyle",
+    "author_en": "Arthur Conan Doyle",
+    "source": "The Sign of the Four, 1890"
   }
 ]

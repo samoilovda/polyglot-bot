@@ -238,5 +238,805 @@
     "author": "Mario Benedetti",
     "author_en": "Mario Benedetti",
     "source": "No te salves, 1985"
+  },
+  {
+    "id": "es-cervantes-005",
+    "country": "ES",
+    "text": "La verdad adelgaza y no quiebra, y siempre anda sobre la mentira como el aceite sobre el agua.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, II, 1615"
+  },
+  {
+    "id": "es-cervantes-006",
+    "country": "ES",
+    "text": "Quien canta su mal espanta.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, I, 1605"
+  },
+  {
+    "id": "es-cervantes-007",
+    "country": "ES",
+    "text": "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, I, 1605"
+  },
+  {
+    "id": "es-cervantes-008",
+    "country": "ES",
+    "text": "La pluma es la lengua del alma.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, II, 1615"
+  },
+  {
+    "id": "es-cervantes-009",
+    "country": "ES",
+    "text": "Dime con quién andas y te diré quién eres.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, II, 1615"
+  },
+  {
+    "id": "es-cervantes-010",
+    "country": "ES",
+    "text": "Cada uno es hijo de sus obras.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, I, 1605"
+  },
+  {
+    "id": "es-cervantes-011",
+    "country": "ES",
+    "text": "La sangre se hereda y la virtud se aquista, y la virtud vale por sí sola lo que la sangre no vale.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, II, 1615"
+  },
+  {
+    "id": "es-cervantes-012",
+    "country": "ES",
+    "text": "La mejor salsa del mundo es el hambre.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, II, 1615"
+  },
+  {
+    "id": "es-cervantes-013",
+    "country": "ES",
+    "text": "Más vale un toma que dos te daré.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, I, 1605"
+  },
+  {
+    "id": "es-cervantes-014",
+    "country": "ES",
+    "text": "Nunca la lanza embotó la pluma, ni la pluma la lanza.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, I, 1605"
+  },
+  {
+    "id": "es-machado-002",
+    "country": "ES",
+    "text": "Despacito y buena letra: el hacer las cosas bien importa más que el hacerlas.",
+    "author": "Antonio Machado",
+    "author_en": "Antonio Machado",
+    "source": "Proverbios y cantares, 1912"
+  },
+  {
+    "id": "es-machado-003",
+    "country": "ES",
+    "text": "Todo pasa y todo queda, pero lo nuestro es pasar, pasar haciendo caminos.",
+    "author": "Antonio Machado",
+    "author_en": "Antonio Machado",
+    "source": "Proverbios y cantares, 1912"
+  },
+  {
+    "id": "es-machado-004",
+    "country": "ES",
+    "text": "Españolito que vienes al mundo, te guarde Dios. Una de las dos Españas ha de helarte el corazón.",
+    "author": "Antonio Machado",
+    "author_en": "Antonio Machado",
+    "source": "Campos de Castilla, 1912"
+  },
+  {
+    "id": "es-machado-005",
+    "country": "ES",
+    "text": "¿Tu verdad? No, la Verdad, y ven conmigo a buscarla. La tuya, guárdatela.",
+    "author": "Antonio Machado",
+    "author_en": "Antonio Machado",
+    "source": "Proverbios y cantares, 1912"
+  },
+  {
+    "id": "es-machado-006",
+    "country": "ES",
+    "text": "Los ojos que ves no son ojos porque tú los veas; son ojos porque te ven.",
+    "author": "Antonio Machado",
+    "author_en": "Antonio Machado",
+    "source": "Proverbios y cantares, 1912"
+  },
+  {
+    "id": "es-lorca-002",
+    "country": "ES",
+    "text": "Verde que te quiero verde. Verde viento. Verdes ramas.",
+    "author": "Federico García Lorca",
+    "author_en": "Federico García Lorca",
+    "source": "Romance sonámbulo, 1928"
+  },
+  {
+    "id": "es-lorca-003",
+    "country": "ES",
+    "text": "A las cinco de la tarde. Eran las cinco en punto de la tarde.",
+    "author": "Federico García Lorca",
+    "author_en": "Federico García Lorca",
+    "source": "Llanto por Ignacio Sánchez Mejías, 1935"
+  },
+  {
+    "id": "es-lorca-004",
+    "country": "ES",
+    "text": "Si muero, dejad el balcón abierto.",
+    "author": "Federico García Lorca",
+    "author_en": "Federico García Lorca",
+    "source": "Despedida, 1921"
+  },
+  {
+    "id": "es-calderon-002",
+    "country": "ES",
+    "text": "¿Qué es la vida? Un frenesí. ¿Qué es la vida? Una ilusión, una sombra, una ficción.",
+    "author": "Pedro Calderón de la Barca",
+    "author_en": "Pedro Calderón de la Barca",
+    "source": "La vida es sueño, 1635"
+  },
+  {
+    "id": "es-calderon-003",
+    "country": "ES",
+    "text": "Estamos en un mundo tan singular, que el vivir sólo es soñar.",
+    "author": "Pedro Calderón de la Barca",
+    "author_en": "Pedro Calderón de la Barca",
+    "source": "La vida es sueño, 1635"
+  },
+  {
+    "id": "es-quevedo-002",
+    "country": "ES",
+    "text": "Es hielo abrasador, es fuego helado, es herida que duele y no se siente.",
+    "author": "Francisco de Quevedo",
+    "author_en": "Francisco de Quevedo",
+    "source": "Definiendo el amor, c. 1620"
+  },
+  {
+    "id": "es-quevedo-003",
+    "country": "ES",
+    "text": "Serán ceniza, mas tendrá sentido; polvo serán, mas polvo enamorado.",
+    "author": "Francisco de Quevedo",
+    "author_en": "Francisco de Quevedo",
+    "source": "Amor constante más allá de la muerte, c. 1620"
+  },
+  {
+    "id": "es-quevedo-004",
+    "country": "ES",
+    "text": "Cerrar podrá mis ojos la postrera sombra que me llevare el blanco día.",
+    "author": "Francisco de Quevedo",
+    "author_en": "Francisco de Quevedo",
+    "source": "Amor constante más allá de la muerte, c. 1620"
+  },
+  {
+    "id": "es-hernandez-miguel-001",
+    "country": "ES",
+    "text": "Para la libertad sangro, lucho, pervivo.",
+    "author": "Miguel Hernández",
+    "author_en": "Miguel Hernández",
+    "source": "Vientos del pueblo, 1937"
+  },
+  {
+    "id": "es-hernandez-miguel-002",
+    "country": "ES",
+    "text": "En la cuna del hambre mi niño estaba.",
+    "author": "Miguel Hernández",
+    "author_en": "Miguel Hernández",
+    "source": "Nanas de la cebolla, 1939"
+  },
+  {
+    "id": "es-hernandez-miguel-003",
+    "country": "ES",
+    "text": "Llegó con tres heridas: la del amor, la de la muerte, la de la vida.",
+    "author": "Miguel Hernández",
+    "author_en": "Miguel Hernández",
+    "source": "El rayo que no cesa, 1936"
+  },
+  {
+    "id": "es-unamuno-001",
+    "country": "ES",
+    "text": "Venceréis, pero no convenceréis, porque para convencer hay que persuadir.",
+    "author": "Miguel de Unamuno",
+    "author_en": "Miguel de Unamuno",
+    "source": "Discurso en la Universidad de Salamanca, 1936"
+  },
+  {
+    "id": "es-lope-001",
+    "country": "ES",
+    "text": "Desmayarse, atreverse, estar furioso, áspero, tierno, liberal, esquivo.",
+    "author": "Lope de Vega",
+    "author_en": "Lope de Vega",
+    "source": "Rimas, 1602"
+  },
+  {
+    "id": "es-lope-002",
+    "country": "ES",
+    "text": "Un soneto me manda hacer Violante, que en mi vida me he visto en tanto aprieto.",
+    "author": "Lope de Vega",
+    "author_en": "Lope de Vega",
+    "source": "La niña de plata, 1613"
+  },
+  {
+    "id": "es-gongora-001",
+    "country": "ES",
+    "text": "Ándeme yo caliente y ríase la gente.",
+    "author": "Luis de Góngora",
+    "author_en": "Luis de Góngora",
+    "source": "Letrilla, 1581"
+  },
+  {
+    "id": "es-garcilaso-001",
+    "country": "ES",
+    "text": "Cuando me paro a contemplar mi estado y a ver los pasos por donde me han traído.",
+    "author": "Garcilaso de la Vega",
+    "author_en": "Garcilaso de la Vega",
+    "source": "Soneto I, 1543"
+  },
+  {
+    "id": "es-garcilaso-002",
+    "country": "ES",
+    "text": "En tanto que de rosa y azucena se muestra la color en vuestro gesto.",
+    "author": "Garcilaso de la Vega",
+    "author_en": "Garcilaso de la Vega",
+    "source": "Soneto XXIII, 1543"
+  },
+  {
+    "id": "es-manrique-001",
+    "country": "ES",
+    "text": "Nuestras vidas son los ríos que van a dar en la mar, que es el morir.",
+    "author": "Jorge Manrique",
+    "author_en": "Jorge Manrique",
+    "source": "Coplas por la muerte de su padre, c. 1476"
+  },
+  {
+    "id": "es-manrique-002",
+    "country": "ES",
+    "text": "Cualquiera tiempo pasado fue mejor.",
+    "author": "Jorge Manrique",
+    "author_en": "Jorge Manrique",
+    "source": "Coplas por la muerte de su padre, c. 1476"
+  },
+  {
+    "id": "es-fray-luis-001",
+    "country": "ES",
+    "text": "¡Qué descansada vida la del que huye del mundanal ruido!",
+    "author": "Fray Luis de León",
+    "author_en": "Fray Luis de León",
+    "source": "Vida retirada, c. 1580"
+  },
+  {
+    "id": "es-teresa-001",
+    "country": "ES",
+    "text": "Nada te turbe, nada te espante; todo se pasa, Dios no se muda.",
+    "author": "Santa Teresa de Jesús",
+    "author_en": "Teresa of Ávila",
+    "source": "Poesías, siglo XVI"
+  },
+  {
+    "id": "es-teresa-002",
+    "country": "ES",
+    "text": "Vivo sin vivir en mí, y tan alta vida espero.",
+    "author": "Santa Teresa de Jesús",
+    "author_en": "Teresa of Ávila",
+    "source": "Vivo sin vivir en mí, siglo XVI"
+  },
+  {
+    "id": "es-juan-cruz-001",
+    "country": "ES",
+    "text": "En una noche oscura, con ansias en amores inflamada.",
+    "author": "San Juan de la Cruz",
+    "author_en": "John of the Cross",
+    "source": "Noche oscura, c. 1578"
+  },
+  {
+    "id": "es-juan-cruz-002",
+    "country": "ES",
+    "text": "A la tarde te examinarán en el amor.",
+    "author": "San Juan de la Cruz",
+    "author_en": "John of the Cross",
+    "source": "Dichos de luz y amor, siglo XVI"
+  },
+  {
+    "id": "es-becquer-001",
+    "country": "ES",
+    "text": "Volverán las oscuras golondrinas en tu balcón sus nidos a colgar.",
+    "author": "Gustavo Adolfo Bécquer",
+    "author_en": "Gustavo Adolfo Bécquer",
+    "source": "Rimas, LIII, 1871"
+  },
+  {
+    "id": "es-becquer-002",
+    "country": "ES",
+    "text": "¿Qué es poesía?, dices mientras clavas en mi pupila tu pupila azul. Poesía... eres tú.",
+    "author": "Gustavo Adolfo Bécquer",
+    "author_en": "Gustavo Adolfo Bécquer",
+    "source": "Rimas, XXI, 1871"
+  },
+  {
+    "id": "es-becquer-003",
+    "country": "ES",
+    "text": "Hoy la tierra y los cielos me sonríen, hoy llega al fondo de mi alma el sol.",
+    "author": "Gustavo Adolfo Bécquer",
+    "author_en": "Gustavo Adolfo Bécquer",
+    "source": "Rimas, XVII, 1871"
+  },
+  {
+    "id": "es-rosalia-001",
+    "country": "ES",
+    "text": "Dicen que no hablan las plantas, ni las fuentes, ni los pájaros; pero hablan.",
+    "author": "Rosalía de Castro",
+    "author_en": "Rosalía de Castro",
+    "source": "En las orillas del Sar, 1884"
+  },
+  {
+    "id": "es-larra-001",
+    "country": "ES",
+    "text": "Escribir en España es llorar, es buscar voz sin encontrarla.",
+    "author": "Mariano José de Larra",
+    "author_en": "Mariano José de Larra",
+    "source": "Fígaro: Cuál de ellas, 1836"
+  },
+  {
+    "id": "es-larra-002",
+    "country": "ES",
+    "text": "Aquí yace media España; murió de la otra media.",
+    "author": "Mariano José de Larra",
+    "author_en": "Mariano José de Larra",
+    "source": "El día de difuntos de 1836"
+  },
+  {
+    "id": "es-jimenez-001",
+    "country": "ES",
+    "text": "Yo no soy yo. Soy este que va a mi lado sin yo verlo.",
+    "author": "Juan Ramón Jiménez",
+    "author_en": "Juan Ramón Jiménez",
+    "source": "Eternidades, 1918"
+  },
+  {
+    "id": "es-jimenez-002",
+    "country": "ES",
+    "text": "Inteligencia, dame el nombre exacto de las cosas.",
+    "author": "Juan Ramón Jiménez",
+    "author_en": "Juan Ramón Jiménez",
+    "source": "Eternidades, 1918"
+  },
+  {
+    "id": "es-jimenez-003",
+    "country": "ES",
+    "text": "Platero es pequeño, peludo, suave; tan blando por fuera, que se diría todo de algodón.",
+    "author": "Juan Ramón Jiménez",
+    "author_en": "Juan Ramón Jiménez",
+    "source": "Platero y yo, 1914"
+  },
+  {
+    "id": "es-borges-003",
+    "country": "AR",
+    "text": "No nos une el amor sino el espanto; será por eso que la quiero tanto.",
+    "author": "Jorge Luis Borges",
+    "author_en": "Jorge Luis Borges",
+    "source": "Buenos Aires, 1964"
+  },
+  {
+    "id": "es-borges-004",
+    "country": "AR",
+    "text": "Que otros se jacten de las páginas que han escrito; a mí me enorgullecen las que he leído.",
+    "author": "Jorge Luis Borges",
+    "author_en": "Jorge Luis Borges",
+    "source": "Elogio de la sombra, 1969"
+  },
+  {
+    "id": "es-garcia-marquez-001",
+    "country": "CO",
+    "text": "Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo.",
+    "author": "Gabriel García Márquez",
+    "author_en": "Gabriel García Márquez",
+    "source": "Cien años de soledad, 1967"
+  },
+  {
+    "id": "es-garcia-marquez-002",
+    "country": "CO",
+    "text": "El secreto de una buena vejez no es otra cosa que un pacto honrado con la soledad.",
+    "author": "Gabriel García Márquez",
+    "author_en": "Gabriel García Márquez",
+    "source": "Memoria de mis putas tristes, 2004"
+  },
+  {
+    "id": "es-garcia-marquez-003",
+    "country": "CO",
+    "text": "El mundo era tan reciente, que muchas cosas carecían de nombre, y para mencionarlas había que señalarlas con el dedo.",
+    "author": "Gabriel García Márquez",
+    "author_en": "Gabriel García Márquez",
+    "source": "Cien años de soledad, 1967"
+  },
+  {
+    "id": "es-neruda-003",
+    "country": "CL",
+    "text": "Me gustas cuando callas porque estás como ausente.",
+    "author": "Pablo Neruda",
+    "author_en": "Pablo Neruda",
+    "source": "Veinte poemas de amor y una canción desesperada, 1924"
+  },
+  {
+    "id": "es-neruda-004",
+    "country": "CL",
+    "text": "Sube a nacer conmigo, hermano.",
+    "author": "Pablo Neruda",
+    "author_en": "Pablo Neruda",
+    "source": "Alturas de Macchu Picchu, 1945"
+  },
+  {
+    "id": "es-neruda-005",
+    "country": "CL",
+    "text": "Y fue a esa edad... Llegó la poesía a buscarme.",
+    "author": "Pablo Neruda",
+    "author_en": "Pablo Neruda",
+    "source": "Memorial de Isla Negra, 1964"
+  },
+  {
+    "id": "es-neruda-006",
+    "country": "CL",
+    "text": "Nosotros, los de entonces, ya no somos los mismos.",
+    "author": "Pablo Neruda",
+    "author_en": "Pablo Neruda",
+    "source": "Veinte poemas de amor y una canción desesperada, 1924"
+  },
+  {
+    "id": "es-neruda-007",
+    "country": "CL",
+    "text": "Para mi corazón basta tu pecho, para tu libertad bastan mis alas.",
+    "author": "Pablo Neruda",
+    "author_en": "Pablo Neruda",
+    "source": "Los versos del capitán, 1952"
+  },
+  {
+    "id": "es-mistral-002",
+    "country": "CL",
+    "text": "Dame la mano y danzaremos; dame la mano y me amarás.",
+    "author": "Gabriela Mistral",
+    "author_en": "Gabriela Mistral",
+    "source": "Ternura, 1924"
+  },
+  {
+    "id": "es-mistral-003",
+    "country": "CL",
+    "text": "Del nicho helado en que los hombres te pusieron, te bajaré a la tierra humilde y soleada.",
+    "author": "Gabriela Mistral",
+    "author_en": "Gabriela Mistral",
+    "source": "Los sonetos de la muerte, 1914"
+  },
+  {
+    "id": "es-paz-002",
+    "country": "MX",
+    "text": "Dos cuerpos frente a frente son a veces dos olas y la noche es océano.",
+    "author": "Octavio Paz",
+    "author_en": "Octavio Paz",
+    "source": "Libertad bajo palabra, 1949"
+  },
+  {
+    "id": "es-paz-003",
+    "country": "MX",
+    "text": "Amar es combatir, es abrir las puertas, dejar de ser fantasma con un número a perpetua cadena condenado.",
+    "author": "Octavio Paz",
+    "author_en": "Octavio Paz",
+    "source": "Piedra de sol, 1957"
+  },
+  {
+    "id": "es-sorjuana-002",
+    "country": "MX",
+    "text": "Yo no estimo tesoros ni riquezas; y así, siempre me causa más contento poner riquezas en mi pensamiento que no mi pensamiento en las riquezas.",
+    "author": "Sor Juana Inés de la Cruz",
+    "author_en": "Sor Juana Inés de la Cruz",
+    "source": "En perseguirme, mundo, ¿qué interesas?, siglo XVII"
+  },
+  {
+    "id": "es-sorjuana-003",
+    "country": "MX",
+    "text": "Detente, sombra de mi bien esquivo, imagen del hechizo que más quiero.",
+    "author": "Sor Juana Inés de la Cruz",
+    "author_en": "Sor Juana Inés de la Cruz",
+    "source": "Soneto 165, siglo XVII"
+  },
+  {
+    "id": "es-nervo-002",
+    "country": "MX",
+    "text": "Muy cerca de mi ocaso, yo te bendigo, Vida, porque nunca me diste ni esperanza fallida, ni trabajos injustos, ni pena inmerecida.",
+    "author": "Amado Nervo",
+    "author_en": "Amado Nervo",
+    "source": "En paz, 1915"
+  },
+  {
+    "id": "es-marti-003",
+    "country": "CU",
+    "text": "Ser bueno es el único modo de ser dichoso; ser culto es el único modo de ser libre.",
+    "author": "José Martí",
+    "author_en": "José Martí",
+    "source": "Maestros ambulantes, 1884"
+  },
+  {
+    "id": "es-marti-004",
+    "country": "CU",
+    "text": "Los árboles se han de poner en fila para que no pase el gigante de las siete leguas.",
+    "author": "José Martí",
+    "author_en": "José Martí",
+    "source": "Nuestra América, 1891"
+  },
+  {
+    "id": "es-marti-005",
+    "country": "CU",
+    "text": "Con los pobres de la tierra quiero yo mi suerte echar.",
+    "author": "José Martí",
+    "author_en": "José Martí",
+    "source": "Versos sencillos, 1891"
+  },
+  {
+    "id": "es-marti-006",
+    "country": "CU",
+    "text": "Un principio justo, desde el fondo de una cueva, puede más que un ejército.",
+    "author": "José Martí",
+    "author_en": "José Martí",
+    "source": "Obras completas"
+  },
+  {
+    "id": "es-dario-002",
+    "country": "NI",
+    "text": "Yo persigo una forma que no encuentra mi estilo, botón de pensamiento que busca ser la rosa.",
+    "author": "Rubén Darío",
+    "author_en": "Rubén Darío",
+    "source": "Prosas profanas, 1896"
+  },
+  {
+    "id": "es-dario-003",
+    "country": "NI",
+    "text": "La princesa está triste... ¿qué tendrá la princesa?",
+    "author": "Rubén Darío",
+    "author_en": "Rubén Darío",
+    "source": "Sonatina, 1896"
+  },
+  {
+    "id": "es-dario-004",
+    "country": "NI",
+    "text": "Ama tu ritmo y ritma tus acciones.",
+    "author": "Rubén Darío",
+    "author_en": "Rubén Darío",
+    "source": "Cantos de vida y esperanza, 1905"
+  },
+  {
+    "id": "es-bolivar-002",
+    "country": "VE",
+    "text": "Un pueblo ignorante es un instrumento ciego de su propia destrucción.",
+    "author": "Simón Bolívar",
+    "author_en": "Simón Bolívar",
+    "source": "Discurso de Angostura, 1819"
+  },
+  {
+    "id": "es-benedetti-002",
+    "country": "UY",
+    "text": "Si te quiero es porque sos mi amor, mi cómplice y todo, y en la calle, codo a codo, somos mucho más que dos.",
+    "author": "Mario Benedetti",
+    "author_en": "Mario Benedetti",
+    "source": "Te quiero, 1956"
+  },
+  {
+    "id": "es-benedetti-003",
+    "country": "UY",
+    "text": "Defender la alegría como una trinchera, defenderla del caos y de las pesadillas.",
+    "author": "Mario Benedetti",
+    "author_en": "Mario Benedetti",
+    "source": "Defensa de la alegría, 1979"
+  },
+  {
+    "id": "es-benedetti-004",
+    "country": "UY",
+    "text": "No te rindas, aún estás a tiempo de alcanzar y comenzar de nuevo.",
+    "author": "Mario Benedetti",
+    "author_en": "Mario Benedetti",
+    "source": "No te rindas, 1983"
+  },
+  {
+    "id": "es-galeano-001",
+    "country": "UY",
+    "text": "La utopía está en el horizonte. Camino dos pasos, ella se aleja dos pasos. Para eso sirve: para caminar.",
+    "author": "Eduardo Galeano",
+    "author_en": "Eduardo Galeano",
+    "source": "Las palabras andantes, 1993"
+  },
+  {
+    "id": "es-galeano-002",
+    "country": "UY",
+    "text": "Somos lo que hacemos, pero somos, sobre todo, lo que hacemos para cambiar lo que somos.",
+    "author": "Eduardo Galeano",
+    "author_en": "Eduardo Galeano",
+    "source": "Las palabras andantes, 1993"
+  },
+  {
+    "id": "es-galeano-003",
+    "country": "UY",
+    "text": "Mucha gente pequeña, en lugares pequeños, haciendo cosas pequeñas, puede cambiar el mundo.",
+    "author": "Eduardo Galeano",
+    "author_en": "Eduardo Galeano",
+    "source": "Atribuida a Eduardo Galeano"
+  },
+  {
+    "id": "es-vallejo-001",
+    "country": "PE",
+    "text": "Hay golpes en la vida, tan fuertes... ¡Yo no sé!",
+    "author": "César Vallejo",
+    "author_en": "César Vallejo",
+    "source": "Los heraldos negros, 1919"
+  },
+  {
+    "id": "es-vallejo-002",
+    "country": "PE",
+    "text": "Me moriré en París con aguacero, un día del cual tengo ya el recuerdo.",
+    "author": "César Vallejo",
+    "author_en": "César Vallejo",
+    "source": "Poemas humanos, 1939"
+  },
+  {
+    "id": "es-rulfo-001",
+    "country": "MX",
+    "text": "Vine a Comala porque me dijeron que acá vivía mi padre, un tal Pedro Páramo.",
+    "author": "Juan Rulfo",
+    "author_en": "Juan Rulfo",
+    "source": "Pedro Páramo, 1955"
+  },
+  {
+    "id": "es-rulfo-002",
+    "country": "MX",
+    "text": "Este pueblo está lleno de ecos. Tal vez estén encerrados en los huecos de las paredes.",
+    "author": "Juan Rulfo",
+    "author_en": "Juan Rulfo",
+    "source": "Pedro Páramo, 1955"
+  },
+  {
+    "id": "es-sabines-001",
+    "country": "MX",
+    "text": "Los amorosos callan. El amor es el silencio más fino, el más tembloroso.",
+    "author": "Jaime Sabines",
+    "author_en": "Jaime Sabines",
+    "source": "Los amorosos, 1950"
+  },
+  {
+    "id": "es-castellanos-001",
+    "country": "MX",
+    "text": "Debe haber otro modo de ser humano y libre.",
+    "author": "Rosario Castellanos",
+    "author_en": "Rosario Castellanos",
+    "source": "Meditación en el umbral, 1972"
+  },
+  {
+    "id": "es-storni-001",
+    "country": "AR",
+    "text": "Tú me quieres blanca, tú me quieres alba.",
+    "author": "Alfonsina Storni",
+    "author_en": "Alfonsina Storni",
+    "source": "Tú me quieres blanca, 1918"
+  },
+  {
+    "id": "es-storni-002",
+    "country": "AR",
+    "text": "Hombre pequeñito, suelta a tu canario que quiere volar.",
+    "author": "Alfonsina Storni",
+    "author_en": "Alfonsina Storni",
+    "source": "Hombre pequeñito, 1918"
+  },
+  {
+    "id": "es-numhauser-001",
+    "country": "CL",
+    "text": "Cambia lo superficial, cambia también lo profundo, cambia el modo de pensar, cambia todo en este mundo.",
+    "author": "Julio Numhauser",
+    "author_en": "Julio Numhauser",
+    "source": "Todo cambia, 1982"
+  },
+  {
+    "id": "es-yupanqui-001",
+    "country": "AR",
+    "text": "Las penas y las vaquitas se van por la misma senda.",
+    "author": "Atahualpa Yupanqui",
+    "author_en": "Atahualpa Yupanqui",
+    "source": "Las penas y las vaquitas, c. 1960"
+  },
+  {
+    "id": "es-sarmiento-001",
+    "country": "AR",
+    "text": "Bárbaros, las ideas no se matan.",
+    "author": "Domingo Faustino Sarmiento",
+    "author_en": "Domingo Faustino Sarmiento",
+    "source": "Frase de 1840"
+  },
+  {
+    "id": "es-sanmartin-001",
+    "country": "AR",
+    "text": "Serás lo que debas ser, o no serás nada.",
+    "author": "José de San Martín",
+    "author_en": "José de San Martín",
+    "source": "Atribuida a José de San Martín"
+  },
+  {
+    "id": "es-juarez-001",
+    "country": "MX",
+    "text": "Entre los individuos, como entre las naciones, el respeto al derecho ajeno es la paz.",
+    "author": "Benito Juárez",
+    "author_en": "Benito Juárez",
+    "source": "Manifiesto a la Nación, 1867"
+  },
+  {
+    "id": "es-silvio-001",
+    "country": "CU",
+    "text": "Ojalá que las hojas no te cubran la memoria.",
+    "author": "Silvio Rodríguez",
+    "author_en": "Silvio Rodríguez",
+    "source": "Ojalá, 1978"
+  },
+  {
+    "id": "es-parra-002",
+    "country": "CL",
+    "text": "Volver a los diecisiete después de vivir un siglo es como descifrar signos sin ser sabio competente.",
+    "author": "Violeta Parra",
+    "author_en": "Violeta Parra",
+    "source": "Volver a los diecisiete, 1966"
+  },
+  {
+    "id": "es-hernandez-002",
+    "country": "AR",
+    "text": "Un padre que da consejos más que padre es un amigo.",
+    "author": "José Hernández",
+    "author_en": "José Hernández",
+    "source": "Martín Fierro, 1872"
+  },
+  {
+    "id": "es-calderon-004",
+    "country": "ES",
+    "text": "Cuentan de un sabio que un día tan pobre y mísero estaba, que sólo se sustentaba de unas hierbas que cogía.",
+    "author": "Pedro Calderón de la Barca",
+    "author_en": "Pedro Calderón de la Barca",
+    "source": "La vida es sueño, 1635"
+  },
+  {
+    "id": "es-cervantes-015",
+    "country": "ES",
+    "text": "El que no sabe gozar de la ventura cuando le viene, no debe quejarse si se pasa.",
+    "author": "Miguel de Cervantes",
+    "author_en": "Miguel de Cervantes",
+    "source": "Don Quijote de la Mancha, II, 1615"
+  },
+  {
+    "id": "es-manrique-003",
+    "country": "ES",
+    "text": "Recuerde el alma dormida, avive el seso y despierte contemplando cómo se pasa la vida.",
+    "author": "Jorge Manrique",
+    "author_en": "Jorge Manrique",
+    "source": "Coplas por la muerte de su padre, c. 1476"
+  },
+  {
+    "id": "es-becquer-004",
+    "country": "ES",
+    "text": "Podrá nublarse el sol eternamente; podrá secarse en un instante el mar.",
+    "author": "Gustavo Adolfo Bécquer",
+    "author_en": "Gustavo Adolfo Bécquer",
+    "source": "Rimas, 1871"
+  },
+  {
+    "id": "es-garcilaso-003",
+    "country": "ES",
+    "text": "¡Oh dulces prendas por mi mal halladas, dulces y alegres cuando Dios quería!",
+    "author": "Garcilaso de la Vega",
+    "author_en": "Garcilaso de la Vega",
+    "source": "Soneto X, 1543"
   }
 ]
