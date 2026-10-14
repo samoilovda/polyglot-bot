@@ -75,3 +75,25 @@ def test_missing_ipa_is_omitted():
     lesson = {"meaning_en": "m", "languages": {k: dict(v, ipa="") for k, v in LESSON["languages"].items()}}
     msg = main.format_message(_quote(), "en_gb", lesson)
     assert "<code>" not in msg
+
+
+def test_context_and_bridge_rendered():
+    lesson = {
+        "meaning_en": "m",
+        "context_en": "Famous Elizabethan comedy written around 1599.",
+        "bridge_en": "Latin merus became Spanish/Portuguese mero and English mere.",
+        "languages": {k: dict(v) for k, v in LESSON["languages"].items()},
+    }
+    msg = main.format_message(_quote(), "en_gb", lesson)
+    assert "📖 <i>Famous Elizabethan comedy written around 1599.</i>" in msg
+    assert "🌉 <i>Latin merus became Spanish/Portuguese mero and English mere.</i>" in msg
+
+
+def test_arabic_bridge_has_lrm():
+    lesson = {
+        "meaning_en": "m",
+        "bridge_en": "Arabic root sh-r-q is related to sunset.",
+        "languages": {k: dict(v) for k, v in LESSON["languages"].items()},
+    }
+    msg = main.format_message(_quote(country="EG", text="نص عربي من خمس كلمات"), "ar", lesson)
+    assert "\u200e🌉 <i>Arabic root sh-r-q is related to sunset.</i>" in msg

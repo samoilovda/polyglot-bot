@@ -1,2 +1,6 @@
 requests>=2.31,<3
 edge-tts>=6.1,<8
+mutagen>=1.47,<2
+pillow>=10.0,<12
+arabic-reshaper>=3.0,<4
+python-bidi>=0.4,<1

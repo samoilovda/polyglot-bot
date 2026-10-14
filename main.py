@@ -8,6 +8,7 @@ import sys
 
 import requests
 
+import card
 import slot
 
 # --- КОНФИГУРАЦИЯ ---
@@ -16,6 +17,8 @@ TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN")
 TG_CHAT_ID = os.environ.get("TG_CHAT_ID")
 MODEL_NAME = os.environ.get("OPENROUTER_MODEL", "~google/gemini-flash-latest")  # алиас OpenRouter на последнюю Gemini Flash
 DRY_RUN = os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes")
+SEND_AS_VOICE = os.environ.get("SEND_AS_VOICE", "true").strip().lower() in ("1", "true", "yes")
+GENERATE_CARD = os.environ.get("GENERATE_CARD", "true").strip().lower() in ("1", "true", "yes")
 # Для отладки: принудительно выбрать культуру (ключ из CULTURE_ORDER)
 FORCE_CULTURE = os.environ.get("FORCE_CULTURE", "").strip()
 
@@ -126,7 +129,9 @@ Original ({CULTURES[culture]["lang_name"]}), by {quote["author_en"]}{source}:
 
 Step 1. Pick ONE of the most difficult / sophisticated words of the ORIGINAL quotation (a content word, not a function word).
 Step 2. Explain its meaning in simple English (max 12 words).
-Step 3. Translate the quotation into every language except the original one, and choose in each translation the word that corresponds to the picked word.
+Step 3. Context: In 1 concise sentence in simple English (max 15 words), explain the historical, cultural, or literary context of this quotation or author.
+Step 4. Language bridge: In 1 concise sentence in simple English (max 20 words), highlight an interesting linguistic connection, etymology, cognate, or comparison between the picked word/concept and another language in the set (e.g. shared Latin roots between en/es/pt, Arabic-Uzbek ties, or false friends).
+Step 5. Translate the quotation into every language except the original one, and choose in each translation the word that corresponds to the picked word.
 
 Languages:
 {all_langs}
@@ -144,15 +149,17 @@ Rules:
 - For each language give "word" (the word in its dictionary/inflected form as used in the text) and "ipa" (its IPA transcription in slashes, e.g. /ˈkɒntəmpleɪt/).
 
 Answer with strictly valid JSON:
-{{"meaning_en": "...", "languages": {{"<lang key>": {{"word": "...", "ipa": "/.../", "text": "... {{{{word}}}} ..."}}, ...}}}}
+{{"meaning_en": "...", "context_en": "...", "bridge_en": "...", "languages": {{"<lang key>": {{"word": "...", "ipa": "/.../", "text": "... {{{{word}}}} ..."}}, ...}}}}
 The "languages" object must contain exactly these keys: {json.dumps(CULTURE_ORDER)}."""
 
 
 def parse_lesson(data, quote, culture):
-    """Проверяет ответ модели. Возвращает {"meaning_en": str, "languages": {key: {word, ipa, text}}}."""
+    """Проверяет ответ модели. Возвращает {"meaning_en": str, "context_en": str, "bridge_en": str, "languages": {key: {word, ipa, text}}}."""
     meaning = str(data.get("meaning_en", "")).strip()
     if not meaning:
         raise ValueError("missing meaning_en")
+    context_en = str(data.get("context_en") or data.get("context") or "").strip()
+    bridge_en = str(data.get("bridge_en") or data.get("bridge") or "").strip()
     languages = data.get("languages") or {}
     result = {}
     for key in CULTURE_ORDER:
@@ -169,7 +176,12 @@ def parse_lesson(data, quote, culture):
         }
     if not result[culture]["word"]:
         raise ValueError("missing word for original language")
-    return {"meaning_en": meaning, "languages": result}
+    return {
+        "meaning_en": meaning,
+        "context_en": context_en,
+        "bridge_en": bridge_en,
+        "languages": result,
+    }
 
 
 def translate_quote(quote, culture, retries=2):
@@ -203,12 +215,49 @@ def translate_quote(quote, culture, retries=2):
 
 
 # --- ОЗВУЧКА ---
-def generate_audio(text, voice, filename="quote.mp3"):
-    """Генерирует аудиофайл с помощью бесплатного edge-tts. Ошибка не фатальна."""
+def add_audio_metadata(filename, quote, culture):
+    """Вшивает ID3-теги в аудиофайл (автор, название цитаты, альбом). Ошибка не фатальна."""
+    try:
+        from mutagen.id3 import ID3, TIT2, TPE1, TALB, COMM, ID3NoHeaderError
+        try:
+            tags = ID3(filename)
+        except ID3NoHeaderError:
+            tags = ID3()
+        title = quote.get("source") or quote["text"][:60]
+        artist = quote["author"]
+        if quote.get("author_en") and quote["author_en"] != quote["author"]:
+            artist += f" ({quote['author_en']})"
+        info = CULTURES.get(culture, {})
+        album = f"Polyglot Wisdom • {info.get('title', 'Quotes')}"
+
+        tags["TIT2"] = TIT2(encoding=3, text=title)
+        tags["TPE1"] = TPE1(encoding=3, text=artist)
+        tags["TALB"] = TALB(encoding=3, text=album)
+        tags["COMM"] = COMM(encoding=3, lang="eng", desc="Quote", text=quote["text"])
+        tags.save(filename)
+        print(f"Audio metadata added: {artist} — {title}")
+    except Exception as e:
+        print(f"Audio metadata error (skipped): {e}")
+
+
+def generate_audio(quote_or_text, culture=None, voice=None, filename="quote.mp3"):
+    """Генерирует аудиофайл с помощью бесплатного edge-tts и добавляет ID3-метаданные. Ошибка не фатальна."""
+    if isinstance(quote_or_text, dict):
+        text = quote_or_text["text"]
+        quote = quote_or_text
+    else:
+        text = quote_or_text
+        quote = None
+        if voice is None and culture is not None and not isinstance(culture, dict):
+            voice = culture
+            culture = None
+
     clean_text = re.sub(r"\{+|\}+|\*+|<[^>]+>", "", text)
     command = ["edge-tts", "--voice", voice, "--text", clean_text, "--write-media", filename]
     try:
         subprocess.run(command, check=True, timeout=120)
+        if quote and culture:
+            add_audio_metadata(filename, quote, culture)
         return filename
     except Exception as e:
         print(f"Audio generation error: {e}")
@@ -251,6 +300,10 @@ def format_message(quote, culture, lesson):
     if source:
         lines.append(f"<i>{source}</i>")
 
+    context_en = html.escape(lesson.get("context_en") or lesson.get("context") or "").strip()
+    if context_en:
+        lines.append(f"📖 <i>{context_en}</i>")
+
     word = html.escape(langs[culture]["word"])
     ipa = html.escape(langs[culture]["ipa"])
     word_line = f"✨ <b>{word}</b>" + (f" {ipa}" if ipa else "")
@@ -260,7 +313,16 @@ def format_message(quote, culture, lesson):
         # арабское слово в начале строки делает абзац RTL и перемешивает IPA/перевод;
         # LRM в начале принудительно задаёт LTR-абзац
         word_line, separator = f"\u200e{word_line}", f"\u200e{separator}"
-    lines += ["", word_line, separator]
+    lines += ["", word_line]
+
+    bridge_en = html.escape(lesson.get("bridge_en") or lesson.get("bridge") or "").strip()
+    if bridge_en:
+        bridge_line = f"🌉 <i>{bridge_en}</i>"
+        if is_ar:
+            bridge_line = f"\u200e{bridge_line}"
+        lines.append(bridge_line)
+
+    lines.append(separator)
 
     for key in CULTURE_ORDER:
         if key == culture:
@@ -276,7 +338,7 @@ def format_message(quote, culture, lesson):
 
 
 # --- ОТПРАВКА ---
-def send_telegram(message, audio_path=None):
+def send_telegram(message, audio_path=None, card_path=None, quote=None):
     """Отправляет пост. Возвращает True только если сообщение реально доставлено."""
     base = f"https://api.telegram.org/bot{TG_BOT_TOKEN}"
 
@@ -289,30 +351,88 @@ def send_telegram(message, audio_path=None):
         return result["result"]
 
     has_audio = bool(audio_path and os.path.exists(audio_path))
+    has_card = bool(card_path and os.path.exists(card_path))
+
+    title = quote.get("source") if quote else None
+    performer = quote.get("author") if quote else None
+
+    def send_media_audio(reply_to=None):
+        if not has_audio:
+            return None
+        try:
+            with open(audio_path, "rb") as f:
+                if SEND_AS_VOICE:
+                    data = {"chat_id": TG_CHAT_ID}
+                    if reply_to:
+                        data["reply_to_message_id"] = reply_to
+                    call("sendVoice", data=data, files={"voice": f})
+                    print("Telegram voice message sent.")
+                else:
+                    data = {"chat_id": TG_CHAT_ID}
+                    if title:
+                        data["title"] = title
+                    if performer:
+                        data["performer"] = performer
+                    if reply_to:
+                        data["reply_to_message_id"] = reply_to
+                    call("sendAudio", data=data, files={"audio": f})
+                    print("Telegram audio message sent.")
+        except Exception as e:
+            print(f"Telegram Audio Error: {e}")
 
     try:
-        if has_audio and len(message) <= CAPTION_LIMIT:
-            with open(audio_path, "rb") as audio_file:
-                call("sendAudio", data={"chat_id": TG_CHAT_ID, "caption": message, "parse_mode": "HTML"},
-                     files={"audio": audio_file})
-            print("Telegram message with audio sent.")
+        # Сценарий 1: есть фото-карточка
+        if has_card:
+            with open(card_path, "rb") as photo_file:
+                if len(message) <= CAPTION_LIMIT:
+                    sent_root = call(
+                        "sendPhoto",
+                        data={"chat_id": TG_CHAT_ID, "caption": message, "parse_mode": "HTML"},
+                        files={"photo": photo_file},
+                    )
+                    print("Telegram photo with caption sent.")
+                else:
+                    sent_root = call(
+                        "sendPhoto",
+                        data={"chat_id": TG_CHAT_ID},
+                        files={"photo": photo_file},
+                    )
+                    print("Telegram photo sent.")
+                    sent_text = call(
+                        "sendMessage",
+                        json={"chat_id": TG_CHAT_ID, "text": message[:MESSAGE_LIMIT], "parse_mode": "HTML", "reply_to_message_id": sent_root["message_id"]},
+                    )
+                    sent_root = sent_text
+                    print("Telegram text message sent (reply to photo).")
+
+            send_media_audio(reply_to=sent_root["message_id"])
             return True
 
+        # Сценарий 2: карточки нет, но есть аудио и текст влезает в caption
+        if has_audio and len(message) <= CAPTION_LIMIT:
+            with open(audio_path, "rb") as f:
+                if SEND_AS_VOICE:
+                    call("sendVoice", data={"chat_id": TG_CHAT_ID, "caption": message, "parse_mode": "HTML"}, files={"voice": f})
+                    print("Telegram voice message with caption sent.")
+                else:
+                    data = {"chat_id": TG_CHAT_ID, "caption": message, "parse_mode": "HTML"}
+                    if title:
+                        data["title"] = title
+                    if performer:
+                        data["performer"] = performer
+                    call("sendAudio", data=data, files={"audio": f})
+                    print("Telegram audio message with caption sent.")
+            return True
+
+        # Сценарий 3: обычное текстовое сообщение + аудио вдогонку
         sent = call("sendMessage", json={"chat_id": TG_CHAT_ID, "text": message[:MESSAGE_LIMIT], "parse_mode": "HTML"})
         print("Telegram text message sent.")
+        send_media_audio(reply_to=sent["message_id"])
+        return True
+
     except Exception as e:
         print(f"Telegram Error: {e}")
         return False
-
-    if has_audio:  # аудио вдогонку; его сбой не отменяет уже опубликованный пост
-        try:
-            with open(audio_path, "rb") as audio_file:
-                call("sendAudio", data={"chat_id": TG_CHAT_ID, "reply_to_message_id": sent["message_id"]},
-                     files={"audio": audio_file})
-            print("Telegram audio sent.")
-        except Exception as e:
-            print(f"Telegram Audio Error (post already published): {e}")
-    return True
 
 
 # --- ТОЧКА ВХОДА ---
@@ -329,15 +449,24 @@ def main():
     lesson = translate_quote(quote, culture)
     message = format_message(quote, culture, lesson)
 
+    card_path = None
+    if GENERATE_CARD:
+        try:
+            card_path = card.generate_card(quote, culture, lesson, output_path="quote_card.png")
+        except Exception as e:
+            print(f"Card generation error (skipped): {e}")
+
     if DRY_RUN:
         print(message)
+        if card_path:
+            print(f"Dry run: card generated at {card_path}")
         print("Dry run: nothing sent, state unchanged.")
         return 0
 
     voice = VOICE_BY_COUNTRY.get(quote.get("country", ""), CULTURES[culture]["voice"])
-    audio_path = generate_audio(quote["text"], voice)
+    audio_path = generate_audio(quote, culture, voice)
 
-    if not send_telegram(message, audio_path):
+    if not send_telegram(message, audio_path=audio_path, card_path=card_path, quote=quote):
         print("Failed to send to Telegram; state not changed.")
         return 1
 
@@ -351,3 +480,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+

@@ -25,10 +25,15 @@ def _lesson_json(culture="ru", original=None):
 
 
 def test_valid_response(monkeypatch):
-    payload = json.dumps(_lesson_json())
+    data = _lesson_json()
+    data["context_en"] = "A short historical note."
+    data["bridge_en"] = "A linguistic bridge."
+    payload = json.dumps(data)
     monkeypatch.setattr(main.requests, "post", lambda *a, **k: FakeResponse(payload))
     lesson = main.translate_quote(QUOTE, "ru")
     assert lesson["meaning_en"] == "three"
+    assert lesson["context_en"] == "A short historical note."
+    assert lesson["bridge_en"] == "A linguistic bridge."
     assert set(lesson["languages"]) == set(main.CULTURE_ORDER)
     assert lesson["languages"]["es"]["ipa"] == "/i-es/"
 

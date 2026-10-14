@@ -11,18 +11,23 @@ Telegram-бот: 3 раза в день публикует цитату вели
 
 ## Как устроено
 - `data/quotes/<культура>.json` — корпус цитат (оригинал, автор, страна, источник). Переводит только LLM (OpenRouter).
+- `card.py` — генерация графической карточки цитаты (Pillow, 1080×1350, без вызовов ИИ / 0 токенов).
+- `main.py` — обогащение цитаты (сложное слово, IPA, исторический контекст `📖` и мост языков `🌉`), озвучка через `edge-tts` с ID3-метаданными (`mutagen`), публикация карточки, текста и голосового сообщения (`sendVoice`).
 - `data/state.json` — очередь культур и уже опубликованные цитаты; коммитится workflow после каждой успешной публикации.
 - `.github/workflows/daily.yml` — расписание (10:00, 16:00, 22:00 по Ташкенту; cron каждый час, слот выбирает `slot.py`), тесты, запуск, коммит состояния.
 
-## Секреты репозитория
-`OPENROUTER_API_KEY`, `TG_BOT_TOKEN`, `TG_CHAT_ID`. (Discord отключён.)
+## Переменные окружения
+- `OPENROUTER_API_KEY`, `TG_BOT_TOKEN`, `TG_CHAT_ID` — основные секреты.
+- `SEND_AS_VOICE` — отправлять аудио как нативное голосовое сообщение (`true` по умолчанию) или как аудиофайл (`false`).
+- `GENERATE_CARD` — создавать графическую карточку цитаты (`true` по умолчанию).
+- `DRY_RUN` — тестовый запуск без отправки (`1` / `true`).
 Также нужно: Settings → Actions → General → Workflow permissions → *Read and write*.
 
 ## Локальный запуск
 ```bash
 pip install -r requirements.txt -r requirements-dev.txt
 pytest
-OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py   # только печатает пост
+OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py   # печатает пост и генерирует тестовую карточку
 ```
 
 ## Как добавить цитаты
