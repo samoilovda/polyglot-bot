@@ -90,3 +90,42 @@ def test_send_telegram_voice_and_card(monkeypatch, tmp_path):
     methods = [c[0] for c in calls]
     assert "sendPhoto" in methods
     assert "sendVoice" in methods
+
+
+def test_send_telegram_video_single_message(monkeypatch, tmp_path):
+    calls = []
+
+    class FakeResp:
+        def raise_for_status(self): pass
+        def json(self): return {"ok": True, "result": {"message_id": 99}}
+
+    def fake_post(url, *args, **kwargs):
+        method = url.rsplit("/", 1)[-1]
+        calls.append((method, kwargs))
+        return FakeResp()
+
+    monkeypatch.setattr(main.requests, "post", fake_post)
+    monkeypatch.setattr(main, "TG_BOT_TOKEN", "dummy_token")
+    monkeypatch.setattr(main, "TG_CHAT_ID", "12345")
+
+    video_file = tmp_path / "v.mp4"
+    video_file.write_bytes(b"dummy_mp4")
+    card_file = tmp_path / "c.png"
+    card_file.write_bytes(b"dummy_png")
+    audio_file = tmp_path / "a.mp3"
+    audio_file.write_bytes(b"dummy_mp3")
+
+    ok = main.send_telegram(
+        "<b>Hello</b> post",
+        audio_path=str(audio_file),
+        card_path=str(card_file),
+        video_path=str(video_file),
+    )
+    assert ok is True
+    assert len(calls) == 1
+    assert calls[0][0] == "sendVideo"
+    assert calls[0][1]["data"]["caption"] == "<b>Hello</b> post"
+
+
+def test_visible_length():
+    assert main.visible_length("<b>Tom &amp; Jerry</b>") == len("Tom & Jerry")

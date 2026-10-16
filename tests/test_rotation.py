@@ -42,6 +42,7 @@ def _run_main(monkeypatch, tmp_path, send_ok):
     state_path.write_text(json.dumps({"next_culture_index": 5, "posted_ids": []}))
     monkeypatch.setattr(main, "STATE_PATH", str(state_path))
     monkeypatch.setattr(main, "DRY_RUN", False)
+    monkeypatch.setattr(main, "GENERATE_CARD", False)
     monkeypatch.setattr(main, "translate_quote",
                         lambda q, c: {"meaning_en": "m", "languages": {
                             k: {"word": "w", "ipa": "/w/", "text": "t {{w}}"} for k in main.CULTURE_ORDER}})

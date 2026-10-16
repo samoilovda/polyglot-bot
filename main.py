@@ -264,6 +264,39 @@ def generate_audio(quote_or_text, culture=None, voice=None, filename="quote.mp3"
         return None
 
 
+def generate_video_card(card_path, audio_path, output_path="quote_video.mp4"):
+    """Склеивает статичную карточку и озвучку в MP4-ролик с помощью ffmpeg. Ошибка не фатальна."""
+    if not (card_path and audio_path and os.path.exists(card_path) and os.path.exists(audio_path)):
+        return None
+    command = [
+        "ffmpeg", "-y",
+        "-loop", "1",
+        "-framerate", "2",
+        "-i", card_path,
+        "-i", audio_path,
+        "-c:v", "libx264",
+        "-tune", "stillimage",
+        "-c:a", "aac",
+        "-b:a", "128k",
+        "-pix_fmt", "yuv420p",
+        "-shortest",
+        "-movflags", "+faststart",
+        output_path,
+    ]
+    try:
+        subprocess.run(command, check=True, timeout=120, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        print(f"Video card generated: {output_path}")
+        return output_path
+    except Exception as e:
+        print(f"Video generation error (skipped): {e}")
+        return None
+
+
+def visible_length(html_text):
+    """Длина видимого текста после снятия HTML-тегов и декодирования сущностей (лимит Telegram)."""
+    return len(html.unescape(re.sub(r"<[^>]+>", "", html_text)))
+
+
 # --- ФОРМАТ СООБЩЕНИЯ ---
 def rtl(text):
     """Оборачивает в RLM-маркеры, чтобы арабский не «ломал» соседние строки."""
@@ -338,7 +371,7 @@ def format_message(quote, culture, lesson):
 
 
 # --- ОТПРАВКА ---
-def send_telegram(message, audio_path=None, card_path=None, quote=None):
+def send_telegram(message, audio_path=None, card_path=None, video_path=None, quote=None):
     """Отправляет пост. Возвращает True только если сообщение реально доставлено."""
     base = f"https://api.telegram.org/bot{TG_BOT_TOKEN}"
 
@@ -350,8 +383,10 @@ def send_telegram(message, audio_path=None, card_path=None, quote=None):
             raise RuntimeError(f"Telegram error: {result}")
         return result["result"]
 
+    has_video = bool(video_path and os.path.exists(video_path))
     has_audio = bool(audio_path and os.path.exists(audio_path))
     has_card = bool(card_path and os.path.exists(card_path))
+    fits_caption = visible_length(message) <= CAPTION_LIMIT
 
     title = quote.get("source") if quote else None
     performer = quote.get("author") if quote else None
@@ -381,10 +416,51 @@ def send_telegram(message, audio_path=None, card_path=None, quote=None):
             print(f"Telegram Audio Error: {e}")
 
     try:
-        # Сценарий 1: есть фото-карточка
+        # Сценарий 0 (основной): есть видео-карточка (картинка + звук в одном MP4)
+        if has_video:
+            with open(video_path, "rb") as video_file:
+                if fits_caption:
+                    call(
+                        "sendVideo",
+                        data={
+                            "chat_id": TG_CHAT_ID,
+                            "caption": message,
+                            "parse_mode": "HTML",
+                            "width": 1080,
+                            "height": 1350,
+                            "supports_streaming": "true",
+                        },
+                        files={"video": video_file},
+                    )
+                    print("Telegram video card with caption sent in a single message.")
+                else:
+                    sent_video = call(
+                        "sendVideo",
+                        data={
+                            "chat_id": TG_CHAT_ID,
+                            "width": 1080,
+                            "height": 1350,
+                            "supports_streaming": "true",
+                        },
+                        files={"video": video_file},
+                    )
+                    print("Telegram video card sent.")
+                    call(
+                        "sendMessage",
+                        json={
+                            "chat_id": TG_CHAT_ID,
+                            "text": message[:MESSAGE_LIMIT],
+                            "parse_mode": "HTML",
+                            "reply_to_message_id": sent_video["message_id"],
+                        },
+                    )
+                    print("Telegram text message sent (reply to video).")
+            return True
+
+        # Сценарий 1 (фолбэк): есть фото-карточка без видео
         if has_card:
             with open(card_path, "rb") as photo_file:
-                if len(message) <= CAPTION_LIMIT:
+                if fits_caption:
                     sent_root = call(
                         "sendPhoto",
                         data={"chat_id": TG_CHAT_ID, "caption": message, "parse_mode": "HTML"},
@@ -409,7 +485,7 @@ def send_telegram(message, audio_path=None, card_path=None, quote=None):
             return True
 
         # Сценарий 2: карточки нет, но есть аудио и текст влезает в caption
-        if has_audio and len(message) <= CAPTION_LIMIT:
+        if has_audio and fits_caption:
             with open(audio_path, "rb") as f:
                 if SEND_AS_VOICE:
                     call("sendVoice", data={"chat_id": TG_CHAT_ID, "caption": message, "parse_mode": "HTML"}, files={"voice": f})
@@ -465,8 +541,9 @@ def main():
 
     voice = VOICE_BY_COUNTRY.get(quote.get("country", ""), CULTURES[culture]["voice"])
     audio_path = generate_audio(quote, culture, voice)
+    video_path = generate_video_card(card_path, audio_path)
 
-    if not send_telegram(message, audio_path=audio_path, card_path=card_path, quote=quote):
+    if not send_telegram(message, audio_path=audio_path, card_path=card_path, video_path=video_path, quote=quote):
         print("Failed to send to Telegram; state not changed.")
         return 1
 
@@ -480,4 +557,5 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 

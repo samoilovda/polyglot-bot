@@ -1,4 +1,5 @@
 *.mp3
+*.mp4
 *.png
 .venv/
 __pycache__/
