@@ -131,6 +131,23 @@ def test_visible_length():
     assert main.visible_length("<b>Tom &amp; Jerry</b>") == len("Tom & Jerry")
 
 
+def test_compact_for_caption():
+    msg = (
+        "🇬🇧 <b>British wisdom</b>\n\n"
+        "<blockquote>A long quote here</blockquote>\n"
+        "— <b>Author</b>\n"
+        "📖 <i>Context line that is quite long</i>\n\n"
+        "✨ <b>word</b> — meaning\n"
+        "🌉 <i>Bridge line that is also quite long</i>\n"
+        "━━━━━━━━━━━━━━━━━━\n"
+        "🇷🇺 перевод"
+    )
+    full_len = main.visible_length(msg)
+    compacted = main.compact_for_caption(msg, limit=full_len - 10)
+    assert "📖" not in compacted
+    assert main.visible_length(compacted) <= full_len - 10
+
+
 def test_generate_video_card_real_ffmpeg(tmp_path):
     import subprocess
     quote = {

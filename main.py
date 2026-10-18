@@ -307,8 +307,24 @@ def generate_video_card(card_path, audio_path, output_path="quote_video.mp4"):
 
 
 def visible_length(html_text):
-    """Длина видимого текста после снятия HTML-тегов и декодирования сущностей (лимит Telegram)."""
-    return len(html.unescape(re.sub(r"<[^>]+>", "", html_text)))
+    """Длина видимого текста в UTF-16 code units после снятия HTML-тегов (лимит Telegram)."""
+    plain = html.unescape(re.sub(r"<[^>]+>", "", html_text))
+    return len(plain.encode("utf-16-le")) // 2
+
+
+def compact_for_caption(message, limit=CAPTION_LIMIT):
+    """Ужимает текст подписи до лимита Telegram (1024), чтобы медиа и текст уходили одним сообщением."""
+    if visible_length(message) <= limit:
+        return message
+    for pattern in (
+        r"\n\u200e?📖 <i>.*?</i>",
+        r"\n\u200e?🌉 <i>.*?</i>",
+        r"\n\n<blockquote>.*?</blockquote>",
+    ):
+        message = re.sub(pattern, "", message, count=1)
+        if visible_length(message) <= limit:
+            return message
+    return message
 
 
 # --- ФОРМАТ СООБЩЕНИЯ ---
@@ -400,7 +416,8 @@ def send_telegram(message, audio_path=None, card_path=None, video_path=None, quo
     has_video = bool(video_path and os.path.exists(video_path))
     has_audio = bool(audio_path and os.path.exists(audio_path))
     has_card = bool(card_path and os.path.exists(card_path))
-    fits_caption = visible_length(message) <= CAPTION_LIMIT
+    caption_msg = compact_for_caption(message) if (has_video or has_card) else message
+    fits_caption = visible_length(caption_msg) <= CAPTION_LIMIT
 
     title = quote.get("source") if quote else None
     performer = quote.get("author") if quote else None
@@ -438,7 +455,7 @@ def send_telegram(message, audio_path=None, card_path=None, video_path=None, quo
                         "sendVideo",
                         data={
                             "chat_id": TG_CHAT_ID,
-                            "caption": message,
+                            "caption": caption_msg,
                             "parse_mode": "HTML",
                             "width": 1080,
                             "height": 1350,
