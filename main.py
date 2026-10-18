@@ -317,9 +317,11 @@ def compact_for_caption(message, limit=CAPTION_LIMIT):
     if visible_length(message) <= limit:
         return message
     for pattern in (
+        r"\n\u200e?━+",
+        r"\n\n<blockquote>.*?</blockquote>",
+        r"\n<i>[^<]*?</i>",
         r"\n\u200e?📖 <i>.*?</i>",
         r"\n\u200e?🌉 <i>.*?</i>",
-        r"\n\n<blockquote>.*?</blockquote>",
     ):
         message = re.sub(pattern, "", message, count=1)
         if visible_length(message) <= limit:

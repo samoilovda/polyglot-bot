@@ -251,9 +251,12 @@ def generate_card(quote, culture, lesson=None, output_path="card.png", width=108
     if lesson and lesson.get("languages") and culture in lesson["languages"]:
         w_info = lesson["languages"][culture]
         word = w_info.get("word", "")
+        if is_ar and word:
+            word = format_arabic_for_display(word)
         ipa = w_info.get("ipa", "")
         if word:
-            footer_text = f"✨ {word} {ipa}".strip()
+            inner = f"{word} {ipa}".strip()
+            footer_text = f"• {inner} •"
             footer_font = get_font_for_culture(culture, 22)
             footer_bbox = draw.textbbox((0, 0), footer_text, font=footer_font)
             footer_w = footer_bbox[2] - footer_bbox[0]
