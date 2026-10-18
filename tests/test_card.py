@@ -129,3 +129,32 @@ def test_send_telegram_video_single_message(monkeypatch, tmp_path):
 
 def test_visible_length():
     assert main.visible_length("<b>Tom &amp; Jerry</b>") == len("Tom & Jerry")
+
+
+def test_generate_video_card_real_ffmpeg(tmp_path):
+    import subprocess
+    quote = {
+        "id": "en_gb-test-001",
+        "country": "GB",
+        "text": "All the world's a stage, and all the men and women merely players.",
+        "author": "William Shakespeare",
+        "author_en": "William Shakespeare",
+        "source": "As You Like It, 1599",
+    }
+    c_path = str(tmp_path / "card.png")
+    a_path = str(tmp_path / "audio.mp3")
+    v_path = str(tmp_path / "video.mp4")
+
+    card.generate_card(quote, "en_gb", output_path=c_path)
+    ffmpeg_exe = main.get_ffmpeg_exe()
+    subprocess.run(
+        [ffmpeg_exe, "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono", "-t", "1", "-q:a", "9", a_path],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+    out = main.generate_video_card(c_path, a_path, output_path=v_path)
+    assert out == v_path
+    assert os.path.exists(v_path)
+    assert os.path.getsize(v_path) > 1000

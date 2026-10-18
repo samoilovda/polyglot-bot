@@ -4,3 +4,4 @@ mutagen>=1.47,<2
 pillow>=10.0,<12
 arabic-reshaper>=3.0,<4
 python-bidi>=0.4,<1
+imageio-ffmpeg>=0.5,<1

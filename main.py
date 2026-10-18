@@ -264,12 +264,25 @@ def generate_audio(quote_or_text, culture=None, voice=None, filename="quote.mp3"
         return None
 
 
+def get_ffmpeg_exe():
+    """Возвращает путь к ffmpeg (системный или из пакета imageio-ffmpeg)."""
+    import shutil
+    path = shutil.which("ffmpeg")
+    if path:
+        return path
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return "ffmpeg"
+
+
 def generate_video_card(card_path, audio_path, output_path="quote_video.mp4"):
     """Склеивает статичную карточку и озвучку в MP4-ролик с помощью ffmpeg. Ошибка не фатальна."""
     if not (card_path and audio_path and os.path.exists(card_path) and os.path.exists(audio_path)):
         return None
     command = [
-        "ffmpeg", "-y",
+        get_ffmpeg_exe(), "-y",
         "-loop", "1",
         "-framerate", "2",
         "-i", card_path,
@@ -290,6 +303,7 @@ def generate_video_card(card_path, audio_path, output_path="quote_video.mp4"):
     except Exception as e:
         print(f"Video generation error (skipped): {e}")
         return None
+
 
 
 def visible_length(html_text):
