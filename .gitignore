@@ -1,6 +1,11 @@
 *.mp3
 *.mp4
+*.ogg
+*.oga
+*.wav
 *.png
+.env
+.DS_Store
 .venv/
 __pycache__/
 .pytest_cache/

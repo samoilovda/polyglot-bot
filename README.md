@@ -15,19 +15,58 @@ Telegram-бот: 3 раза в день публикует цитату вели
 - `main.py` — обогащение цитаты (сложное слово, IPA, исторический контекст `📖` и мост языков `🌉`), озвучка через `edge-tts` с ID3-метаданными (`mutagen`), склейка карточки и звука в единый видео-пост через `ffmpeg` (`sendVideo`, либо фолбэк на `sendPhoto` + `sendVoice`).
 - `data/state.json` — очередь культур и уже опубликованные цитаты; коммитится workflow после каждой успешной публикации.
 - `.github/workflows/daily.yml` — расписание (10:00, 16:00, 22:00 по Ташкенту; cron каждый час, слот выбирает `slot.py`), тесты, запуск, коммит состояния.
+- `chat_assistant.py` — серверный помощник для учебного группового чата по испанскому языку (`@polyglotatelbot`): автоматическая расшифровка голосовых через локальный Whisper и перевод между `RU`/`EN`/`ES` через локальный Argos Translate API (без LLM, строго в рамках белого списка `ALLOWED_CHAT_IDS`).
 
 ## Переменные окружения
+
+### Публикация цитат в канал (`main.py`)
 - `OPENROUTER_API_KEY`, `TG_BOT_TOKEN`, `TG_CHAT_ID` — основные секреты.
 - `SEND_AS_VOICE` — отправлять аудио как нативное голосовое сообщение (`true` по умолчанию) или как аудиофайл (`false`).
 - `GENERATE_CARD` — создавать графическую карточку цитаты (`true` по умолчанию).
 - `DRY_RUN` — тестовый запуск без отправки (`1` / `true`).
 Также нужно: Settings → Actions → General → Workflow permissions → *Read and write*.
 
-## Локальный запуск
+### Помощник учебного чата (`chat_assistant.py`)
+- `TG_BOT_TOKEN` — токен бота `@polyglotatelbot` (секрет).
+- `TG_BOT_USERNAME` — имя бота без `@` (по умолчанию `polyglotatelbot`).
+- `ALLOWED_CHAT_IDS` (или `STUDY_CHAT_ID`) — ID разрешённых учебных/тестовых групповых чатов через запятую (обязательно; сообщения вне этого списка и из `TG_CHAT_ID` игнорируются).
+- `ARGOS_API_URL` — адрес сервиса перевода (по умолчанию `http://127.0.0.1:8770`; `POST /v1/translate` с `{"text", "source", "targets": [...]}`, ответ `{"translations": {...}}`; оба целевых языка одним запросом, RU↔ES сервис переводит через EN).
+- `ARGOS_API_KEY` — ключ клиента сервиса перевода (заголовок `Authorization: Bearer`, секрет).
+- `ARGOS_TIMEOUT` — тайм-аут запроса к переводу в секундах (по умолчанию `30`; при 429/503 одна повторная попытка через `Retry-After`).
+- `WHISPER_API_URL` — адрес сервиса распознавания (по умолчанию `http://127.0.0.1:8765/v1/audio/transcriptions`, OpenAI-совместимый с полем `file`; поддерживается и `POST /asr` с `audio_file`).
+- `WHISPER_API_KEY` — ключ клиента сервиса распознавания (`Authorization: Bearer`, секрет).
+- `WHISPER_LANGUAGE` — язык распознавания: один код (`ru` / `es` / `en`) или список `ru,es,en` — тогда сервис на stelve сам выбирает наиболее вероятный из них (+~10 с на голосовое); если не задан, используется язык по умолчанию сервиса (`ru`), и испанская речь распознаётся как русская.
+- `WHISPER_FILE_FIELD` — имя multipart-поля аудиофайла (`audio_file` или `file`; определяется автоматически по URL, если не задано).
+- `WHISPER_TIMEOUT` — тайм-аут распознавания речи в секундах (по умолчанию `300`: whisper-turbo на CPU тратит ~0,5–0,7 с на секунду аудио).
+- `MAX_VOICE_DURATION_SEC` — максимальная длительность голосового (по умолчанию `300` сек.).
+- `MAX_VOICE_SIZE_BYTES` — максимальный размер файла голосового (по умолчанию `10485760` = 10 МБ).
+- `MAX_TEXT_LENGTH` — максимальная длина переводимого текста (по умолчанию `2000` символов = лимит сервиса перевода).
+- `MAX_CONCURRENT_TASKS` — сколько голосовых/переводов обрабатывается параллельно (по умолчанию `4`); остальным бот отвечает «занят».
+- `RATE_LIMIT_REQUESTS` / `RATE_LIMIT_WINDOW_SEC` — лимит запросов на участника (по умолчанию `10` запросов за `60` сек.).
+- `HEARTBEAT_FILE` — файл, который обновляется на каждом цикле опроса (для healthcheck контейнера).
+
+Бот должен видеть все сообщения группы, чтобы получать голосовые: в @BotFather `/setprivacy` → Disable
+(или сделать бота администратором группы).
+
+### Развёртывание на stelve
+`Dockerfile` собирает только `chat_assistant.py` (зависимость — `requests`). Контейнер `polyglot-assistant`
+описан в `/srv/bots/compose.yml`; сервер раз в 5 минут сверяет `main` с GitHub и пересобирает контейнер,
+только если изменились `chat_assistant.py`, `Dockerfile`, `requirements-chat.txt` или `.dockerignore`
+(коммиты `state.json` от публикаций его не трогают).
+
+## Локальный и серверный запуск
 ```bash
 pip install -r requirements.txt -r requirements-dev.txt
 pytest
-OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py   # печатает пост и генерирует тестовую карточку
+
+# Тестовый запуск генератора постов для канала:
+OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py
+
+# Запуск помощника для учебного чата (long polling):
+TG_BOT_TOKEN=... ALLOWED_CHAT_IDS=-1001234567890 \
+  ARGOS_API_URL=http://127.0.0.1:8770 ARGOS_API_KEY=... \
+  WHISPER_API_URL=http://127.0.0.1:8765/v1/audio/transcriptions WHISPER_API_KEY=... \
+  python chat_assistant.py
 ```
 
 ## Как добавить цитаты
