@@ -15,19 +15,45 @@ Telegram-бот: 3 раза в день публикует цитату вели
 - `main.py` — обогащение цитаты (сложное слово, IPA, исторический контекст `📖` и мост языков `🌉`), озвучка через `edge-tts` с ID3-метаданными (`mutagen`), склейка карточки и звука в единый видео-пост через `ffmpeg` (`sendVideo`, либо фолбэк на `sendPhoto` + `sendVoice`).
 - `data/state.json` — очередь культур и уже опубликованные цитаты; коммитится workflow после каждой успешной публикации.
 - `.github/workflows/daily.yml` — расписание (10:00, 16:00, 22:00 по Ташкенту; cron каждый час, слот выбирает `slot.py`), тесты, запуск, коммит состояния.
+- `chat_assistant.py` — серверный помощник для учебного группового чата по испанскому языку (`@polyglotatelbot`): автоматическая расшифровка голосовых через локальный Whisper и перевод между `RU`/`EN`/`ES` через локальный Argos Translate API (без LLM, строго в рамках белого списка `ALLOWED_CHAT_IDS`).
 
 ## Переменные окружения
+
+### Публикация цитат в канал (`main.py`)
 - `OPENROUTER_API_KEY`, `TG_BOT_TOKEN`, `TG_CHAT_ID` — основные секреты.
 - `SEND_AS_VOICE` — отправлять аудио как нативное голосовое сообщение (`true` по умолчанию) или как аудиофайл (`false`).
 - `GENERATE_CARD` — создавать графическую карточку цитаты (`true` по умолчанию).
 - `DRY_RUN` — тестовый запуск без отправки (`1` / `true`).
 Также нужно: Settings → Actions → General → Workflow permissions → *Read and write*.
 
-## Локальный запуск
+### Помощник учебного чата (`chat_assistant.py`)
+- `TG_BOT_TOKEN` — токен бота `@polyglotatelbot` (секрет).
+- `TG_BOT_USERNAME` — имя бота без `@` (по умолчанию `polyglotatelbot`).
+- `ALLOWED_CHAT_IDS` (или `STUDY_CHAT_ID`) — ID разрешённых учебных/тестовых групповых чатов через запятую (обязательно; сообщения вне этого списка и из `TG_CHAT_ID` игнорируются).
+- `ARGOS_API_URL` — адрес локального сервиса Argos Translate API (по умолчанию `http://127.0.0.1:5000`; `POST /translate` с `{"q", "source", "target", "format": "text"}`).
+- `ARGOS_TIMEOUT` — тайм-аут запроса к Argos в секундах (по умолчанию `15`).
+- `WHISPER_API_URL` — адрес существующего сервиса Whisper (по умолчанию `http://127.0.0.1:9000/asr`; поддерживает `POST /asr` с `audio_file` и OpenAI-совместимый `POST /v1/audio/transcriptions` с `file`).
+- `WHISPER_FILE_FIELD` — имя multipart-поля аудиофайла (`audio_file` или `file`; определяется автоматически по URL, если не задано).
+- `WHISPER_TIMEOUT` — тайм-аут распознавания речи в секундах (по умолчанию `60`).
+- `MAX_VOICE_DURATION_SEC` — максимальная длительность голосового (по умолчанию `300` сек.).
+- `MAX_VOICE_SIZE_BYTES` — максимальный размер файла голосового (по умолчанию `10485760` = 10 МБ).
+- `MAX_TEXT_LENGTH` — максимальная длина переводимого текста (по умолчанию `4000` символов).
+- `MAX_CONCURRENT_TASKS` — лимит одновременных задач обработки (по умолчанию `4`).
+- `RATE_LIMIT_REQUESTS` / `RATE_LIMIT_WINDOW_SEC` — лимит запросов на участника (по умолчанию `10` запросов за `60` сек.).
+
+## Локальный и серверный запуск
 ```bash
 pip install -r requirements.txt -r requirements-dev.txt
 pytest
-OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py   # печатает пост и генерирует тестовую карточку
+
+# Тестовый запуск генератора постов для канала:
+OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py
+
+# Запуск помощника для учебного чата (long polling):
+TG_BOT_TOKEN=... ALLOWED_CHAT_IDS=-1001234567890 \
+  ARGOS_API_URL=http://127.0.0.1:5000 \
+  WHISPER_API_URL=http://127.0.0.1:9000/asr \
+  python chat_assistant.py
 ```
 
 ## Как добавить цитаты
