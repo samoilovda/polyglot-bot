@@ -16,6 +16,7 @@
 """
 
 from collections import OrderedDict, deque
+from concurrent.futures import Executor, ThreadPoolExecutor
 from dataclasses import dataclass
 import logging
 import os
@@ -73,7 +74,7 @@ LANG_ALIASES: Dict[str, str] = {
 }
 
 TELEGRAM_MESSAGE_LIMIT = 4096
-DEFAULT_MAX_TEXT_LENGTH = 4000
+DEFAULT_MAX_TEXT_LENGTH = 2000  # лимит сервиса перевода на stelve (TRANSLATE_MAX_CHARS)
 DEFAULT_MAX_VOICE_DURATION_SEC = 300
 DEFAULT_MAX_VOICE_SIZE_BYTES = 10 * 1024 * 1024  # 10 МБ
 DEFAULT_MAX_CONCURRENT_TASKS = 4
@@ -118,13 +119,17 @@ class AssistantConfig:
     bot_username: str = "polyglotatelbot"
     allowed_chat_ids: Set[int] = None  # type: ignore[assignment]
     channel_chat_id: Optional[str] = None
-    argos_api_url: str = "http://127.0.0.1:5000"
+    argos_api_url: str = "http://127.0.0.1:8770"
     argos_api_key: Optional[str] = None
-    argos_timeout: float = 15.0
-    whisper_api_url: str = "http://127.0.0.1:9000/asr"
+    argos_timeout: float = 30.0
+    whisper_api_url: str = "http://127.0.0.1:8765/v1/audio/transcriptions"
+    whisper_api_key: Optional[str] = None
+    whisper_language: Optional[str] = None
     whisper_file_field: Optional[str] = None
     whisper_model: Optional[str] = None
-    whisper_timeout: float = 60.0
+    # whisper-turbo на CPU stelve: ~0,5-0,7 с на секунду аудио, плюс очередь сервиса
+    whisper_timeout: float = 300.0
+    heartbeat_file: Optional[str] = None
     telegram_timeout: float = 30.0
     max_voice_duration_sec: int = DEFAULT_MAX_VOICE_DURATION_SEC
     max_voice_size_bytes: int = DEFAULT_MAX_VOICE_SIZE_BYTES
@@ -163,13 +168,18 @@ class AssistantConfig:
             bot_username=os.environ.get("TG_BOT_USERNAME", "polyglotatelbot").strip(),
             allowed_chat_ids=parse_chat_ids(raw_allowed),
             channel_chat_id=os.environ.get("TG_CHAT_ID", "").strip() or None,
-            argos_api_url=os.environ.get("ARGOS_API_URL", "http://127.0.0.1:5000").strip(),
+            argos_api_url=os.environ.get("ARGOS_API_URL", "http://127.0.0.1:8770").strip(),
             argos_api_key=os.environ.get("ARGOS_API_KEY", "").strip() or None,
-            argos_timeout=float(os.environ.get("ARGOS_TIMEOUT", "15")),
-            whisper_api_url=os.environ.get("WHISPER_API_URL", "http://127.0.0.1:9000/asr").strip(),
+            argos_timeout=float(os.environ.get("ARGOS_TIMEOUT", "30")),
+            whisper_api_url=os.environ.get(
+                "WHISPER_API_URL", "http://127.0.0.1:8765/v1/audio/transcriptions"
+            ).strip(),
+            whisper_api_key=os.environ.get("WHISPER_API_KEY", "").strip() or None,
+            whisper_language=os.environ.get("WHISPER_LANGUAGE", "").strip() or None,
             whisper_file_field=os.environ.get("WHISPER_FILE_FIELD", "").strip() or None,
             whisper_model=os.environ.get("WHISPER_MODEL", "").strip() or None,
-            whisper_timeout=float(os.environ.get("WHISPER_TIMEOUT", "60")),
+            whisper_timeout=float(os.environ.get("WHISPER_TIMEOUT", "300")),
+            heartbeat_file=os.environ.get("HEARTBEAT_FILE", "").strip() or None,
             telegram_timeout=float(os.environ.get("TG_API_TIMEOUT", "30")),
             max_voice_duration_sec=int(
                 os.environ.get("MAX_VOICE_DURATION_SEC", str(DEFAULT_MAX_VOICE_DURATION_SEC))
@@ -216,7 +226,7 @@ _NON_RUSSIAN_CYRILLIC = set("іїєґўђјљњћџѕІЇЄҐЎЂЈЉЊЋЏЅ")
 
 # Диакритика латиницы, характерная для неподдерживаемых языков (pt, fr, de, it, tr, uz и др.),
 # но не используемая в стандартном испанском или английском
-_NON_ES_EN_LATIN_CHARS = set("ãõçâêîôûàèìòùäößœæğşıÃÕÇÂÊÎÔÛÀÈÌÒÙÄÖẞŒÆĞŞI")
+_NON_ES_EN_LATIN_CHARS = set("ãõçâêîôûàèìòùäößœæğşıÃÕÇÂÊÎÔÛÀÈÌÒÙÄÖẞŒÆĞŞİ")
 
 # Уникальные для испанского символы (среди пары EN/ES)
 _SPANISH_SPECIFIC_CHARS = set("ñáéíóúüÑÁÉÍÓÚÜ¿¡")
@@ -227,7 +237,7 @@ _SPANISH_WORDS = {
     "por", "favor", "como", "cómo", "estas", "estás", "estoy", "esta", "está",
     "estamos", "estan", "están", "bien", "muy", "mucho", "mucha", "muchos",
     "muchas", "poco", "poca", "pocos", "todo", "toda", "todos", "todas",
-    "nada", "algo", "alguien", "nadie", "siempre", "nunca", " jamás", "jamas",
+    "nada", "algo", "alguien", "nadie", "siempre", "nunca", "jamás", "jamas",
     "también", "tambien", "tampoco", "pero", "porque", "cuando", "cuándo",
     "donde", "dónde", "quien", "quién", "cual", "cuál", "este", "esta",
     "estos", "estas", "ese", "esa", "esos", "esas", "aquel", "aquella",
@@ -332,7 +342,7 @@ _FOREIGN_LATIN_WORDS = {
     "très", "avoir", "être", "faire",
     # German
     "guten", "morgen", "danke", "bitte", "nicht", "sind", "haben", "werden",
-    "kann", "مuss", "oder", "aber", "wenn", "weil", "Ihnen", "ihnen", "sich",
+    "kann", "muss", "oder", "aber", "wenn", "weil", "ihnen", "sich",
     "auch", "noch", "schon", "immer", "alles", "leben", "sprechen", "deutsch",
     # Portuguese
     "obrigado", "obrigada", "você", "voce", "vocês", "tudo", "muito", "bom",
@@ -853,73 +863,89 @@ class SlidingWindowRateLimiter:
 
 # --- КЛИЕНТЫ СЕРВИСОВ (ARGOS, WHISPER, TELEGRAM) ---
 class ArgosClient:
-    """HTTP-клиент к локальному/серверному Argos Translate API."""
+    """HTTP-клиент к сервису перевода на stelve (Argos Translate, POST /v1/translate).
+
+    Контракт: {"text", "source", "targets": [1-2 кода]} -> {"translations": {код: текст}},
+    авторизация Bearer, ошибки {"error": {"code", "message"}}; 429/503 приходят с Retry-After.
+    """
+
+    MAX_RETRY_AFTER_SEC = 10.0
 
     def __init__(
         self,
         base_url: str,
-        timeout: float = 15.0,
+        timeout: float = 30.0,
         api_key: Optional[str] = None,
         session: Optional[requests.Session] = None,
+        sleep: Callable[[float], None] = time.sleep,
     ):
-        self.base_url = (base_url or "http://127.0.0.1:5000").rstrip("/")
+        self.base_url = (base_url or "http://127.0.0.1:8770").rstrip("/")
         self.timeout = timeout
         self.api_key = api_key
         self._http = session or requests
+        self._sleep = sleep
 
     @property
     def translate_url(self) -> str:
-        if self.base_url.endswith("/translate"):
+        if self.base_url.endswith("/v1/translate"):
             return self.base_url
-        return f"{self.base_url}/translate"
+        return f"{self.base_url}/v1/translate"
+
+    def _post(self, payload: dict) -> dict:
+        headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
+        for attempt in range(2):
+            try:
+                response = self._http.post(
+                    self.translate_url,
+                    json=payload,
+                    headers=headers,
+                    timeout=self.timeout,
+                )
+            except Exception as exc:
+                raise ServiceUnavailableError("Argos translation service request failed") from exc
+            status = getattr(response, "status_code", 200)
+            if status in (429, 503) and attempt == 0:
+                # Сервис занят или ещё грузит модели: одна повторная попытка через Retry-After
+                try:
+                    delay = float(response.headers.get("Retry-After", "5"))
+                except (TypeError, ValueError, AttributeError):
+                    delay = 5.0
+                self._sleep(min(max(delay, 1.0), self.MAX_RETRY_AFTER_SEC))
+                continue
+            try:
+                response.raise_for_status()
+                data = response.json()
+            except Exception as exc:
+                raise ServiceUnavailableError(
+                    f"Argos translation service returned HTTP {status}"
+                ) from exc
+            if not isinstance(data, dict) or not isinstance(data.get("translations"), dict):
+                raise ServiceUnavailableError("Invalid response format from Argos service")
+            return data["translations"]
+        raise ServiceUnavailableError("Argos translation service is busy")
+
+    def translate_many(self, text: str, source_lang: str, target_langs: Sequence[str]) -> Dict[str, str]:
+        """Переводит текст сразу на несколько языков одним запросом (RU<->ES сервис делает через EN)."""
+        if source_lang not in SUPPORTED_LANGS or any(t not in SUPPORTED_LANGS for t in target_langs):
+            raise ValueError(f"Unsupported language direction: {source_lang} -> {list(target_langs)}")
+        result = {source_lang: text} if source_lang in target_langs else {}
+        targets = [t for t in target_langs if t != source_lang]
+        if not targets:
+            return result
+        translations = self._post({"text": text, "source": source_lang, "targets": targets})
+        for target in targets:
+            translated = translations.get(target)
+            if not isinstance(translated, str) or not translated.strip():
+                raise ServiceUnavailableError("Empty translation returned by Argos service")
+            result[target] = translated.strip()
+        return result
 
     def translate(self, text: str, source_lang: str, target_lang: str) -> str:
-        if source_lang not in SUPPORTED_LANGS or target_lang not in SUPPORTED_LANGS:
-            raise ValueError(f"Unsupported language direction: {source_lang} -> {target_lang}")
-        if source_lang == target_lang:
-            return text
-
-        payload = {
-            "q": text,
-            "source": source_lang,
-            "target": target_lang,
-            "format": "text",
-        }
-        if self.api_key:
-            payload["api_key"] = self.api_key
-
-        try:
-            response = self._http.post(
-                self.translate_url,
-                json=payload,
-                timeout=self.timeout,
-            )
-            response.raise_for_status()
-            data = response.json()
-        except Exception as exc:
-            raise ServiceUnavailableError("Argos translation service request failed") from exc
-
-        if not isinstance(data, dict):
-            raise ServiceUnavailableError("Invalid response format from Argos service")
-
-        translated = (
-            data.get("translatedText")
-            or data.get("translation")
-            or data.get("text")
-            or ""
-        )
-        if not isinstance(translated, str) or not translated.strip():
-            raise ServiceUnavailableError("Empty translation returned by Argos service")
-
-        return translated.strip()
+        return self.translate_many(text, source_lang, [target_lang])[target_lang]
 
     def translate_to_pair(self, text: str, source_lang: str) -> Dict[str, str]:
-        """Переводит текст с исходного языка на два остальных языка из RU/EN/ES."""
-        targets = TARGET_LANGS_FOR_SOURCE[source_lang]
-        result: Dict[str, str] = {}
-        for target_lang in targets:
-            result[target_lang] = self.translate(text, source_lang, target_lang)
-        return result
+        """Переводит текст с исходного языка на два остальных языка из RU/EN/ES одним запросом."""
+        return self.translate_many(text, source_lang, TARGET_LANGS_FOR_SOURCE[source_lang])
 
 
 class WhisperClient:
@@ -928,15 +954,19 @@ class WhisperClient:
     def __init__(
         self,
         api_url: str,
-        timeout: float = 60.0,
+        timeout: float = 300.0,
         file_field: Optional[str] = None,
         model: Optional[str] = None,
         session: Optional[requests.Session] = None,
+        api_key: Optional[str] = None,
+        language: Optional[str] = None,
     ):
-        self.api_url = (api_url or "http://127.0.0.1:9000/asr").strip()
+        self.api_url = (api_url or "http://127.0.0.1:8765/v1/audio/transcriptions").strip()
         self.timeout = timeout
         self.file_field = file_field
         self.model = model
+        self.api_key = api_key
+        self.language = language
         self._http = session or requests
 
     def _resolve_file_field(self) -> str:
@@ -952,10 +982,15 @@ class WhisperClient:
         data = {}
         if field_name == "audio_file":
             params = {"task": "transcribe", "output": "json"}
+            if self.language:
+                params["language"] = self.language
         else:
             data["response_format"] = "json"
             if self.model:
                 data["model"] = self.model
+            if self.language:
+                data["language"] = self.language
+        headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else None
 
         try:
             with open(audio_path, "rb") as audio_file:
@@ -965,6 +1000,7 @@ class WhisperClient:
                     params=params or None,
                     data=data or None,
                     files=files,
+                    headers=headers,
                     timeout=self.timeout,
                 )
             response.raise_for_status()
@@ -1137,6 +1173,8 @@ class StudyChatAssistant:
             timeout=config.whisper_timeout,
             file_field=config.whisper_file_field,
             model=config.whisper_model,
+            api_key=config.whisper_api_key,
+            language=config.whisper_language,
         )
         self.bot_id = bot_id
         self.deduplicator = UpdateDeduplicator(max_size=config.dedup_cache_size)
@@ -1376,8 +1414,12 @@ class StudyChatAssistant:
         self.tg.send_text_reply(chat_id, formatted, reply_to_message_id=reply_to_id)
         return f"translated_{source_lang}"
 
-    def handle_update(self, update: dict) -> Optional[str]:
-        """Обрабатывает одно обновление Telegram. Возвращает код результата или None (если проигнорировано)."""
+    def handle_update(self, update: dict, executor: Optional[Executor] = None) -> Optional[str]:
+        """Обрабатывает одно обновление Telegram. Возвращает код результата или None (если проигнорировано).
+
+        С executor тяжёлая часть (Whisper / Argos) уходит в пул потоков и возвращается "queued",
+        чтобы долгое распознавание не задерживало остальные сообщения чата.
+        """
         if not isinstance(update, dict):
             return None
 
@@ -1437,14 +1479,47 @@ class StudyChatAssistant:
             )
             return "queue_full"
 
+        if executor is None:
+            return self._process(int(chat_id), int(message_id), message, voice, cmd)
+        try:
+            executor.submit(self._process_logged, int(chat_id), int(message_id), message, voice, cmd)
+        except Exception:
+            self._semaphore.release()
+            raise
+        return "queued"
+
+    def _process(self, chat_id: int, message_id: int, message: dict, voice, cmd) -> Optional[str]:
+        """Выполняет задачу и освобождает слот семафора, занятый в handle_update."""
         try:
             if isinstance(voice, dict):
-                return self._handle_voice_message(int(chat_id), int(message_id), voice)
+                return self._handle_voice_message(chat_id, message_id, voice)
             if cmd is not None:
-                return self._handle_translation_command(int(chat_id), int(message_id), message, cmd)
+                return self._handle_translation_command(chat_id, message_id, message, cmd)
             return None
         finally:
             self._semaphore.release()
+
+    def _process_logged(self, chat_id: int, message_id: int, message: dict, voice, cmd) -> None:
+        try:
+            status = self._process(chat_id, message_id, message, voice, cmd)
+            logger.info("chat_id=%s message_id=%s result=%s", chat_id, message_id, status)
+        except Exception as exc:
+            logger.error(
+                "Unhandled error processing chat_id=%s message_id=%s: %s",
+                chat_id,
+                message_id,
+                redact_secrets(f"{type(exc).__name__}: {exc}", [self.config.bot_token]),
+            )
+
+    def _touch_heartbeat(self) -> None:
+        if not self.config.heartbeat_file:
+            return
+        try:
+            with open(self.config.heartbeat_file, "a"):
+                pass
+            os.utime(self.config.heartbeat_file, None)
+        except OSError:
+            logger.warning("Failed to update heartbeat file")
 
     def run_polling(self, stop_event: Optional[threading.Event] = None) -> None:
         """Запускает long-polling цикл получения обновлений для учебного чата."""
@@ -1468,8 +1543,13 @@ class StudyChatAssistant:
         except ServiceUnavailableError as exc:
             logger.warning("Could not fetch getMe on startup: %s", exc)
 
+        executor = ThreadPoolExecutor(
+            max_workers=max(1, self.config.max_concurrent_tasks),
+            thread_name_prefix="chat-task",
+        )
         offset: Optional[int] = None
         while not (stop_event and stop_event.is_set()):
+            self._touch_heartbeat()
             try:
                 updates = self.tg.get_updates(
                     offset=offset,
@@ -1480,7 +1560,7 @@ class StudyChatAssistant:
                     if isinstance(upd_id, int):
                         offset = upd_id + 1
                     try:
-                        self.handle_update(upd)
+                        self.handle_update(upd, executor=executor)
                     except Exception as exc:
                         logger.error(
                             "Unhandled error processing update_id=%s: %s",
@@ -1497,6 +1577,7 @@ class StudyChatAssistant:
                         break
                 else:
                     time.sleep(3.0)
+        executor.shutdown(wait=True)
 
 
 def main() -> int:

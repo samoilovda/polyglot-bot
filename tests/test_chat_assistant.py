@@ -252,28 +252,108 @@ def test_six_translation_directions_via_mention():
     }
 
 
-def test_argos_http_client_all_six_directions():
+class _Resp:
+    def __init__(self, status_code=200, payload=None, headers=None):
+        self.status_code = status_code
+        self._payload = payload
+        self.headers = headers or {}
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise RuntimeError(f"HTTP {self.status_code}")
+
+    def json(self):
+        return self._payload
+
+
+def test_argos_http_client_all_six_directions_in_one_request_per_source():
     recorded = []
 
     class DummySession:
-        def post(self, url, json=None, timeout=None):
-            recorded.append((url, json, timeout))
+        def post(self, url, json=None, headers=None, timeout=None):
+            recorded.append((url, json, headers, timeout))
+            out = {t: f"out({json['source']}->{t}):{json['text']}" for t in json["targets"]}
+            return _Resp(payload={"source": json["source"], "translations": out})
 
-            class Resp:
-                def raise_for_status(self):
-                    pass
-
-                def json(self):
-                    return {"translatedText": f"out({json['source']}->{json['target']}):{json['q']}"}
-
-            return Resp()
-
-    client = ca.ArgosClient("http://127.0.0.1:5000", timeout=12.0, session=DummySession())
+    client = ca.ArgosClient("http://127.0.0.1:8770", timeout=12.0, api_key="k1", session=DummySession())
+    directions = set()
     for src in ("ru", "en", "es"):
         pair = client.translate_to_pair("sample", src)
         assert set(pair.keys()) == set(ca.TARGET_LANGS_FOR_SOURCE[src])
-    assert len(recorded) == 6
-    assert all(r[0] == "http://127.0.0.1:5000/translate" for r in recorded)
+        directions |= {(src, t) for t in pair}
+    assert len(directions) == 6
+    assert len(recorded) == 3
+    assert all(r[0] == "http://127.0.0.1:8770/v1/translate" for r in recorded)
+    assert all(r[2] == {"Authorization": "Bearer k1"} for r in recorded)
+    assert recorded[0][1] == {"text": "sample", "source": "ru", "targets": ["en", "es"]}
+    assert client.translate("hola", "es", "ru") == "out(es->ru):hola"
+
+
+def test_argos_client_retries_once_on_busy_then_fails_cleanly():
+    responses = [
+        _Resp(429, {"error": {"code": "busy"}}, {"Retry-After": "5"}),
+        _Resp(200, {"translations": {"en": "Hi", "es": "Hola"}}),
+    ]
+    slept = []
+
+    class DummySession:
+        def post(self, url, json=None, headers=None, timeout=None):
+            return responses.pop(0)
+
+    client = ca.ArgosClient("http://x:8770", session=DummySession(), sleep=slept.append)
+    assert client.translate_to_pair("Привет", "ru") == {"en": "Hi", "es": "Hola"}
+    assert slept == [5.0]
+
+    responses[:] = [_Resp(503, {}, {"Retry-After": "60"}), _Resp(503, {}, {"Retry-After": "60"})]
+    with pytest.raises(ca.ServiceUnavailableError):
+        client.translate_to_pair("Привет", "ru")
+    assert slept[-1] == ca.ArgosClient.MAX_RETRY_AFTER_SEC
+
+    responses[:] = [_Resp(413, {"error": {"code": "text_too_long"}})]
+    with pytest.raises(ca.ServiceUnavailableError):
+        client.translate_to_pair("Привет", "ru")
+
+
+def test_whisper_client_sends_bearer_token_and_language(tmp_path):
+    recorded = {}
+
+    class DummySession:
+        def post(self, url, params=None, data=None, files=None, headers=None, timeout=None):
+            recorded.update(url=url, data=data, headers=headers, field=list(files)[0])
+            return _Resp(payload={"text": " Hola "})
+
+    audio = tmp_path / "v.ogg"
+    audio.write_bytes(b"OggS")
+    client = ca.WhisperClient(
+        "http://172.31.0.1:8765/v1/audio/transcriptions",
+        api_key="stt-key",
+        language="es",
+        session=DummySession(),
+    )
+    assert client.transcribe(str(audio)) == "Hola"
+    assert recorded["field"] == "file"
+    assert recorded["headers"] == {"Authorization": "Bearer stt-key"}
+    assert recorded["data"] == {"response_format": "json", "language": "es"}
+
+
+def test_english_with_capital_i_is_detected_as_english():
+    for text in ("I am late, sorry", "I think I can help you with the homework", "Can I go?"):
+        res = ca.detect_language(text)
+        assert (res.status, res.lang) == ("ok", "en"), text
+
+
+def test_executor_dispatch_returns_queued_and_releases_slot():
+    from concurrent.futures import ThreadPoolExecutor
+
+    assistant, tg, argos, _ = make_assistant(max_concurrent_tasks=1)
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        status = assistant.handle_update(
+            make_update(update_id=900, text="/translate es Hola amigos"), executor=pool
+        )
+    assert status == "queued"
+    assert argos.calls and tg.sent_messages
+    # слот семафора освобождён после выполнения задачи в пуле
+    assert assistant.handle_update(make_update(update_id=901, text="/translate es Gracias")) == "translated_es"
 
 
 # --- 3. КОМАНДА /translate, ОТВЕТЫ НА СООБЩЕНИЯ И ЯВНОЕ УКАЗАНИЕ ЯЗЫКА ---

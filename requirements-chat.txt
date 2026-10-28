@@ -1,0 +1,2 @@
+# Зависимости только для chat_assistant.py (контейнер на stelve); main.py работает в GitHub Actions
+requests>=2.31,<3

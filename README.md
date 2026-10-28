@@ -30,16 +30,29 @@ Telegram-бот: 3 раза в день публикует цитату вели
 - `TG_BOT_TOKEN` — токен бота `@polyglotatelbot` (секрет).
 - `TG_BOT_USERNAME` — имя бота без `@` (по умолчанию `polyglotatelbot`).
 - `ALLOWED_CHAT_IDS` (или `STUDY_CHAT_ID`) — ID разрешённых учебных/тестовых групповых чатов через запятую (обязательно; сообщения вне этого списка и из `TG_CHAT_ID` игнорируются).
-- `ARGOS_API_URL` — адрес локального сервиса Argos Translate API (по умолчанию `http://127.0.0.1:5000`; `POST /translate` с `{"q", "source", "target", "format": "text"}`).
-- `ARGOS_TIMEOUT` — тайм-аут запроса к Argos в секундах (по умолчанию `15`).
-- `WHISPER_API_URL` — адрес существующего сервиса Whisper (по умолчанию `http://127.0.0.1:9000/asr`; поддерживает `POST /asr` с `audio_file` и OpenAI-совместимый `POST /v1/audio/transcriptions` с `file`).
+- `ARGOS_API_URL` — адрес сервиса перевода (по умолчанию `http://127.0.0.1:8770`; `POST /v1/translate` с `{"text", "source", "targets": [...]}`, ответ `{"translations": {...}}`; оба целевых языка одним запросом, RU↔ES сервис переводит через EN).
+- `ARGOS_API_KEY` — ключ клиента сервиса перевода (заголовок `Authorization: Bearer`, секрет).
+- `ARGOS_TIMEOUT` — тайм-аут запроса к переводу в секундах (по умолчанию `30`; при 429/503 одна повторная попытка через `Retry-After`).
+- `WHISPER_API_URL` — адрес сервиса распознавания (по умолчанию `http://127.0.0.1:8765/v1/audio/transcriptions`, OpenAI-совместимый с полем `file`; поддерживается и `POST /asr` с `audio_file`).
+- `WHISPER_API_KEY` — ключ клиента сервиса распознавания (`Authorization: Bearer`, секрет).
+- `WHISPER_LANGUAGE` — язык распознавания (`ru` / `es` / `en`); если не задан, используется язык по умолчанию сервиса (на stelve — `ru`).
 - `WHISPER_FILE_FIELD` — имя multipart-поля аудиофайла (`audio_file` или `file`; определяется автоматически по URL, если не задано).
-- `WHISPER_TIMEOUT` — тайм-аут распознавания речи в секундах (по умолчанию `60`).
+- `WHISPER_TIMEOUT` — тайм-аут распознавания речи в секундах (по умолчанию `300`: whisper-turbo на CPU тратит ~0,5–0,7 с на секунду аудио).
 - `MAX_VOICE_DURATION_SEC` — максимальная длительность голосового (по умолчанию `300` сек.).
 - `MAX_VOICE_SIZE_BYTES` — максимальный размер файла голосового (по умолчанию `10485760` = 10 МБ).
-- `MAX_TEXT_LENGTH` — максимальная длина переводимого текста (по умолчанию `4000` символов).
-- `MAX_CONCURRENT_TASKS` — лимит одновременных задач обработки (по умолчанию `4`).
+- `MAX_TEXT_LENGTH` — максимальная длина переводимого текста (по умолчанию `2000` символов = лимит сервиса перевода).
+- `MAX_CONCURRENT_TASKS` — сколько голосовых/переводов обрабатывается параллельно (по умолчанию `4`); остальным бот отвечает «занят».
 - `RATE_LIMIT_REQUESTS` / `RATE_LIMIT_WINDOW_SEC` — лимит запросов на участника (по умолчанию `10` запросов за `60` сек.).
+- `HEARTBEAT_FILE` — файл, который обновляется на каждом цикле опроса (для healthcheck контейнера).
+
+Бот должен видеть все сообщения группы, чтобы получать голосовые: в @BotFather `/setprivacy` → Disable
+(или сделать бота администратором группы).
+
+### Развёртывание на stelve
+`Dockerfile` собирает только `chat_assistant.py` (зависимость — `requests`). Контейнер `polyglot-assistant`
+описан в `/srv/bots/compose.yml`; сервер раз в 5 минут сверяет `main` с GitHub и пересобирает контейнер,
+только если изменились `chat_assistant.py`, `Dockerfile`, `requirements-chat.txt` или `.dockerignore`
+(коммиты `state.json` от публикаций его не трогают).
 
 ## Локальный и серверный запуск
 ```bash
@@ -51,8 +64,8 @@ OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py
 
 # Запуск помощника для учебного чата (long polling):
 TG_BOT_TOKEN=... ALLOWED_CHAT_IDS=-1001234567890 \
-  ARGOS_API_URL=http://127.0.0.1:5000 \
-  WHISPER_API_URL=http://127.0.0.1:9000/asr \
+  ARGOS_API_URL=http://127.0.0.1:8770 ARGOS_API_KEY=... \
+  WHISPER_API_URL=http://127.0.0.1:8765/v1/audio/transcriptions WHISPER_API_KEY=... \
   python chat_assistant.py
 ```
 
