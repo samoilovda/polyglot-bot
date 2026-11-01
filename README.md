@@ -17,7 +17,8 @@ Telegram-бот: 3 раза в день публикует цитату вели
 - `.github/workflows/daily.yml` — расписание (10:00, 16:00, 22:00 по Ташкенту; cron каждый час, слот выбирает `slot.py`), тесты, запуск, коммит состояния.
 
 ## Переменные окружения
-- `OPENROUTER_API_KEY`, `TG_BOT_TOKEN`, `TG_CHAT_ID` — основные секреты.
+- `TG_BOT_TOKEN`, `TG_CHAT_ID` — основные секреты.
+- LLM (без платного API, `llm.py`): `CLAUDE_CODE_OAUTH_TOKEN` (локально выполнить `claude setup-token`, токен положить в секрет репозитория) и `GEMINI_API_KEY` (ключ бесплатного уровня из Google AI Studio). Порядок провайдеров — переменная репозитория (Settings → Variables) `LLM_PROVIDERS`, по умолчанию `claude_cli,gemini`; доступен и `openrouter` (секрет `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`). Модель Claude — `CLAUDE_MODEL` (по умолчанию `haiku`), Gemini — `GEMINI_MODEL`. При 401/402/429 провайдер пропускается без повторов; при невалидном JSON — до 2 повторов, затем следующий провайдер.
 - `SEND_AS_VOICE` — отправлять аудио как нативное голосовое сообщение (`true` по умолчанию) или как аудиофайл (`false`).
 - `GENERATE_CARD` — создавать графическую карточку цитаты (`true` по умолчанию).
 - `DRY_RUN` — тестовый запуск без отправки (`1` / `true`).
@@ -27,7 +28,7 @@ Telegram-бот: 3 раза в день публикует цитату вели
 ```bash
 pip install -r requirements.txt -r requirements-dev.txt
 pytest
-OPENROUTER_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py   # печатает пост и генерирует тестовую карточку
+LLM_PROVIDERS=gemini GEMINI_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.py   # печатает пост и генерирует тестовую карточку
 ```
 
 ## Как добавить цитаты

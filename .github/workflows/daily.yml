@@ -37,6 +37,16 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Set up Node (for Claude Code CLI)
+        if: steps.slot.outputs.due == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Claude Code CLI
+        if: steps.slot.outputs.due == 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
       - name: Install dependencies
         if: steps.slot.outputs.due == 'true'
         run: |
@@ -50,6 +60,10 @@ jobs:
       - name: Run bot
         if: steps.slot.outputs.due == 'true'
         env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS || 'claude_cli,gemini' }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'haiku' }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}

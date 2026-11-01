@@ -9,13 +9,12 @@ import sys
 import requests
 
 import card
+import llm
 import slot
 
 # --- КОНФИГУРАЦИЯ ---
-OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN")
 TG_CHAT_ID = os.environ.get("TG_CHAT_ID")
-MODEL_NAME = os.environ.get("OPENROUTER_MODEL", "~google/gemini-flash-latest")  # алиас OpenRouter на последнюю Gemini Flash
 DRY_RUN = os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes")
 SEND_AS_VOICE = os.environ.get("SEND_AS_VOICE", "true").strip().lower() in ("1", "true", "yes")
 GENERATE_CARD = os.environ.get("GENERATE_CARD", "true").strip().lower() in ("1", "true", "yes")
@@ -186,28 +185,16 @@ def parse_lesson(data, quote, culture):
 
 def translate_quote(quote, culture, retries=2):
     """Переводит цитату, выбирает сложное слово и его эквиваленты. См. parse_lesson."""
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/polyglot-bot",
-    }
-    payload = {
-        "model": MODEL_NAME,
-        "messages": [{"role": "user", "content": build_prompt(quote, culture)}],
-        "temperature": 0.3,
-        "response_format": {"type": "json_object"},
-    }
-
+    prompt = build_prompt(quote, culture)
     last_error = None
     for attempt in range(retries + 1):
         try:
-            response = requests.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers=headers, json=payload, timeout=60,
-            )
-            response.raise_for_status()
-            raw = response.json()["choices"][0]["message"]["content"]
-            return parse_lesson(json.loads(clean_json_response(raw)), quote, culture)
+            data = llm.complete_json_chain(prompt, temperature=0.3)
+            return parse_lesson(data, quote, culture)
+        except llm.LlmError as e:
+            last_error = e
+            print(f"Translation attempt {attempt + 1} failed: {e}")
+            break  # цепочка уже исчерпала провайдеров и повторы
         except Exception as e:
             last_error = e
             print(f"Translation attempt {attempt + 1} failed: {e}")
