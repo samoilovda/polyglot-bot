@@ -35,3 +35,11 @@ LLM_PROVIDERS=gemini GEMINI_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.p
 Добавьте объект в нужный `data/quotes/*.json`: `id` (`<культура>-<автор>-NNN`, уникальный), `country`
 (ISO-код: `GB`, `IE`, `GB-SCT`, `GB-WLS`, `ES`, `MX`, …), `text` (≥ 5 слов, ≤ 300 символов),
 `author`, `author_en`, `source`. Тесты проверят формат.
+
+## «Words in context» (words_post.py)
+Отдельный пост из слов, сохранённых в Wordbank, в **отдельный** канал (`WORDS_TG_CHAT_ID`; в канал цитат не отправляется никогда).
+- Секреты: `WORDBANK_URL`, `WORDBANK_TOKEN` (токен со scope `publish`), `WORDS_TG_CHAT_ID`; LLM — те же, что у цитат.
+- Слот: `WORDS_SLOT_HOURS` (по умолчанию `13` по Ташкенту), ключи состояния `last_words_slot`, `words_lang_index`. Если наступили оба слота, цитата публикуется первой, слова — следующим часовым запуском.
+- Переменные: `WORDS_LEVEL_EN/ES/PT/UZ`, `WORDS_ALLOW_LLM_IPA`, `FORCE_WORDS_LANG` (для DRY_RUN), `WORDS_TRANSLATION_LANG`.
+- Ручной запуск: workflow_dispatch с `words=true` (и `dry_run=true` для образца поста).
+- При нехватке кандидатов (< 4) или неудаче генерации слот пропускается с кодом выхода 0.
