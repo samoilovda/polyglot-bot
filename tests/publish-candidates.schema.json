@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GET /api/v1/publish/candidates response",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "text", "lemma", "lang", "ipa", "ipa_origin"],
+    "properties": {
+      "id": {"type": "integer"},
+      "text": {"type": "string", "minLength": 1},
+      "lemma": {"type": ["string", "null"]},
+      "lang": {"type": "string"},
+      "ipa": {"type": ["string", "null"]},
+      "ipa_origin": {"enum": ["dictionary", "user", "llm", null]}
+    }
+  }
+}
