@@ -228,3 +228,19 @@ def test_telegram_failure_returns_1_and_keeps_state(net, monkeypatch):
 def test_not_enough_candidates_skips(net, monkeypatch):
     monkeypatch.setattr(wp.requests, "get", lambda url, **k: Resp(CANDS[:2]))
     assert wp.run({}, utc(10, 8)) == 0 and saved[-1]["last_words_slot"] == "2026-10-10T13"
+
+
+def test_agglutinative_suffix_after_braces_accepted():
+    cands = [cand(i, w, lang="uz-Latn") for i, w in enumerate(["shahar", "kitob", "yo'l", "do'st", "bahor"], 1)]
+    text = ("Biz {{shahar}}ga bordik va {{kitob}}ni o'qidik. Yo'lda {{yo'l}}ning chetida {{do'st}}imiz bilan uchrashdik. "
+            "Quyosh charaqlab turardi, havo issiq edi, odamlar ko'chalarda sayr qilishardi. {{bahor}} kelganida hamma xursand bo'ladi, "
+            "chunki daraxtlar gullaydi va qushlar sayraydi, kunlar uzayib boradi, va hamma yoqda shodlik hukm suradi.") * 1
+    d = {"text": text, "translation": "Мы поехали в город.", "words": [
+        {"candidate": "shahar", "form": "shaharga", "gloss": "city"}, {"candidate": "kitob", "form": "kitobni", "gloss": "book"},
+        {"candidate": "yo'l", "form": "yo'lning", "gloss": "road"}, {"candidate": "do'st", "form": "do'stimiz", "gloss": "friend"},
+        {"candidate": "bahor", "form": "bahor", "gloss": "spring"}]}
+    assert len(wp.validate(d, cands)["used"]) == 5
+
+
+def test_uzbek_apostrophe_variants_are_equal():
+    assert wp.norm("do'st") == wp.norm("doʻst") == wp.norm("do‘st") == wp.norm("DO’ST")

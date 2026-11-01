@@ -89,7 +89,7 @@ def choose_language(state, fetch=fetch_candidates):
 def build_prompt(lang, candidates):
     cfg = LANGS[lang]
     words = "\n".join(f"- {c['text']}" + (f" (lemma: {c['lemma']})" if c.get("lemma") else "") for c in candidates)
-    return f"""Write a short, natural text in {cfg['name']} at CEFR level {level_for(lang)}: 3-5 sentences, {MIN_CHARS}-{MAX_CHARS} characters.
+    return f"""Write a short, natural text in {cfg['name']} at CEFR level {level_for(lang)}: exactly 5 sentences, 400-600 characters long, counting characters (never fewer than {MIN_CHARS}, never more than {MAX_CHARS}). Longer sentences are fine.
 Use between {MIN_USED} and {MAX_USED} of these words (inflect them correctly if the grammar needs it):
 {words}
 Wrap every used word exactly as it appears in the text in double curly braces, e.g. {{{{word}}}}.
@@ -98,8 +98,12 @@ Reply with JSON only:
 {{"text": "...", "translation": "...", "words": [{{"candidate": "<exact candidate text from the list>", "form": "<form as used in the text>", "gloss": "<English gloss>"}}]}}"""
 
 
+_APOS = str.maketrans({c: "\u02bb" for c in "\u2018\u2019\u0027\u02bc\u0060"})
+
+
 def norm(s):
-    return re.sub(r"\s+", " ", s.strip().casefold())
+    """Сравнение слов: регистр, пробелы и все варианты узбекского апострофа (oʻ, o', o‘ …) считаются одним."""
+    return re.sub(r"\s+", " ", s.strip().casefold().translate(_APOS))
 
 
 def related(form, candidate):
@@ -133,11 +137,13 @@ def validate(data, candidates):
         cand = by_text.get(w.get("candidate")) if isinstance(w, dict) else None
         if cand is None:
             raise ValueError("word is not a candidate")
-        if norm(w.get("form", "")) not in {norm(m) for m in marked} or not related(w["form"], cand):
+        f = norm(w.get("form", ""))
+        # suffixes after the braces are allowed (agglutinative Uzbek: {{shahar}}ga)
+        if not any(f == norm(m) or f.startswith(norm(m)) for m in marked) or not related(w["form"], cand):
             raise ValueError(f"form {w.get('form')!r} not marked or unrelated to {cand['text']!r}")
         used[cand["id"]] = {"candidate": cand, "form": w["form"], "gloss": str(w.get("gloss", "")).strip()}
     for m in marked:  # every marked word must belong to a candidate
-        if not any(norm(u["form"]) == norm(m) for u in used.values()):
+        if not any(norm(u["form"]) == norm(m) or norm(u["form"]).startswith(norm(m)) for u in used.values()):
             raise ValueError(f"marked word {m!r} is not a candidate")
     if not MIN_USED <= len(used) <= MAX_USED:
         raise ValueError(f"{len(used)} words used, need {MIN_USED}-{MAX_USED}")
