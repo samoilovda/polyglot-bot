@@ -22,7 +22,9 @@ OPENROUTER_DEFAULT_MODEL = "~google/gemini-flash-latest"
 # Бесплатные модели OpenRouter (не тратят кредиты). Пробуются по порядку, если основная модель вернула
 # 402/429 или недоступна. Список меняется на стороне OpenRouter — переопределяется OPENROUTER_FREE_MODELS
 # (через запятую; "none" — отключить).
-OPENROUTER_FREE_MODELS = "openrouter/free,meta-llama/llama-3.3-70b-instruct:free,google/gemma-3-27b-it:free"
+OPENROUTER_FREE_MODELS = (
+    "meta-llama/llama-3.3-70b-instruct:free,google/gemma-3-27b-it:free,deepseek/deepseek-chat-v3.1:free,openrouter/free"
+)
 
 
 class LlmError(Exception):
@@ -74,16 +76,19 @@ def _env(name, default=""):
     return (os.environ.get(name) or "").strip() or default
 
 
-def _chat_completion(url, headers, payload, timeout):
+def _chat_completion(url, headers, payload, timeout, meta=None):
     try:
         response = requests.post(url, headers=headers, json=payload, timeout=timeout)
     except requests.RequestException as e:
         raise LlmError(f"network error: {type(e).__name__}") from e
     _check_http(response)
     try:
-        raw = response.json()["choices"][0]["message"]["content"]
+        body = response.json()
+        raw = body["choices"][0]["message"]["content"]
     except (ValueError, KeyError, IndexError, TypeError) as e:
         raise LlmBadOutput("unexpected response shape") from e
+    if meta is not None and isinstance(body.get("model"), str):
+        meta["model"] = body["model"]  # фактическая модель (у роутеров вроде openrouter/free отличается от запрошенной)
     return _parse_json(raw)
 
 
@@ -187,8 +192,11 @@ class OpenRouterProvider:
                 "temperature": temperature,
                 "response_format": {"type": "json_object"},
             }
+            meta = {}
             try:
-                return _chat_completion(OPENROUTER_URL, headers, payload, timeout)
+                data = _chat_completion(OPENROUTER_URL, headers, payload, timeout, meta)
+                print(f"LLM provider openrouter: answered by {meta.get('model', model)} (requested {model})")
+                return data
             except (LlmAuthError, LlmBadOutput):
                 raise  # ключ не принят — другие модели не помогут; плохой JSON повторяет цепочка
             except LlmError as e:  # 402 нет кредитов, 429, модель снята (400/404), сеть
