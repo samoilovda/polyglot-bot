@@ -18,7 +18,7 @@ Telegram-бот: 3 раза в день публикует цитату вели
 
 ## Переменные окружения
 - `TG_BOT_TOKEN`, `TG_CHAT_ID` — основные секреты.
-- LLM (без платного API, `llm.py`): `CLAUDE_CODE_OAUTH_TOKEN` (локально выполнить `claude setup-token`, токен положить в секрет репозитория) и `GEMINI_API_KEY` (ключ бесплатного уровня из Google AI Studio). Порядок провайдеров — переменная репозитория (Settings → Variables) `LLM_PROVIDERS`, по умолчанию `claude_cli,gemini`; доступен и `openrouter` (секрет `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`). Модель Claude — `CLAUDE_MODEL` (по умолчанию `haiku`), Gemini — `GEMINI_MODEL`. При 401/402/429 провайдер пропускается без повторов; при невалидном JSON — до 2 повторов, затем следующий провайдер.
+- LLM (без платного API, `llm.py`): `CLAUDE_CODE_OAUTH_TOKEN` (локально выполнить `claude setup-token`, токен положить в секрет репозитория) и `GEMINI_API_KEY` (ключ бесплатного уровня из Google AI Studio). Порядок провайдеров — переменная репозитория (Settings → Variables) `LLM_PROVIDERS`, по умолчанию `claude_cli,gemini,openrouter`. Провайдеры без ключа пропускаются ещё до вызова (в логе `LLM provider …: skipped (… is not set)`); если ключа нет ни у одного — понятная ошибка `no LLM provider configured`. `openrouter` (секрет `OPENROUTER_API_KEY`) сначала пробует `OPENROUTER_MODEL`, а при 402/429 или снятой модели — бесплатные модели из `OPENROUTER_FREE_MODELS` (через запятую, `none` — отключить; по умолчанию список в `llm.py`). Модель Claude — `CLAUDE_MODEL` (по умолчанию `haiku`), Gemini — `GEMINI_MODEL`. При 401/402/429 провайдер пропускается без повторов; при невалидном JSON — до 2 повторов, затем следующий провайдер.
 - `SEND_AS_VOICE` — отправлять аудио как нативное голосовое сообщение (`true` по умолчанию) или как аудиофайл (`false`).
 - `GENERATE_CARD` — создавать графическую карточку цитаты (`true` по умолчанию).
 - `DRY_RUN` — тестовый запуск без отправки (`1` / `true`).
@@ -38,7 +38,7 @@ LLM_PROVIDERS=gemini GEMINI_API_KEY=... DRY_RUN=1 FORCE_CULTURE=uz python main.p
 
 ## «Words in context» (words_post.py)
 Отдельный пост из слов, сохранённых в Wordbank, в **отдельный** канал (`WORDS_TG_CHAT_ID`; в канал цитат не отправляется никогда).
-- Секреты: `WORDBANK_URL`, `WORDBANK_TOKEN` (токен со scope `publish`), `WORDS_TG_CHAT_ID`; LLM — те же, что у цитат.
+- Секреты: `WORDBANK_URL`, `WORDBANK_TOKEN` (токен со scope `publish`), `WORDS_TG_CHAT_ID`; LLM — те же, что у цитат. Пока любой из трёх секретов не задан, `slot.py` пропускает слот слов (в логе `Words in context: skipped, secrets not set: …`), цитаты это не затрагивает.
 - Слот: `WORDS_SLOT_HOURS` (по умолчанию `13` по Ташкенту), ключи состояния `last_words_slot`, `words_lang_index`. Если наступили оба слота, цитата публикуется первой, слова — следующим часовым запуском.
 - Переменные: `WORDS_LEVEL_EN/ES/PT/UZ`, `WORDS_ALLOW_LLM_IPA`, `FORCE_WORDS_LANG` (для DRY_RUN), `WORDS_TRANSLATION_LANG`.
 - Ручной запуск: workflow_dispatch с `words=true` (и `dry_run=true` для образца поста).

@@ -7,15 +7,22 @@
 import json
 import os
 import re
+import shutil
 import subprocess
 import time
 
 import requests
 
-DEFAULT_PROVIDERS = "claude_cli,gemini"
+# openrouter последним: это единственный провайдер, чей ключ уже лежит в секретах репозитория.
+DEFAULT_PROVIDERS = "claude_cli,gemini,openrouter"
 BAD_OUTPUT_RETRIES = 2
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+OPENROUTER_DEFAULT_MODEL = "~google/gemini-flash-latest"
+# Бесплатные модели OpenRouter (не тратят кредиты). Пробуются по порядку, если основная модель вернула
+# 402/429 или недоступна. Список меняется на стороне OpenRouter — переопределяется OPENROUTER_FREE_MODELS
+# (через запятую; "none" — отключить).
+OPENROUTER_FREE_MODELS = "openrouter/free,meta-llama/llama-3.3-70b-instruct:free,google/gemma-3-27b-it:free"
 
 
 class LlmError(Exception):
@@ -62,6 +69,11 @@ def _check_http(response):
         raise LlmError(f"HTTP {status}")
 
 
+def _env(name, default=""):
+    """Пустая переменная (так GitHub Actions передаёт незаданные vars/secrets) = не задана."""
+    return (os.environ.get(name) or "").strip() or default
+
+
 def _chat_completion(url, headers, payload, timeout):
     try:
         response = requests.post(url, headers=headers, json=payload, timeout=timeout)
@@ -81,6 +93,16 @@ class ClaudeCliProvider:
     name = "claude_cli"
     AUTH_MARKERS = ("401", "unauthorized", "authentication", "oauth", "token", "login", "not logged in")
     QUOTA_MARKERS = ("rate limit", "usage limit", "quota", "429", "limit reached")
+
+    def unavailable_reason(self):
+        if not shutil.which("claude"):
+            return "claude CLI is not installed"
+        if _env("CLAUDE_CODE_OAUTH_TOKEN") or _env("ANTHROPIC_API_KEY"):
+            return None
+        config_dir = _env("CLAUDE_CONFIG_DIR", os.path.join(os.path.expanduser("~"), ".claude"))
+        if os.path.isfile(os.path.join(config_dir, ".credentials.json")):
+            return None  # локальный `claude login`
+        return "CLAUDE_CODE_OAUTH_TOKEN is not set"
 
     def complete_json(self, prompt, *, temperature=0.3, timeout=120):  # temperature CLI не принимает
         model = os.environ.get("CLAUDE_MODEL", "haiku")
@@ -114,12 +136,15 @@ class ClaudeCliProvider:
 class GeminiProvider:
     name = "gemini"
 
+    def unavailable_reason(self):
+        return None if _env("GEMINI_API_KEY") else "GEMINI_API_KEY is not set"
+
     def complete_json(self, prompt, *, temperature=0.3, timeout=60):
-        key = os.environ.get("GEMINI_API_KEY")
+        key = _env("GEMINI_API_KEY")
         if not key:
             raise LlmAuthError("GEMINI_API_KEY is not set")
         payload = {
-            "model": os.environ.get("GEMINI_MODEL", "gemini-flash-latest"),
+            "model": _env("GEMINI_MODEL", "gemini-flash-latest"),
             "messages": [{"role": "user", "content": prompt}],
             "temperature": temperature,
             "response_format": {"type": "json_object"},
@@ -128,10 +153,25 @@ class GeminiProvider:
 
 
 class OpenRouterProvider:
+    """OpenRouter: сначала OPENROUTER_MODEL, при 402/429/недоступной модели — бесплатные модели по очереди."""
+
     name = "openrouter"
 
+    def unavailable_reason(self):
+        return None if _env("OPENROUTER_API_KEY") else "OPENROUTER_API_KEY is not set"
+
+    @staticmethod
+    def models():
+        free = _env("OPENROUTER_FREE_MODELS", OPENROUTER_FREE_MODELS)
+        free_models = [] if free.lower() == "none" else [m.strip() for m in free.split(",") if m.strip()]
+        result = []
+        for m in [_env("OPENROUTER_MODEL", OPENROUTER_DEFAULT_MODEL), *free_models]:
+            if m not in result:
+                result.append(m)
+        return result
+
     def complete_json(self, prompt, *, temperature=0.3, timeout=60):
-        key = os.environ.get("OPENROUTER_API_KEY")
+        key = _env("OPENROUTER_API_KEY")
         if not key:
             raise LlmAuthError("OPENROUTER_API_KEY is not set")
         headers = {
@@ -139,24 +179,49 @@ class OpenRouterProvider:
             "Content-Type": "application/json",
             "HTTP-Referer": "https://github.com/polyglot-bot",
         }
-        payload = {
-            "model": os.environ.get("OPENROUTER_MODEL", "~google/gemini-flash-latest"),
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": temperature,
-            "response_format": {"type": "json_object"},
-        }
-        return _chat_completion(OPENROUTER_URL, headers, payload, timeout)
+        failures = []
+        for model in self.models():
+            payload = {
+                "model": model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": temperature,
+                "response_format": {"type": "json_object"},
+            }
+            try:
+                return _chat_completion(OPENROUTER_URL, headers, payload, timeout)
+            except (LlmAuthError, LlmBadOutput):
+                raise  # ключ не принят — другие модели не помогут; плохой JSON повторяет цепочка
+            except LlmError as e:  # 402 нет кредитов, 429, модель снята (400/404), сеть
+                print(f"LLM provider openrouter: model {model}: {type(e).__name__}: {e}")
+                failures.append(e)
+        reasons = "; ".join(f"{type(e).__name__} ({e})" for e in failures)
+        if failures and all(isinstance(e, LlmQuotaError) for e in failures):
+            raise LlmQuotaError(f"all OpenRouter models out of credits or rate-limited: {reasons}")
+        raise LlmError(f"all OpenRouter models failed: {reasons}")
 
 
 PROVIDERS = {p.name: p for p in (ClaudeCliProvider, GeminiProvider, OpenRouterProvider)}
 
 
 def get_chain():
-    names = [n.strip() for n in os.environ.get("LLM_PROVIDERS", DEFAULT_PROVIDERS).split(",") if n.strip()]
+    """Провайдеры из LLM_PROVIDERS (пусто — DEFAULT_PROVIDERS) без тех, для кого нет ключа: их пропускаем до вызова."""
+    names = [n.strip() for n in _env("LLM_PROVIDERS", DEFAULT_PROVIDERS).split(",") if n.strip()]
     unknown = [n for n in names if n not in PROVIDERS]
     if unknown:
         raise ValueError(f"unknown LLM provider(s): {', '.join(unknown)}")
-    return [PROVIDERS[n]() for n in names]
+    chain, skipped = [], []
+    for n in names:
+        provider = PROVIDERS[n]()
+        reason = provider.unavailable_reason()
+        if reason:
+            print(f"LLM provider {n}: skipped ({reason})")
+            skipped.append(f"{n}: {reason}")
+        else:
+            chain.append(provider)
+    if not chain:
+        raise LlmAuthError(f"no LLM provider configured ({'; '.join(skipped)})")
+    print(f"LLM chain: {', '.join(p.name for p in chain)}")
+    return chain
 
 
 def complete_json_chain(prompt, temperature=0.3, timeout=None, chain=None):
