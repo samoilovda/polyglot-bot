@@ -22,9 +22,9 @@ OPENROUTER_DEFAULT_MODEL = "~google/gemini-flash-latest"
 # Бесплатные модели OpenRouter (не тратят кредиты). Пробуются по порядку, если основная модель вернула
 # 402/429 или недоступна. Список меняется на стороне OpenRouter — переопределяется OPENROUTER_FREE_MODELS
 # (через запятую; "none" — отключить).
-OPENROUTER_FREE_MODELS = (
-    "meta-llama/llama-3.3-70b-instruct:free,google/gemma-3-27b-it:free,deepseek/deepseek-chat-v3.1:free,openrouter/free"
-)
+# Именованные :free-модели OpenRouter регулярно снимает (на 2026-11-07 llama-3.3-70b, gemma-3-27b и
+# deepseek-chat-v3.1 отдавали 404), поэтому по умолчанию — роутер по бесплатным моделям.
+OPENROUTER_FREE_MODELS = "openrouter/free"
 
 
 class LlmError(Exception):
