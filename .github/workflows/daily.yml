@@ -27,6 +27,9 @@ concurrency:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    env:
+      # Без токена claude CLI не нужен: llm.py всё равно пропустит claude_cli, а установка занимает время.
+      HAS_CLAUDE_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -35,6 +38,11 @@ jobs:
         id: slot
         env:
           FORCE_WORDS: ${{ inputs.words }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          # Только для проверки «задано ли» — без них шаг Words пропускается с сообщением в логе.
+          WORDS_TG_CHAT_ID: ${{ secrets.WORDS_TG_CHAT_ID }}
+          WORDBANK_URL: ${{ secrets.WORDBANK_URL }}
+          WORDBANK_TOKEN: ${{ secrets.WORDBANK_TOKEN }}
         run: python3 slot.py
 
       - name: Set up Python
@@ -44,13 +52,13 @@ jobs:
           python-version: '3.13'
 
       - name: Set up Node (for Claude Code CLI)
-        if: steps.slot.outputs.due == 'true'
+        if: steps.slot.outputs.due == 'true' && env.HAS_CLAUDE_TOKEN == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Install Claude Code CLI
-        if: steps.slot.outputs.due == 'true'
+        if: steps.slot.outputs.due == 'true' && env.HAS_CLAUDE_TOKEN == 'true'
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Install dependencies
@@ -68,9 +76,11 @@ jobs:
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS || 'claude_cli,gemini' }}
+          LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS }}  # пусто = llm.DEFAULT_PROVIDERS
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'haiku' }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ vars.OPENROUTER_MODEL }}
+          OPENROUTER_FREE_MODELS: ${{ vars.OPENROUTER_FREE_MODELS }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           DRY_RUN: ${{ inputs.dry_run }}
@@ -81,9 +91,11 @@ jobs:
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS || 'claude_cli,gemini' }}
+          LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS }}  # пусто = llm.DEFAULT_PROVIDERS
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'sonnet' }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ vars.OPENROUTER_MODEL }}
+          OPENROUTER_FREE_MODELS: ${{ vars.OPENROUTER_FREE_MODELS }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           WORDS_TG_CHAT_ID: ${{ secrets.WORDS_TG_CHAT_ID }}
           WORDBANK_URL: ${{ secrets.WORDBANK_URL }}

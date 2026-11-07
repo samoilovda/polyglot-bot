@@ -32,6 +32,15 @@ def is_due(last_slot, now=None, hours=None):
     return last_slot != current_slot(now, hours)
 
 
+WORDS_REQUIRED_ENV = ("WORDS_TG_CHAT_ID", "WORDBANK_URL", "WORDBANK_TOKEN")
+
+
+def words_missing_config(env=None):
+    """Секреты, без которых пост «Words in context» отправить нельзя."""
+    env = os.environ if env is None else env
+    return [k for k in WORDS_REQUIRED_ENV if not (env.get(k) or "").strip()]
+
+
 def decide(state, event_name, now=None, force_words=False):
     """-> (quotes_due, words_due). Не публикуем оба типа за один запуск: цитата первой."""
     if force_words:
@@ -50,6 +59,12 @@ def main():
         state = {}
     force_words = os.environ.get("FORCE_WORDS", "").strip().lower() in ("1", "true", "yes")
     quotes_due, words_due = decide(state, os.environ.get("GITHUB_EVENT_NAME"), force_words=force_words)
+    dry_run = os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes")
+    missing = words_missing_config()
+    if words_due and missing and not dry_run:
+        # Не падаем и не ставим зависимости каждый час впустую: слот слов просто пропускается до настройки секретов.
+        print(f"Words in context: skipped, secrets not set: {', '.join(missing)} (quotes are not affected).")
+        words_due = False
     due = quotes_due or words_due
     print(
         f"current={current_slot()} last={state.get('last_slot')} words_current={current_slot(hours=words_slot_hours())} "
