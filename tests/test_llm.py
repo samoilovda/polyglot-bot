@@ -80,6 +80,30 @@ def test_gemini_without_key_is_auth(monkeypatch):
         llm.GeminiProvider().complete_json("p")
 
 
+def test_hermes_sends_prompt_on_stdin_to_forced_command(monkeypatch):
+    monkeypatch.setenv("HERMES_SSH_TARGET", "hermes@stelve")
+    monkeypatch.setenv("HERMES_SSH_IDENTITY", "/tmp/hermes_key")
+    monkeypatch.setenv("HERMES_SSH_KNOWN_HOSTS", "/tmp/hermes_hosts")
+
+    def fake_run(cmd, **kw):
+        assert cmd[-2:] == ["--", "hermes@stelve"]
+        assert "StrictHostKeyChecking=yes" in cmd
+        assert "/tmp/hermes_key" in cmd
+        assert "UserKnownHostsFile=/tmp/hermes_hosts" in cmd
+        assert kw["input"] == "цитата\n$(ignored)"
+        return cli_result('{"answer":"перевод"}')
+
+    monkeypatch.setattr(llm.subprocess, "run", fake_run)
+    assert llm.HermesProvider().complete_json("цитата\n$(ignored)") == {"answer": "перевод"}
+
+
+def test_hermes_ssh_failure_does_not_log_remote_output(monkeypatch):
+    monkeypatch.setenv("HERMES_SSH_TARGET", "hermes@stelve")
+    monkeypatch.setattr(llm.subprocess, "run", lambda *a, **k: cli_result("prompt", "remote stderr", 255))
+    with pytest.raises(llm.LlmError, match=r"^Hermes SSH connection failed \(check host key and credentials\)$"):
+        llm.HermesProvider().complete_json("prompt")
+
+
 class Stub:
     def __init__(self, name, results):
         self.name, self.results, self.calls = name, list(results), 0

@@ -10,7 +10,7 @@ Telegram-бот: 3 раза в день публикует цитату вели
 арабский (MSA), русский.
 
 ## Как устроено
-- `data/quotes/<культура>.json` — корпус цитат (оригинал, автор, страна, источник). Переводит только LLM (OpenRouter).
+- `data/quotes/<культура>.json` — корпус цитат (оригинал, автор, страна, источник). Переводы и языковые пояснения генерирует LLM.
 - `card.py` — генерация графической карточки цитаты (Pillow, 1080×1350, без вызовов ИИ / 0 токенов).
 - `main.py` — обогащение цитаты (сложное слово, IPA, исторический контекст `📖` и мост языков `🌉`), озвучка через `edge-tts` с ID3-метаданными (`mutagen`), склейка карточки и звука в единый видео-пост через `ffmpeg` (`sendVideo`, либо фолбэк на `sendPhoto` + `sendVoice`).
 - `data/state.json` — очередь культур и уже опубликованные цитаты; коммитится workflow после каждой успешной публикации.
@@ -18,11 +18,25 @@ Telegram-бот: 3 раза в день публикует цитату вели
 
 ## Переменные окружения
 - `TG_BOT_TOKEN`, `TG_CHAT_ID` — основные секреты.
-- LLM (без платного API, `llm.py`): `CLAUDE_CODE_OAUTH_TOKEN` (локально выполнить `claude setup-token`, токен положить в секрет репозитория) и `GEMINI_API_KEY` (ключ бесплатного уровня из Google AI Studio). Порядок провайдеров — переменная репозитория (Settings → Variables) `LLM_PROVIDERS`, по умолчанию `claude_cli,gemini`; доступен и `openrouter` (секрет `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`). Модель Claude — `CLAUDE_MODEL` (по умолчанию `haiku`), Gemini — `GEMINI_MODEL`. При 401/402/429 провайдер пропускается без повторов; при невалидном JSON — до 2 повторов, затем следующий провайдер.
+- `LLM_PROVIDERS` задаёт порядок провайдеров. В GitHub Actions по умолчанию используется `hermes`, локально — `claude_cli,gemini`. Для `claude_cli` используются `CLAUDE_CODE_OAUTH_TOKEN` и `CLAUDE_MODEL`, для `gemini` — `GEMINI_API_KEY` и `GEMINI_MODEL`, для `openrouter` — `OPENROUTER_API_KEY` и `OPENROUTER_MODEL`. При ошибке авторизации или квоты цепочка сразу переходит к следующему провайдеру. При невалидном JSON допускаются два повтора.
 - `SEND_AS_VOICE` — отправлять аудио как нативное голосовое сообщение (`true` по умолчанию) или как аудиофайл (`false`).
 - `GENERATE_CARD` — создавать графическую карточку цитаты (`true` по умолчанию).
 - `DRY_RUN` — тестовый запуск без отправки (`1` / `true`).
 Также нужно: Settings → Actions → General → Workflow permissions → *Read and write*.
+
+## Hermes на сервере
+
+Hermes получает промпт по SSH и возвращает JSON. Бот проверяет структуру ответа, формирует пост, публикует его и сохраняет состояние ротации.
+
+1. Установите `tools/hermes_generate.py` на хосте Hermes. В `authorized_keys` учётной записи Hermes добавьте **отдельный** ключ для бота с `restrict` и принудительной командой. Подставьте абсолютные пути к Python Hermes, скрипту и каталогу установки, а также провайдер и модель этого экземпляра.
+
+   ```text
+   restrict,command="/usr/bin/timeout --kill-after=5s 110s /path/to/python -I /path/to/hermes_generate.py /path/to/hermes-agent PROVIDER MODEL" ssh-ed25519 PUBLIC_KEY polyglot-hermes
+   ```
+
+   Обработчик запускает Hermes без инструментов, памяти и файлов контекста. Промпт передаётся через stdin, а Telegram-токен остаётся в GitHub Actions.
+2. В секреты репозитория добавьте `HERMES_SSH_TARGET` (`user@host`), `HERMES_SSH_KEY` (закрытая часть выделенного ключа) и `HERMES_SSH_HOST_KEY` (проверенная строка `known_hosts` для хоста).
+3. Запустите `Quotes Bot` с `dry_run=true`. В журнале должна появиться строка `LLM provider hermes: ok`. Пост и состояние ротации при пробном запуске не отправляются.
 
 ## Локальный запуск
 ```bash

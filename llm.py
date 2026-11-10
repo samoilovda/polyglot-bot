@@ -148,7 +148,36 @@ class OpenRouterProvider:
         return _chat_completion(OPENROUTER_URL, headers, payload, timeout)
 
 
-PROVIDERS = {p.name: p for p in (ClaudeCliProvider, GeminiProvider, OpenRouterProvider)}
+class HermesProvider:
+    """Send the prompt to the SSH key's forced command, using stdin."""
+
+    name = "hermes"
+
+    def complete_json(self, prompt, *, temperature=0.3, timeout=120):
+        target = os.environ.get("HERMES_SSH_TARGET")
+        if not target:
+            raise LlmAuthError("HERMES_SSH_TARGET is not set")
+        cmd = ["ssh", "-T", "-o", "BatchMode=yes", "-o", "StrictHostKeyChecking=yes",
+               "-o", "ConnectTimeout=10", "-o", "ClearAllForwardings=yes", "-o", "ForwardAgent=no"]
+        if identity := os.environ.get("HERMES_SSH_IDENTITY"):
+            cmd.extend(["-i", identity, "-o", "IdentitiesOnly=yes"])
+        if known_hosts := os.environ.get("HERMES_SSH_KNOWN_HOSTS"):
+            cmd.extend(["-o", f"UserKnownHostsFile={known_hosts}", "-o", "GlobalKnownHostsFile=/dev/null"])
+        try:
+            proc = subprocess.run([*cmd, "--", target], input=prompt, capture_output=True,
+                                  encoding="utf-8", errors="replace", timeout=timeout)
+        except subprocess.TimeoutExpired as e:
+            raise LlmError("Hermes SSH timeout") from e
+        except OSError as e:
+            raise LlmError(f"Hermes SSH not runnable: {type(e).__name__}") from e
+        if proc.returncode == 255:
+            raise LlmError("Hermes SSH connection failed (check host key and credentials)")
+        if proc.returncode != 0:
+            raise LlmError(f"Hermes generation exited with code {proc.returncode}")
+        return _parse_json(proc.stdout)
+
+
+PROVIDERS = {p.name: p for p in (ClaudeCliProvider, GeminiProvider, OpenRouterProvider, HermesProvider)}
 
 
 def get_chain():
