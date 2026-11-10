@@ -27,6 +27,8 @@ concurrency:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    env:
+      LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS || 'hermes' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -44,13 +46,13 @@ jobs:
           python-version: '3.13'
 
       - name: Set up Node (for Claude Code CLI)
-        if: steps.slot.outputs.due == 'true'
+        if: steps.slot.outputs.due == 'true' && contains(env.LLM_PROVIDERS, 'claude_cli')
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Install Claude Code CLI
-        if: steps.slot.outputs.due == 'true'
+        if: steps.slot.outputs.due == 'true' && contains(env.LLM_PROVIDERS, 'claude_cli')
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Install dependencies
@@ -63,12 +65,32 @@ jobs:
         if: steps.slot.outputs.due == 'true'
         run: pytest -q
 
+      - name: Configure Hermes SSH
+        if: steps.slot.outputs.due == 'true' && contains(env.LLM_PROVIDERS, 'hermes')
+        env:
+          HERMES_SSH_KEY: ${{ secrets.HERMES_SSH_KEY }}
+          HERMES_SSH_HOST_KEY: ${{ secrets.HERMES_SSH_HOST_KEY }}
+          HERMES_SSH_DESTINATION: ${{ secrets.HERMES_SSH_TARGET }}
+        run: |
+          if [[ -z "$HERMES_SSH_KEY" || -z "$HERMES_SSH_HOST_KEY" || -z "$HERMES_SSH_DESTINATION" ]]; then
+            echo '::warning::Hermes SSH secrets are incomplete'
+            exit 0
+          fi
+          umask 077
+          ssh_dir=$(mktemp -d "$RUNNER_TEMP/hermes.XXXXXX")
+          printf '%s\n' "$HERMES_SSH_KEY" > "$ssh_dir/id_ed25519"
+          printf '%s\n' "$HERMES_SSH_HOST_KEY" > "$ssh_dir/known_hosts"
+          {
+            printf 'HERMES_SSH_TARGET=%s\n' "$HERMES_SSH_DESTINATION"
+            printf 'HERMES_SSH_IDENTITY=%s\n' "$ssh_dir/id_ed25519"
+            printf 'HERMES_SSH_KNOWN_HOSTS=%s\n' "$ssh_dir/known_hosts"
+          } >> "$GITHUB_ENV"
+
       - name: Run bot
         if: steps.slot.outputs.quotes_due == 'true'
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS || 'claude_cli,gemini' }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'haiku' }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
@@ -81,7 +103,6 @@ jobs:
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LLM_PROVIDERS: ${{ vars.LLM_PROVIDERS || 'claude_cli,gemini' }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'sonnet' }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
@@ -93,7 +114,7 @@ jobs:
         run: python words_post.py
 
       - name: Commit state
-        if: success() && steps.slot.outputs.due == 'true'
+        if: success() && steps.slot.outputs.due == 'true' && inputs.dry_run != true
         run: |
           git config user.name "quotes-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
