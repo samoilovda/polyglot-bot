@@ -1,5 +1,5 @@
 {
-  "next_culture_index": 5,
+  "next_culture_index": 0,
   "posted_ids": [
     "en_gb-shakespeare-001",
     "es-neruda-002",
@@ -89,7 +89,8 @@
     "es-jimenez-001",
     "pt_br-quintana-001",
     "uz-ulugbek-001",
-    "ar-sayyab-002"
+    "ar-sayyab-002",
+    "ru-turgenev-001"
   ],
-  "last_slot": "2026-11-14T22"
+  "last_slot": "2026-11-15T16"
 }
