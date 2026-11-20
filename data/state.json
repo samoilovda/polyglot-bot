@@ -1,5 +1,5 @@
 {
-  "next_culture_index": 3,
+  "next_culture_index": 4,
   "posted_ids": [
     "en_gb-shakespeare-001",
     "es-neruda-002",
@@ -84,7 +84,8 @@
     "ru-pushkin-003",
     "en_gb-shakespeare-011",
     "es-calderon-003",
-    "pt_br-coralina-001"
+    "pt_br-coralina-001",
+    "uz-navoiy-010"
   ],
-  "last_slot": "2026-11-19T22"
+  "last_slot": "2026-11-20T16"
 }
