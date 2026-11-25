@@ -1,5 +1,6 @@
 [Unit]
 Description=Hermes generation for Quotes Bot
+CollectMode=inactive-or-failed
 
 [Service]
 User=hermes
