@@ -2,6 +2,8 @@
 
 Два независимых набора слотов: цитаты (SLOT_HOURS, ключ состояния last_slot) и «Words in context»
 (WORDS_SLOT_HOURS, ключ last_words_slot). Если наступили оба, цитата публикуется первой, слова — следующим запуском.
+
+Пропущенные слоты цитат догоняются: один запуск — одна цитата, не больше MAX_BACKLOG слотов назад.
 """
 import json
 import os
@@ -10,7 +12,8 @@ from datetime import datetime, timedelta, timezone
 
 TASHKENT = timezone(timedelta(hours=5))
 SLOT_HOURS = (10, 16, 22)
-STATE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "state.json")
+MAX_BACKLOG = 2  # текущий слот и один пропущенный; более старые отбрасываются
+STATE_PATH = os.environ.get("STATE_PATH") or os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "state.json")
 
 
 def words_slot_hours():
@@ -32,12 +35,23 @@ def is_due(last_slot, now=None, hours=None):
     return last_slot != current_slot(now, hours)
 
 
+def quote_slot(last_slot, now=None):
+    """Какой слот цитат публиковать: самый старый неопубликованный из последних MAX_BACKLOG; None — всё опубликовано."""
+    now = (now or datetime.now(timezone.utc)).astimezone(TASHKENT)
+    days = [now - timedelta(days=d) for d in range(MAX_BACKLOG, -1, -1)]
+    current = current_slot(now)
+    recent = [s for day in days for h in sorted(SLOT_HOURS) if (s := f"{day:%Y-%m-%d}T{h:02d}") <= current][-MAX_BACKLOG:]
+    if not last_slot:
+        return current
+    return next((s for s in recent if s > last_slot), None)
+
+
 def decide(state, event_name, now=None, force_words=False):
     """-> (quotes_due, words_due). Не публикуем оба типа за один запуск: цитата первой."""
     if force_words:
         return False, True
     manual = event_name != "schedule"
-    quotes_due = manual or is_due(state.get("last_slot"), now)
+    quotes_due = manual or quote_slot(state.get("last_slot"), now) is not None
     words_due = (not manual) and not quotes_due and is_due(state.get("last_words_slot"), now, words_slot_hours())
     return quotes_due, words_due
 

@@ -7,6 +7,7 @@
 import json
 import os
 import re
+import socket
 import subprocess
 import time
 
@@ -177,7 +178,36 @@ class HermesProvider:
         return _parse_json(proc.stdout)
 
 
-PROVIDERS = {p.name: p for p in (ClaudeCliProvider, GeminiProvider, OpenRouterProvider, HermesProvider)}
+class HermesSocketProvider:
+    """Hermes on the same host: a systemd socket starts the generator as its own user."""
+
+    name = "hermes_socket"
+
+    def complete_json(self, prompt, *, temperature=0.3, timeout=120):
+        path = os.environ.get("HERMES_SOCKET", "/run/polyglot-hermes.sock")
+        deadline = time.monotonic() + timeout
+        chunks = []
+        try:
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
+                s.settimeout(timeout)
+                s.connect(path)
+                s.sendall(prompt.encode("utf-8"))
+                s.shutdown(socket.SHUT_WR)
+                while True:
+                    s.settimeout(max(0.1, deadline - time.monotonic()))
+                    chunk = s.recv(65536)
+                    if not chunk:
+                        break
+                    chunks.append(chunk)
+        except OSError as e:
+            raise LlmError(f"Hermes socket: {type(e).__name__}") from e
+        if not chunks:
+            raise LlmError("Hermes generation returned nothing")
+        return _parse_json(b"".join(chunks).decode("utf-8", "replace"))
+
+
+PROVIDERS = {p.name: p for p in (ClaudeCliProvider, GeminiProvider, OpenRouterProvider, HermesProvider,
+                                 HermesSocketProvider)}
 
 
 def get_chain():

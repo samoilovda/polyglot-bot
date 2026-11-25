@@ -23,7 +23,7 @@ FORCE_CULTURE = os.environ.get("FORCE_CULTURE", "").strip()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 QUOTES_DIR = os.path.join(BASE_DIR, "data", "quotes")
-STATE_PATH = os.path.join(BASE_DIR, "data", "state.json")
+STATE_PATH = slot.STATE_PATH
 
 MIN_WORDS = 5
 CAPTION_LIMIT = 1024  # лимит подписи к аудио в Telegram
@@ -92,9 +92,11 @@ def load_state(path=STATE_PATH):
 
 
 def save_state(state, path=STATE_PATH):
-    with open(path, "w", encoding="utf-8") as f:
+    tmp = f"{path}.tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False, indent=2)
         f.write("\n")
+    os.replace(tmp, path)
 
 
 def load_quotes(culture, quotes_dir=QUOTES_DIR):
@@ -568,7 +570,7 @@ def main():
         return 1
 
     state["posted_ids"].append(quote["id"])
-    state["last_slot"] = slot.current_slot()
+    state["last_slot"] = slot.quote_slot(state.get("last_slot")) or slot.current_slot()
     state["next_culture_index"] = (index + 1) % len(CULTURE_ORDER)
     save_state(state)
     print("Workflow completed successfully!")

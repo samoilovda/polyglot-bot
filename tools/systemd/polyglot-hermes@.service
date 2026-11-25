@@ -1,0 +1,17 @@
+[Unit]
+Description=Hermes generation for Quotes Bot
+CollectMode=inactive-or-failed
+
+[Service]
+User=hermes
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal
+ExecStart=/home/hermes/.hermes/tools/python-3.14.7+20260901-linux-arm64/bin/python3 -I /usr/local/libexec/polyglot-hermes/generate.py /home/hermes/.hermes/hermes-agent openai-codex gpt-6.1-sol
+RuntimeMaxSec=110
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/hermes
+MemoryMax=2G
+CPUQuota=200%
