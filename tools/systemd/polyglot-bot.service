@@ -1,0 +1,22 @@
+[Unit]
+Description=Quotes Bot: publish a quote if a slot is due
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=polyglot
+EnvironmentFile=/srv/polyglot-bot/.env
+Environment=STATE_PATH=/srv/polyglot-bot/state/state.json PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+Environment=PATH=/srv/polyglot-bot/venv/bin:/usr/bin:/bin
+WorkingDirectory=/srv/polyglot-bot/state
+ExecStart=/srv/polyglot-bot/venv/bin/python /srv/polyglot-bot/app/run_scheduled.py
+TimeoutStartSec=15min
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ReadWritePaths=/srv/polyglot-bot/state
+MemoryMax=1G
+CPUQuota=200%
