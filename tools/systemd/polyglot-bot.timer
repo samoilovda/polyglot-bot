@@ -1,0 +1,9 @@
+[Unit]
+Description=Quotes Bot: hourly slot check (slots 10/16/22 Tashkent)
+
+[Timer]
+OnCalendar=*-*-* *:00:20
+Persistent=true
+
+[Install]
+WantedBy=timers.target

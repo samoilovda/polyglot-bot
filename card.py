@@ -40,7 +40,8 @@ def find_font(candidates, size):
     for path in candidates:
         if os.path.exists(path):
             try:
-                return ImageFont.truetype(path, size)
+                # BASIC: порядок букв уже задан get_display, Raqm перевернул бы арабский ещё раз
+                return ImageFont.truetype(path, size, layout_engine=ImageFont.Layout.BASIC)
             except Exception:
                 continue
     try:

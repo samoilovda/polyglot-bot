@@ -178,3 +178,10 @@ def test_generate_video_card_real_ffmpeg(tmp_path):
     assert out == v_path
     assert os.path.exists(v_path)
     assert os.path.getsize(v_path) > 1000
+
+
+def test_fonts_use_basic_layout_so_arabic_is_not_reversed_twice():
+    from PIL import ImageFont
+
+    font = card.find_font(card.ARABIC_FONT_CANDIDATES, 20)
+    assert getattr(font, "layout_engine", ImageFont.Layout.BASIC) == ImageFont.Layout.BASIC

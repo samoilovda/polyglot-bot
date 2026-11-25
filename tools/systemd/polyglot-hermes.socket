@@ -1,0 +1,13 @@
+[Unit]
+Description=Quotes Bot -> Hermes text generation
+
+[Socket]
+ListenStream=/run/polyglot-hermes.sock
+SocketUser=polyglot
+SocketGroup=polyglot
+SocketMode=0600
+Accept=yes
+MaxConnections=2
+
+[Install]
+WantedBy=sockets.target
